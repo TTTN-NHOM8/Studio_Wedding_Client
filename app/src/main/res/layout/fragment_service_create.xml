@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/line"
+    android:orientation="vertical"
+    android:scrollbars="none"
+    tools:context=".view.activity.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarAddContract"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/imgBackFromAddContract"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_back" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="Thêm dịch vụ"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </androidx.appcompat.widget.Toolbar>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+
+            <EditText
+                android:id="@+id/edAddClientContract"
+                android:layout_width="343dp"
+                android:layout_height="52dp"
+                android:layout_marginBottom="7dp"
+                android:background="@drawable/edittext_bgr_white"
+                android:clickable="true"
+                android:drawableLeft="@drawable/services_name"
+                android:drawablePadding="8dp"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="text"
+                android:padding="13dp"
+                android:text="Tên dịch vụ"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"/>
+
+            <EditText
+                android:id="@+id/edAddDiscountContract"
+                android:layout_width="343dp"
+                android:layout_height="52dp"
+                android:layout_marginBottom="7dp"
+                android:background="@drawable/edittext_bgr_white"
+                android:drawableLeft="@drawable/services_price"
+                android:drawablePadding="8dp"
+                android:ems="10"
+                android:hint="Giá dịch vụ"
+                android:inputType="text"
+                android:padding="13dp"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAddNewContract"
+            android:layout_width="343dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="450dp"
+            android:background="@drawable/button_bgr_primary"
+            android:text="Thêm mới"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+
+</ScrollView>
