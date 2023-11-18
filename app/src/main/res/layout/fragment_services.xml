@@ -61,7 +61,8 @@
         android:foreground="floating_button_icon"
         tools:layout_editor_absoluteX="339dp"
         tools:layout_editor_absoluteY="637dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:contentDescription="TODO" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
