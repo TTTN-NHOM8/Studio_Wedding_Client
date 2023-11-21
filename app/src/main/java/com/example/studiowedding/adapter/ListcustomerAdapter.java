@@ -13,15 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studiowedding.view.activity.customer.UpdateCustomerActivity;
 import com.example.studiowedding.R;
-import com.example.studiowedding.model.ListcustomerModel;
+import com.example.studiowedding.model.Customer;
 
 
 import java.util.ArrayList;
 
 public class ListcustomerAdapter extends RecyclerView.Adapter<ListcustomerAdapter.Viewhodel> {
-    ArrayList<ListcustomerModel> listCustomersModels;
+    ArrayList<Customer> listCustomersModels;
 
-    public ListcustomerAdapter(ArrayList<ListcustomerModel> listCustomersModels) {
+    public ListcustomerAdapter(ArrayList<Customer> listCustomersModels) {
         this.listCustomersModels = listCustomersModels;
     }
 
@@ -46,7 +46,7 @@ public class ListcustomerAdapter extends RecyclerView.Adapter<ListcustomerAdapte
         holder.TVPhoneCustome.setText(listCustomersModels.get(position).getPhone());
         holder.TVAddressCustome.setText(listCustomersModels.get(position).getAddress());
         holder.imgUpdateClient.setOnClickListener(myClickListener2);
-        ListcustomerModel customer = listCustomersModels.get(position);
+        Customer customer = listCustomersModels.get(position);
         String picUrl= "";
         switch (position){
             case 0:{

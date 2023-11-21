@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="Services" android:id="@+id/Menu" android:icon="@drawable/drawer_home" app:showAsAction="ifRoom"/>
+    <item android:title="Services" android:id="@+id/Menu1" android:icon="@drawable/drawer_home" app:showAsAction="ifRoom"/>
+    <item android:title="Services" android:id="@+id/Services" android:icon="@drawable/drawer_home" app:showAsAction="ifRoom"/>
+    <item android:title="Product" android:id="@+id/Product" android:icon="@drawable/drawer_alert" app:showAsAction="ifRoom"/>
+</menu>

@@ -11,6 +11,7 @@ import com.example.studiowedding.view.fragment.EmployeeFragment;
 import com.example.studiowedding.view.fragment.HomeFragment;
 import com.example.studiowedding.view.fragment.InvoiceFragment;
 import com.example.studiowedding.view.fragment.NoticationFragment;
+import com.example.studiowedding.view.fragment.ProductAndServicesFragment;
 import com.example.studiowedding.view.fragment.ServicesFragment;
 import com.example.studiowedding.view.fragment.SettingFragment;
 import com.example.studiowedding.view.fragment.StatisticFragment;
@@ -72,12 +73,12 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new EmployeeFragment();
                 break;
             case R.id.navClient:
-                getSupportActionBar().setTitle("Danh sách khác hàng");
+                getSupportActionBar().setTitle("Danh sách khách hàng");
                 fragment = new CustomerFragment();
                 break;
             case R.id.navServices:
                 getSupportActionBar().setTitle("Sản phẩm & Dịch vụ");
-                fragment = new ServicesFragment();
+                fragment = new ProductAndServicesFragment();
                 break;
             case R.id.navInvoice:
                 getSupportActionBar().setTitle("Danh sách hợp đồng");

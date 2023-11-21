@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.adapter.ListcustomerAdapter;
-import com.example.studiowedding.model.ListcustomerModel;
+import com.example.studiowedding.model.Customer;
 
 import java.util.ArrayList;
 
@@ -44,10 +44,10 @@ public class CustomerFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewCustomersList = view.findViewById(R.id.RVCustomers);
         recyclerViewCustomersList.setLayoutManager(linearLayoutManager);
-        ArrayList<ListcustomerModel> listCustomer = new ArrayList<>();
-        listCustomer.add(new ListcustomerModel("Cuong", "+ 888888888", "Đà nẵng"));
-        listCustomer.add(new ListcustomerModel("Cuong1", "+ 888888888", "Đà nẵng"));
-        listCustomer.add(new ListcustomerModel("Cuong2", "+ 888888888", "Đà nẵng"));
+        ArrayList<Customer> listCustomer = new ArrayList<>();
+        listCustomer.add(new Customer("Cuong", "+ 888888888", "Đà nẵng"));
+        listCustomer.add(new Customer("Cuong1", "+ 888888888", "Đà nẵng"));
+        listCustomer.add(new Customer("Cuong2", "+ 888888888", "Đà nẵng"));
         adapter = new ListcustomerAdapter(listCustomer);
         recyclerViewCustomersList.setAdapter(adapter);
 
