@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/line"
+    tools:context=".view.activity.employee.UpdateEmployeeActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar21"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="40dp"
+                android:fontFamily="@font/inter_bold"
+                android:text="@string/content_update_staff"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="@+id/imageView5" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_update_img_employee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="97dp"
+                android:src="@drawable/avt_demo_employee"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_update_email_employee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="38dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edittext_bgr_white"
+                android:drawableStart="@drawable/login_username"
+                android:drawablePadding="23dp"
+                android:fontFamily="@font/inter_regular"
+                android:minHeight="52dp"
+                android:paddingStart="17dp"
+                android:text="@string/text_email_update_staff"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/civ_update_img_employee" />
+
+            <EditText
+                android:id="@+id/et_update_pass_employee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edittext_bgr_white"
+                android:drawableStart="@drawable/login_password"
+                android:drawablePadding="23dp"
+                android:enabled="false"
+                android:fontFamily="@font/inter_regular"
+                android:minHeight="52dp"
+                android:paddingStart="17dp"
+                android:password="true"
+                android:text="@string/edt_pass_staff"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_update_email_employee" />
+
+            <EditText
+                android:id="@+id/et_update_name_employee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edittext_bgr_white"
+                android:drawableStart="@drawable/client_name"
+                android:drawablePadding="23dp"
+                android:fontFamily="@font/inter_bold"
+                android:minHeight="52dp"
+                android:paddingStart="17dp"
+                android:text="@string/name_staff"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_update_pass_employee" />
+
+            <EditText
+                android:id="@+id/et_update_dob_employee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edittext_bgr_white"
+                android:drawableStart="@drawable/detail_contract_dop"
+                android:drawablePadding="23dp"
+                android:fontFamily="@font/inter_regular"
+                android:minHeight="52dp"
+                android:paddingStart="17dp"
+                android:text="@string/text_dob_update_staff"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_update_name_employee" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edittext_bgr_white"
+                android:minHeight="52dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_update_dob_employee">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="17dp"
+                    android:drawableStart="@drawable/icon_gender_employ"
+                    android:drawablePadding="22dp"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="@string/text_gender_staff"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="7dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:scaleX="0.9"
+                        android:scaleY="0.9"
+                        android:text="@string/text_gender_staff_male"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:fontFamily="@font/inter_regular"
+                        android:paddingEnd="7dp"
+                        android:scaleX="0.9"
+                        android:scaleY="0.9"
+                        android:text="@string/text_gender_staff_female"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/et_update_phone_employee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edittext_bgr_white"
+                android:drawableStart="@drawable/client_phone"
+                android:drawablePadding="23dp"
+                android:fontFamily="@font/inter_regular"
+                android:minHeight="52dp"
+                android:paddingStart="17dp"
+                android:text="@string/text_phone_update_staff"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+            <EditText
+                android:id="@+id/et_update_address_employee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edittext_bgr_white"
+                android:drawableStart="@drawable/locaion"
+                android:drawablePadding="23dp"
+                android:fontFamily="@font/inter_regular"
+                android:minHeight="52dp"
+                android:paddingStart="17dp"
+                android:text="@string/text_location_update_staff"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_update_phone_employee" />
+
+            <EditText
+                android:id="@+id/et_update_role_employee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/edittext_bgr_white"
+                android:drawableStart="@drawable/spinner_select"
+                android:drawableEnd="@drawable/spinner_arrow_down"
+                android:drawablePadding="23dp"
+                android:enabled="false"
+                android:fontFamily="@font/inter_regular"
+                android:minHeight="52dp"
+                android:paddingStart="17dp"
+                android:paddingEnd="35dp"
+                android:text="@string/text_role_update_staff"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_update_address_employee" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="34dp"
+                android:background="@drawable/button_bgr_primary"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_update_role_employee">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_bold"
+                    android:text="@string/text_btn_update_staff"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

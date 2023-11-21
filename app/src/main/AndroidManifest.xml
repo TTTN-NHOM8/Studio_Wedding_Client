@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -10,17 +13,89 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.StudioWedding"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name=".view.activity.account.EditInformation"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.account.Login"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.account.ChangePassword"
+            android:exported="false" />
+
         <activity
             android:name=".view.activity.employee.SearchEmployeeActivity"
             android:exported="false" />
+
         <activity
-            android:name=".SplashActivity"
+            android:name=".view.activity.customer.UpdateCustomerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.customer.FindPhoneActivity"
+            android:exported="false" />
+
+
+        <activity
+            android:name=".view.activity.customer.AddCustomerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.activity.employee.UpdateEmployeeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.employee.AddEmployeeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.activity.detail_contract.UpdateContractServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.UpdateContractProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.ServiceSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.ProductSelectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.detail_contract.AddContractDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.activity.contract.FilterContractActivity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:exported="false"
+          />
+
+
+        <activity
+            android:name=".view.activity.contract.PickClientActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.contract.UpdateContractActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.contract.AddContractActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.activity.task.UpdateTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.task.SeeTaskActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.MainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SplashActivity"
             android:exported="true"
-            android:label="@string/title_activity_main"
             android:theme="@style/Theme.StudioWedding">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -9,8 +9,14 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="line">#F5F5F5</color>
+    <color name="yellow">#DB9A8D17</color>
     <color name="bg">#CCCCCC</color>
     <color name="linear">#C9C9C9</color>
     <color name="red">#D83C3C</color>
+    <color name="gray">#D9D9D9</color>
+    <color name="dark_green">#226403</color>
+    <color name="earthy">#9A8D17</color>
+    <color name="red_light">#FF0000</color>
+    <color name="blue_g">#0C2C9C</color>
 
 </resources>
