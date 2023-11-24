@@ -74,7 +74,6 @@
                     android:layout_marginTop="14dp"
                     android:background="@drawable/edittext_bgr_white"
                     android:drawableStart="@drawable/spinner_select"
-                    android:drawableEnd="@drawable/spinner_arrow_down"
                     android:drawablePadding="14dp"
                     android:focusable="false"
                     android:fontFamily="@font/inter_regular"

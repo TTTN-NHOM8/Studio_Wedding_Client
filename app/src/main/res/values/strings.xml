@@ -83,4 +83,7 @@
     <string name="damage">Làm hỏng đồ</string>
     <string name="is_late">Trả đồ muộn</string>
 
+
+    <string name="icon_description">Role Icon</string>
+
 </resources>
