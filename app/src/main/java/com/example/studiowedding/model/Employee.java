@@ -1,31 +1,34 @@
 package com.example.studiowedding.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class Employee {
+
     private String idNhanVien;
+    @SerializedName("hoVaTen")
     private String hoTen;
     private String matKhau;
     private String ngaySinh;
     private String gioiTinh;
     private String dienThoai;
     private String diaChi;
+    @SerializedName("anhDaiDien")
     private String anh;
     private String vaiTro;
-    private int hienThi;
 
-    public Employee(String idNhanVien, String hoTen, String matKhau, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro, int hienThi) {
+    public Employee(String idNhanVien, String hoTen, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro) {
         this.idNhanVien = idNhanVien;
         this.hoTen = hoTen;
-        this.matKhau = matKhau;
         this.ngaySinh = ngaySinh;
         this.gioiTinh = gioiTinh;
         this.dienThoai = dienThoai;
         this.diaChi = diaChi;
         this.anh = anh;
         this.vaiTro = vaiTro;
-        this.hienThi = hienThi;
     }
+
 
     public String getIdNhanVien() {
         return idNhanVien;
@@ -99,13 +102,6 @@ public class Employee {
         this.vaiTro = vaiTro;
     }
 
-    public int getHienThi() {
-        return hienThi;
-    }
-
-    public void setHienThi(int hienThi) {
-        this.hienThi = hienThi;
-    }
 
     @Override
     public String toString() {
@@ -119,7 +115,6 @@ public class Employee {
                 ", diaChi='" + diaChi + '\'' +
                 ", anh='" + anh + '\'' +
                 ", vaiTro='" + vaiTro + '\'' +
-                ", hienThi=" + hienThi +
                 '}';
     }
 }
