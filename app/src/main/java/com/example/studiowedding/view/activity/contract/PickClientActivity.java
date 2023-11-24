@@ -20,6 +20,7 @@ import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Customer;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
+import com.example.studiowedding.view.activity.customer.AddCustomerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +78,7 @@ public class PickClientActivity extends AppCompatActivity implements View.OnClic
                 finish();
                 break;
             case R.id.tvCreateClient:
+                startActivity(new Intent(PickClientActivity.this, AddCustomerActivity.class));
                 break;
         }
     }

@@ -121,4 +121,7 @@ public interface ApiService {
     Call<Void> updateContractIDContractDetail(@Path("contractIDTemporary") String contractIDTemporary, @Body ContractDetail contractID);
     @DELETE(ManagerUrl.CONTRACT_DETAIL_REMOVE)
     Call<Void>deleteHDCT(@Path("contractIDTemporary") String idHDTT);
+
+    @GET(ManagerUrl.CONTRACT_DETAIL_IDCONTRACT)
+    Call<List<ContractDetail>>getContractDetailByIdContract(@Path("contractID") String idContract);
 }

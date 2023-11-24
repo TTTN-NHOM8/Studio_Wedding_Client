@@ -33,6 +33,7 @@ import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.view.activity.contract.AddContractActivity;
 import com.example.studiowedding.view.activity.contract.FilterContractActivity;
 import com.example.studiowedding.view.activity.contract.UpdateContractActivity;
+import com.example.studiowedding.view.activity.detail_contract.AddContractDetailActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -97,6 +98,8 @@ public class InvoiceFragment extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListner() {
             @Override
             public void onItemClick(int position) {
+                Contract contract=contractList.get(position);
+                String idHD=contract.getIdHopDong();
                 showAlertDialog(position);
             }
         });
@@ -116,8 +119,6 @@ public class InvoiceFragment extends Fragment {
     }
 
 
-
-
     private void showAlertDialog(int position) {
         final CharSequence[] options = {"Cập nhật", "Xoá"};
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -126,10 +127,12 @@ public class InvoiceFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                startActivity(new Intent(getActivity(), UpdateContractActivity.class));
+                                Intent updateIntent = new Intent(getActivity(), UpdateContractActivity.class);
+                                updateIntent.putExtra("contractList", contractList.get(position));
+                                startActivity(updateIntent);
                                 break;
                             case 1:
-                                Toast.makeText(getContext(), "Xoá"+position, Toast.LENGTH_SHORT).show();
+                                comfirmDeleteDialog(position);
                                 break;
                             default:
                                 break;
@@ -166,6 +169,21 @@ public class InvoiceFragment extends Fragment {
 //
 //    }
 
+
+
+    private void comfirmDeleteDialog(int posititon){
+        Contract contract=contractList.get(posititon);
+        String idHD =contract.getIdHopDong();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Xác nhận xoá HĐCT: " + idHD);
+        builder.setNegativeButton("Huỷ", (dialogInterface, i) -> dialogInterface.dismiss());
+        builder.setPositiveButton("Xoá", (dialogInterface, i) -> {
+            deleteContract(idHD);
+        });
+        builder.show();
+
+    }
     private void getAllContracts(){
         ApiService apiService=ApiClient.getClient().create(ApiService.class);
         Call<List<Contract>>call=apiService.getContracts();
@@ -185,6 +203,31 @@ public class InvoiceFragment extends Fragment {
             @Override
             public void onFailure(Call<List<Contract>> call, Throwable t) {
                 Log.i("TAG","Lỗi" +t.getMessage());
+            }
+        });
+    }
+
+    private void deleteContract( String idHD){
+        ApiService apiService=ApiClient.getClient().create(ApiService.class);
+        Call<Void>call=apiService.deleteContract(idHD);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    getAllContracts();
+                    Toast.makeText(getContext(), "Xoá thành công", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getContext(), "Xoá thành công", Toast.LENGTH_SHORT).show();
+                Log.i("TAG", "Lỗi"+t.getMessage());
+
             }
         });
     }

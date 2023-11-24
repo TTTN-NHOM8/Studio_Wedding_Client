@@ -29,6 +29,7 @@ public class ManagerUrl {
     public static final String CONTRACT_DETAIL_SERVICES = "contract-details-services";
     public static final String CONTRACT_DETAIL_PRODUCTS = "contract-details-products";
     public static final String DELETE_CONTRACT_DETAIL_BY_CONTRACT_DETAIL_ID = "contract-details/{contractDetailID}/single";
-    public  static  final String CONTRACT_DETAIL_IDHD="contract-details/{contractIDTemporary}/contract";
-    public  static  final String CONTRACT_DETAIL_REMOVE="contract-details/{contractIDTemporary}";
+    public static final String CONTRACT_DETAIL_IDHD="contract-details/{contractIDTemporary}/contract";
+    public static final String CONTRACT_DETAIL_REMOVE="contract-details/{contractIDTemporary}";
+    public static final String CONTRACT_DETAIL_IDCONTRACT="contract-details/{contractID}";
 }

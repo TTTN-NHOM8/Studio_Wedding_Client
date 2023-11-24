@@ -25,30 +25,24 @@
         <activity
             android:name=".view.activity.account.ChangePassword"
             android:exported="false" />
-
         <activity
             android:name=".view.activity.employee.SearchEmployeeActivity"
             android:exported="false" />
-
         <activity
             android:name=".view.activity.customer.UpdateCustomerActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.customer.FindPhoneActivity"
             android:exported="false" />
-
-
         <activity
             android:name=".view.activity.customer.AddCustomerActivity"
             android:exported="false" />
-
         <activity
             android:name=".view.activity.employee.UpdateEmployeeActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.employee.AddEmployeeActivity"
             android:exported="false" />
-
         <activity
             android:name=".view.activity.detail_contract.UpdateContractServiceActivity"
             android:exported="false" />
@@ -64,15 +58,11 @@
         <activity
             android:name=".view.activity.detail_contract.AddContractDetailActivity"
             android:exported="false" />
-
         <activity
             android:name=".view.activity.contract.FilterContractActivity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:exported="false"
-          />
-
-
+            android:exported="false" />
         <activity
             android:name=".view.activity.contract.PickClientActivity"
             android:exported="false" />
@@ -82,7 +72,6 @@
         <activity
             android:name=".view.activity.contract.AddContractActivity"
             android:exported="false" />
-
         <activity
             android:name=".view.activity.task.UpdateTaskActivity"
             android:exported="false" />
@@ -92,7 +81,6 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".SplashActivity"
             android:exported="true"
