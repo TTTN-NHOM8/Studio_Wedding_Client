@@ -141,6 +141,7 @@ public class AddEmployeeActivity extends AppCompatActivity {
                 .addOnSuccessListener(taskSnapshot -> imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                     showLoadingDialog(false);
                     photoUrlPiker = uri.toString();
+
                 }))
                 .addOnFailureListener(e -> Toast.makeText(AddEmployeeActivity.this, "Failed to upload image." + e, Toast.LENGTH_SHORT).show());
     }
@@ -156,8 +157,8 @@ public class AddEmployeeActivity extends AppCompatActivity {
                 this,
                 R.style.CustomDatePickerDialog,
                 (datePicker, selectedYear, selectedMonth, selectedDay) -> {
-                    calendar.set(selectedDay, selectedMonth, selectedYear);
-                    etDob.setText(String.valueOf(selectedDay + "-" + selectedMonth + "-" + selectedYear));
+                    calendar.set(selectedYear, selectedMonth, selectedDay);
+                    etDob.setText(String.valueOf(selectedYear + "-" + selectedMonth + "-" + selectedDay));
                 },
                 year,
                 month,
@@ -187,7 +188,6 @@ public class AddEmployeeActivity extends AppCompatActivity {
         String dob = etDob.getText().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String location = etLocation. getText().toString().trim();
-        String urlPhoto = photoUrlPiker;
         radioGender.setOnCheckedChangeListener((radioGroup, i) -> {
             if (i != View.NO_ID) {
                 RadioButton radioButton = findViewById(i);
@@ -196,8 +196,8 @@ public class AddEmployeeActivity extends AppCompatActivity {
         });
         String role = etRole.getText().toString().trim();
 
-        Employee employee = new Employee(id,name,dob,gender,phone,location,urlPhoto,role);
-
+        Employee employee = new Employee(id,name,dob,gender,phone,location,photoUrlPiker,role);
+        Log.e("A", photoUrlPiker);
         if (!isValidDataInput(employee)){
             return;
         }
@@ -258,8 +258,9 @@ public class AddEmployeeActivity extends AppCompatActivity {
                 employee.getGioiTinh(),
                 employee.getDienThoai(),
                 employee.getDiaChi(),
-                employee.getVaiTro(),
-                employee.getAnh()
+                employee.getAnh(),
+                employee.getVaiTro()
+
         ).enqueue(new Callback<ResponseEmployee>() {
             @Override
             public void onResponse(Call<ResponseEmployee> call, Response<ResponseEmployee> response) {

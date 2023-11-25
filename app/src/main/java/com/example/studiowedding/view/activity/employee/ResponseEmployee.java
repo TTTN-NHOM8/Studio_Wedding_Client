@@ -28,6 +28,6 @@ public class ResponseEmployee {
     }
 
     public boolean isSuccess(){
-        return this.status.equals(AppConstants.RESPONSE_SUCCESS);
+        return AppConstants.RESPONSE_SUCCESS.equals(this.status);
     }
 }
