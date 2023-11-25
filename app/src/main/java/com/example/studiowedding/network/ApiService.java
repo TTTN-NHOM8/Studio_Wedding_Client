@@ -28,7 +28,7 @@ public interface ApiService {
             @Field("gioiTinh") String gioiTinh,
             @Field("dienThoai") String dienThoai,
             @Field("diaChi") String diaChi,
-            @Field("anh") String anh,
+            @Field("anhDaiDien") String anh,
             @Field("vaiTro") String vaiTro
     );
 
@@ -41,7 +41,7 @@ public interface ApiService {
             @Field("gioiTinh") String gioiTinh,
             @Field("dienThoai") String dienThoai,
             @Field("diaChi") String diaChi,
-            @Field("anh") String anh,
+            @Field("anhDaiDien") String anh,
             @Field("vaiTro") String vaiTro
     );
 }

@@ -77,6 +77,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         rcvEmployee.setLayoutManager(linearLayoutManager);
         rcvEmployee.setNestedScrollingEnabled(false);
         employeeAdapter = new EmployeeAdapter();
+        employeeAdapter.setOnClickItem(this);
         rcvEmployee.setAdapter(employeeAdapter);
     }
 
@@ -127,5 +128,11 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getEmployeeList();
     }
 }
