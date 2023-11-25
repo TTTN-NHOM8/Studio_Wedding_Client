@@ -3,10 +3,14 @@ package com.example.studiowedding.view.activity.account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +33,7 @@ public class Login extends AppCompatActivity {
     private ApiService apiService;
     private EditText edtIdNhanVien, edtMatKhau;
     private Button btnLogin;
+    private ImageView btnTogglePassword;
     private boolean isPasswordVisible = false;
 
     @Override
@@ -41,6 +46,7 @@ public class Login extends AppCompatActivity {
         edtIdNhanVien = findViewById(R.id.edTenDn);
         edtMatKhau = findViewById(R.id.edPasswork);
         btnLogin = findViewById(R.id.btnLogin);
+        btnTogglePassword = findViewById(R.id.ivTogglePassword);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,15 +60,26 @@ public class Login extends AppCompatActivity {
                 login(idNhanVien, matKhau);
             }
         });
-        Button btnTogglePassword = findViewById(R.id.btnTogglePassword);
 
         btnTogglePassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                isPasswordVisible = !isPasswordVisible;
-                togglePasswordVisibility(edtMatKhau, isPasswordVisible);
+            public void onClick(View view) {
+                togglePasswordVisibility();
             }
         });
+    }
+
+    private void togglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible;
+
+        // Toggle password visibility in the EditText
+        edtMatKhau.setTransformationMethod(
+                isPasswordVisible ? HideReturnsTransformationMethod.getInstance() :
+                        PasswordTransformationMethod.getInstance());
+
+        // Toggle the eye icon
+        btnTogglePassword.setImageResource(
+                isPasswordVisible ? R.drawable.baseline_visibility_24 : R.drawable.baseline_visibility_off_24);
     }
 
     private void login(String idNhanVien, String matKhau) {
@@ -77,15 +94,12 @@ public class Login extends AppCompatActivity {
                         Account userAccount = accountResponse.getUserAccount();
                         if (userAccount != null) {
                             String vaitro = userAccount.getVaitro();
-                            if(vaitro.equals("1")){
-                                Toast.makeText(Login.this, "Đăng nhập thành công admin " , Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Login.this, MainActivity.class);
-                                startActivity(intent);
-                            }
-                            else{
-                                Toast.makeText(Login.this, "Đăng nhập thành công nhân viên " , Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Login.this, SeeTaskActivity.class);
-                                startActivity(intent);
+                            if (vaitro.equals("1")) {
+                                Toast.makeText(Login.this, "Đăng nhập thành công admin ", Toast.LENGTH_SHORT).show();
+                                navigateToNextScreenAdmin();
+                            } else {
+                                Toast.makeText(Login.this, "Đăng nhập thành công nhân viên ", Toast.LENGTH_SHORT).show();
+                                navigateToNextScreenEmployee();
                             }
                         } else {
                             Toast.makeText(Login.this, "Không có thông tin tài khoản", Toast.LENGTH_SHORT).show();
@@ -105,16 +119,17 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-    private void togglePasswordVisibility(EditText editText, boolean isVisible) {
-        if (isVisible) {
-            // Hiển thị mật khẩu
-            editText.setInputType(editText.getInputType() | 1);
-        } else {
-            // Ẩn mật khẩu
-            editText.setInputType(editText.getInputType() & ~1);
-        }
 
-        // Đặt con trỏ về cuối chuỗi
-        editText.setSelection(editText.getText().length());
+    private void navigateToNextScreenAdmin() {
+        // Thực hiện chuyển màn hình admin
+        Intent intent = new Intent(Login.this, MainActivity.class);
+        startActivity(intent);
     }
+
+    private void navigateToNextScreenEmployee() {
+        // Thực hiện chuyển màn hình nhân viên
+        Intent intent = new Intent(Login.this, SeeTaskActivity.class);
+        startActivity(intent);
+    }
+
 }
