@@ -32,8 +32,9 @@ public class FormatUtils {
     /**
      * Kiểm tra xem ngày truyền vào có trùng với ngày hiện tại không
      */
-    public static boolean checkData(Date date){
+    public static boolean checkData(Date date) {
         return FormatUtils.formatDateToString(date).equals(FormatUtils.formatDateToString(new Date()));
+    }
 
     /**
      * Chuyển đổi số tiền sang định dạng tiền tệ Việt Nam với ký hiệu "₫".

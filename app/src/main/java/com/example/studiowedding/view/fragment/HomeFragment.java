@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     }
 
     private void setAdapter(List<Task> taskList) {
-         adapterTask = new TaskAdapter(taskList);
+        adapterTask = new TaskAdapter(taskList);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCV.setLayoutManager(layoutManager);
