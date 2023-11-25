@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -21,19 +19,14 @@ import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Task;
 import com.example.studiowedding.utils.FormatUtils;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> implements Filterable {
+public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.ViewHolder> {
 
-    private List<Task> mList;
-    private List<Task> filteredTasks;
+    private  List<Task> mList;
     private OnItemClickListner.TaskI mOnClickItem;
-    public TaskAdapter(List<Task> mList) {
+    public TaskTodayAdapter(List<Task> mList) {
         this.mList = mList;
-        this.filteredTasks = mList;
     }
 
     public void setOnClickItem(OnItemClickListner.TaskI mOnClickItem){
@@ -43,9 +36,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     @SuppressLint("NotifyDataSetChanged")
     public void setList(List<Task> mList){
         this.mList = mList;
-        this.filteredTasks = mList;
         notifyDataSetChanged();
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -89,42 +82,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     @Override
     public int getItemCount() {
         return mList != null ? mList.size() : 0;
-    }
-
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            // loc du lieu theo dk
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String search = charSequence.toString().toLowerCase(Locale.getDefault());
-                ArrayList<Task> listTask = new ArrayList<>();
-
-                if (search.isEmpty()){
-                    listTask.addAll(filteredTasks);
-                }else {
-                    for (Task task : filteredTasks ) {
-                        if (task.getDateImplement() != null && task.getNameService().toLowerCase(Locale.getDefault()).contains(search.toLowerCase())){
-                                listTask.add(task);
-                        }else if(task.getDateImplement() == null && AppConstants.NAME_TASK.toLowerCase(Locale.getDefault()).contains(search.toLowerCase())){
-                                listTask.add(task);
-                        }
-                    }
-                }
-
-                FilterResults  filterResults = new FilterResults();
-                filterResults.values = listTask;
-                return filterResults;
-            }
-
-            // lay ket qua loc
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                mList = (List<Task>) filterResults.values;
-                notifyDataSetChanged();
-            }
-        };
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -444,9 +444,9 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
         String discount = edDiscount.getText().toString();
         String status = edPaymentStatus.getText().toString();
         String dateOfPay=edDop.getText().toString();
-        Date dop=formatUtils.parserStringToDate(dateOfPay);
-        LocalDate currentDate = LocalDate.now();
-        LocalDate paymentDate = dop.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+//        LocalDate currentDate = LocalDate.now();
+//        LocalDate paymentDate = dop.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
 
         if (check == 1 && customerName.equalsIgnoreCase("Chọn KH")) {
@@ -464,10 +464,16 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
             check = -1;
         }
 
-        if(check==1 && paymentDate.isBefore(currentDate)){
-            Toast.makeText(this, "Ngày thanh toán không hợp lệ ", Toast.LENGTH_SHORT).show();
-            check = -1;
+        if(!dateOfPay.isEmpty()){
+            Date dop=formatUtils.parserStringToDate(dateOfPay);
+            Date currentDate=formatUtils.parserStringToDate(edDateCreate.getText().toString());
+
+            if(check==1 && dop.before(currentDate)){
+                Toast.makeText(this, "Ngày thanh toán không hợp lệ ", Toast.LENGTH_SHORT).show();
+                check = -1;
+            }
         }
+
         if (check == 1 && deposit.isEmpty()) {
             Toast.makeText(this, "Chưa nhập tiền cọc ", Toast.LENGTH_SHORT).show();
             check = -1;

@@ -1,36 +1,53 @@
 package com.example.studiowedding.network;
 
-import com.example.studiowedding.auth.test;
-import com.example.studiowedding.model.Contract;
-import com.example.studiowedding.model.ContractDetail;
-import com.example.studiowedding.model.Customer;
-import com.example.studiowedding.model.Incurrent;
+import com.example.studiowedding.view.activity.task.ResponseTask;
 
-import com.example.studiowedding.model.Product;
-import com.example.studiowedding.model.Service;
-import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
-
-import java.net.IDN;
-import java.util.List;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
+import retrofit2.http.Query;
+import java.util.List;
+import com.example.studiowedding.model.Contract;
+import com.example.studiowedding.model.ContractDetail;
+import com.example.studiowedding.model.Customer;
+import com.example.studiowedding.model.Incurrent;
+import com.example.studiowedding.view.activity.account.AccountResponse;
+import com.example.studiowedding.view.activity.task.ResponseTask;
+import com.example.studiowedding.model.Product;
+import com.example.studiowedding.model.Service;
+import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
 
 
 public interface ApiService {
-    @GET("/abc")
-    Call<test> TEST_CALL();
 
     @GET(ManagerUrl.CONTRACT_DETAILS_URL)
     Call<List<ContractDetail>> getContractDetails();
+  
+    // task
+    @GET(ManagerUrl.READ_TASKS)
+    Call<ResponseTask> readTask();
+
+    @GET(ManagerUrl.READ_TASKS_ROLE)
+    Call<ResponseTask> readTaskByRole(@Query("vaiTro") String role);
+
+    @PUT(ManagerUrl.UPDATE_TASKS)
+    @FormUrlEncoded
+    Call<ResponseTask> updateTaskById(@Path("id") int id,
+                                      @Field("statusTask") String statusTask);
+
+    @DELETE(ManagerUrl.DELETE_TASKS)
+    Call<ResponseTask> deleteTaskById(@Path("id") int id);
+  
+    // Account
+    @FormUrlEncoded
+    @POST(ManagerUrl.ACCOUNT)
+    Call<AccountResponse> loginAccount(@Field("idNhanVien") String idNhanVien, @Field("matKhau") String matKhau);
 
 
     // CONTRACT
@@ -70,7 +87,7 @@ public interface ApiService {
     @PUT(ManagerUrl.INCURRENT_DELETE)
     Call<Void> deleteIncurrent(@Path("idPhatSinh") String idPhatSinh);
 
-
+  // Detail contract
     @FormUrlEncoded
     @POST(ManagerUrl.INSERT_CONTRACT_DETAIL_PRODUCT)
     Call<ServerResponse> insertContractDetailWithProduct(
@@ -125,3 +142,4 @@ public interface ApiService {
     @GET(ManagerUrl.CONTRACT_DETAIL_IDCONTRACT)
     Call<List<ContractDetail>>getContractDetailByIdContract(@Path("contractID") String idContract);
 }
+
