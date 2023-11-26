@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Thêm sản phẩm"
+                android:text="Cập nhật sản phẩm"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -56,7 +56,7 @@
             android:background="@drawable/edittext_bgr_white"
             android:drawableStart="@drawable/product_name"
             android:drawablePadding="16dp"
-            android:hint="Tên sản phẩm"
+            android:hint="Váy cưới"
             android:minHeight="52dp" />
 
         <EditText
@@ -68,7 +68,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/edittext_bgr_white"
-            android:drawableStart="@drawable/drawer_menu"
+            android:drawableStart="@drawable/spinner_select"
             android:drawablePadding="16dp"
             android:hint="Chú rể"
             android:minHeight="52dp" />
@@ -82,9 +82,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/edittext_bgr_white"
-            android:drawableStart="@drawable/contract_incurred_fine"
+            android:drawableStart="@drawable/contract_deposit"
             android:drawablePadding="16dp"
-            android:hint="Giá thuê"
+            android:hint="9.999.000đ"
             android:minHeight="52dp" />
 
     </RelativeLayout>
@@ -96,6 +96,6 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/button_bgr_primary"
-        android:text="Thêm mới"
+        android:text="Cập nhật"
         android:textColor="@color/white" />
 </LinearLayout>
