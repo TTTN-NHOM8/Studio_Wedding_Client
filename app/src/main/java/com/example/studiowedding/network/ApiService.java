@@ -12,6 +12,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 public interface ApiService {
 
@@ -34,7 +35,7 @@ public interface ApiService {
 
     @PUT(ManagerUrl.URL_UPDATE_EMPLOYEE)
     Call<ResponseEmployee> updateEmployee(
-            @Field("idNhanVien") String id,
+            @Path("idNhanVien") String id,
             @Field("hoVaTen") String hoTen,
             @Field("matKhau") String matKhau,
             @Field("ngaySinh") String ngaySinh,

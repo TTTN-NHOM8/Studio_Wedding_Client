@@ -2,9 +2,10 @@ package com.example.studiowedding.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Employee {
+public class Employee implements Serializable {
 
     private String idNhanVien;
     @SerializedName("hoVaTen")

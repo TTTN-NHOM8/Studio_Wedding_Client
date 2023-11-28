@@ -20,7 +20,7 @@
             tools:layout_editor_absoluteY="16dp">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/iv_back_update_employee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/arrow_back"
@@ -36,16 +36,17 @@
                 android:text="@string/content_update_staff"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_back_update_employee"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView5"
-                app:layout_constraintTop_toTopOf="@+id/imageView5" />
+                app:layout_constraintStart_toEndOf="@+id/iv_back_update_employee"
+                app:layout_constraintTop_toTopOf="@+id/iv_back_update_employee" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -53,9 +54,9 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/civ_update_img_employee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="97dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="37dp"
                 android:src="@drawable/avt_demo_employee"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +92,6 @@
                 android:background="@drawable/edittext_bgr_white"
                 android:drawableStart="@drawable/login_password"
                 android:drawablePadding="23dp"
-                android:enabled="false"
                 android:fontFamily="@font/inter_regular"
                 android:minHeight="52dp"
                 android:paddingStart="17dp"
@@ -171,6 +171,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <RadioGroup
+                    android:id="@+id/radioGenderUpdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="7dp"
@@ -180,6 +181,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <RadioButton
+                        android:id="@+id/radioButtonUpdateMale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_regular"
@@ -190,6 +192,7 @@
                         android:textSize="15sp" />
 
                     <RadioButton
+                        android:id="@+id/radioButtonUpdateFemale"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
@@ -243,30 +246,51 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_update_phone_employee" />
 
-            <EditText
-                android:id="@+id/et_update_role_employee"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearRole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/edittext_bgr_white"
-                android:drawableStart="@drawable/spinner_select"
-                android:drawableEnd="@drawable/spinner_arrow_down"
-                android:drawablePadding="23dp"
-                android:enabled="false"
-                android:fontFamily="@font/inter_regular"
-                android:minHeight="52dp"
-                android:paddingStart="17dp"
-                android:paddingEnd="35dp"
-                android:text="@string/text_role_update_staff"
-                android:textColor="@color/black"
-                android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_update_address_employee" />
+                app:layout_constraintTop_toBottomOf="@+id/et_update_address_employee">
+
+                <EditText
+                    android:id="@+id/et_update_role_employee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_bgr_white"
+                    android:drawableStart="@drawable/spinner_select"
+                    android:drawablePadding="23dp"
+                    android:enabled="false"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="@string/hint_role_staff"
+                    android:minHeight="52dp"
+                    android:paddingStart="17dp"
+                    android:paddingEnd="35dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivSpinnerUpdateRole"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/spinner_arrow_down"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
+                android:id="@+id/btnUpdateEmployee"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginStart="16dp"
@@ -278,7 +302,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_update_role_employee">
+                app:layout_constraintTop_toBottomOf="@+id/linearRole">
 
                 <TextView
                     android:layout_width="wrap_content"

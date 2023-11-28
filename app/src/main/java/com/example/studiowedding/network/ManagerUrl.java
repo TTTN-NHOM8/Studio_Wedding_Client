@@ -6,5 +6,5 @@ public class ManagerUrl {
     //API Employee
     public static final String URL_GET_EMPLOYEE = "employee";
     public static final String URL_ADD_EMPLOYEE = "employee/add";
-    public static final String URL_UPDATE_EMPLOYEE = "/employee/update/:idNhanVien";
+    public static final String URL_UPDATE_EMPLOYEE = "/employee/update/{:idNhanVien}";
 }

@@ -52,8 +52,7 @@ public class AddEmployeeActivity extends AppCompatActivity {
     private CircleImageView civEmployee;
     private EditText etEmail, etName, etDob, etPhone, etLocation, etRole;
     private RadioGroup radioGender;
-    private LinearLayout linearAdd, linearRole;
-
+    private LinearLayout linearAdd;
     private ProgressDialog loadingDialog;
 
     private String photoUrlPiker;
@@ -69,7 +68,7 @@ public class AddEmployeeActivity extends AppCompatActivity {
     }
 
     private void setMapping() {
-        ivBack = findViewById(R.id.iv_back);
+        ivBack = findViewById(R.id.iv_back_add_employee);
         civEmployee = findViewById(R.id.civ_add_img_employee);
         etEmail = findViewById(R.id.et_add_email_employee);
         etName = findViewById(R.id.et_add_name_employee);
@@ -83,7 +82,7 @@ public class AddEmployeeActivity extends AppCompatActivity {
     }
 
     private void setListener(){
-        ivBack.setOnClickListener(view -> onBackPressed());
+        ivBack.setOnClickListener(view -> getOnBackPressedDispatcher().onBackPressed());
         civEmployee.setOnClickListener(view -> requestPermission());
         etDob.setOnClickListener(view -> showDatePicker());
         ivSpinnerRole.setOnClickListener(view -> showRoleOptions());
@@ -197,7 +196,6 @@ public class AddEmployeeActivity extends AppCompatActivity {
         String role = etRole.getText().toString().trim();
 
         Employee employee = new Employee(id,name,dob,gender,phone,location,photoUrlPiker,role);
-        Log.e("A", photoUrlPiker);
         if (!isValidDataInput(employee)){
             return;
         }
@@ -274,7 +272,7 @@ public class AddEmployeeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseEmployee> call, Throwable t) {
-                Log.e("ERROR", AppConstants.CALL_API_FAILURE_MESSAGE + t);
+                Log.e("FAILURE", AppConstants.CALL_API_FAILURE_MESSAGE + t);
             }
         });
     }
