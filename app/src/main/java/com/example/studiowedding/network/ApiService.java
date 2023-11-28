@@ -1,5 +1,6 @@
 package com.example.studiowedding.network;
 
+import com.example.studiowedding.view.activity.services.ServiceResponse;
 import com.example.studiowedding.view.activity.task.ResponseTask;
 
 import retrofit2.Call;
@@ -18,7 +19,6 @@ import com.example.studiowedding.model.ContractDetail;
 import com.example.studiowedding.model.Customer;
 import com.example.studiowedding.model.Incurrent;
 import com.example.studiowedding.view.activity.account.AccountResponse;
-import com.example.studiowedding.view.activity.task.ResponseTask;
 import com.example.studiowedding.model.Product;
 import com.example.studiowedding.model.Service;
 import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
@@ -28,7 +28,7 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAILS_URL)
     Call<List<ContractDetail>> getContractDetails();
-  
+
     // task
     @GET(ManagerUrl.READ_TASKS)
     Call<ResponseTask> readTask();
@@ -43,7 +43,7 @@ public interface ApiService {
 
     @DELETE(ManagerUrl.DELETE_TASKS)
     Call<ResponseTask> deleteTaskById(@Path("id") int id);
-  
+
     // Account
     @FormUrlEncoded
     @POST(ManagerUrl.ACCOUNT)
@@ -141,5 +141,24 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAIL_IDCONTRACT)
     Call<List<ContractDetail>>getContractDetailByIdContract(@Path("contractID") String idContract);
+
+    // Service
+    @GET(ManagerUrl.GET_SERVICES_URL)
+    Call<List<Service>> getServices();
+
+    @FormUrlEncoded
+    @POST(ManagerUrl.INSERT_SERVICE_URL)
+    Call<ServiceResponse> insertService(@Field("serviceName") String serviceName, @Field("servicePrice") float servicePrice);
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.UPDATE_SERVICE_URL)
+    Call<ServiceResponse> updateService(
+            @Path("serviceID") int serviceID,
+            @Field("serviceName") String serviceName,
+            @Field("servicePrice") float servicePrice
+    );
+
+    @PUT(ManagerUrl.REMOVE_SERVICE_URL)
+    Call<ServiceResponse> removeService(@Path("serviceID") int serviceID);
 }
 
