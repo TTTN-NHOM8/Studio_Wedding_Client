@@ -19,7 +19,7 @@
             tools:layout_editor_absoluteY="16dp">
 
             <ImageView
-                android:id="@+id/iv_back"
+                android:id="@+id/iv_back_add_employee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/arrow_back"
@@ -35,16 +35,17 @@
                 android:text="@string/content_add_staff"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_back_add_employee"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_back"
-                app:layout_constraintTop_toTopOf="@+id/iv_back" />
+                app:layout_constraintStart_toEndOf="@+id/iv_back_add_employee"
+                app:layout_constraintTop_toTopOf="@+id/iv_back_add_employee" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -54,7 +55,7 @@
                 android:id="@+id/civ_add_img_employee"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="97dp"
+                android:layout_marginTop="37dp"
                 android:src="@drawable/bgr_add_img"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -244,13 +245,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_add_phone_employee" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearRole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:id="@+id/linearRole"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_add_address_employee">
 

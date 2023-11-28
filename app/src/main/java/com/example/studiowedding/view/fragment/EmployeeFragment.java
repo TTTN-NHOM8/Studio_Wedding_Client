@@ -144,6 +144,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     @Override
     public void nextUpdateScreenEmployee(Employee employee) {
         Intent intent = new Intent(getContext(), UpdateEmployeeActivity.class);
+        intent.putExtra("employee", employee);
         startActivity(intent);
     }
 
