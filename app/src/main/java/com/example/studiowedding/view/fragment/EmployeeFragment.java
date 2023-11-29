@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,12 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     private FloatingActionButton floatingActionButton;
     private ImageView ivFilter;
     private RecyclerView rcvEmployee;
+
+    private SearchView searchView;
+
+    private EmployeeAdapter employeeAdapter;
+    private List<Employee> employeeList;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +52,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
                              Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_employee, container, false);
+
     }
 
     @Override
@@ -54,8 +62,30 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         rcvEmployee = view.findViewById(R.id.rcv_employee_list);
         floatingActionButton = view.findViewById(R.id.fabContract);
         ivFilter = view.findViewById(R.id.imgFilterContract);
+        searchView = view.findViewById(R.id.searchView);
         floatingActionButton.setOnClickListener(view1 -> startActivity(new Intent(getContext(), AddEmployeeActivity.class)));
         setAdapter();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (employeeAdapter != null){
+                    employeeAdapter.filter(query);
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
+        ImageView clearButton = searchView.findViewById(R.id.searchView);
+        clearButton.setOnClickListener(v -> {
+            searchView.setQuery("", false);
+            if (employeeAdapter != null) {
+                employeeAdapter.filter("");
+            }
+        });
     }
 
     public void setAdapter(){
@@ -70,6 +100,8 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rcvEmployee.setLayoutManager(linearLayoutManager);
         rcvEmployee.setAdapter(employeeAdapter);
+
+
     }
 
 
@@ -96,4 +128,5 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
 }
