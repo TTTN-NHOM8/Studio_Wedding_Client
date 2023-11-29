@@ -7,39 +7,41 @@
     tools:context=".view.activity.services.ProductServiceFragment">
 
     <!-- TODO: Update blank fragment layout -->
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
-
-        <SearchView
-            android:id="@+id/et_search_task"
-            android:layout_width="281dp"
-            android:layout_height="52dp"
-            android:layout_weight="1"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/edittext_bgr_white" />
-
-        <ImageView
-            android:id="@+id/iv_product"
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/filter_icon" />
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <EditText
+                android:padding="10dp"
+                android:id="@+id/et_search_task"
+                android:layout_width="281dp"
+                android:minHeight="52dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/edittext_bgr_white" />
+
+            <ImageView
+                android:id="@+id/iv_product"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/filter_icon" />
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvProduct"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcvProduct"
-        android:padding="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabService"
         android:layout_width="wrap_content"

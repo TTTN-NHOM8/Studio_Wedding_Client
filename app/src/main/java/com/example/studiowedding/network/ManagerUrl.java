@@ -2,11 +2,11 @@ package com.example.studiowedding.network;
 
 public class ManagerUrl {
 
-    public static final String BASE_URL = "http://192.168.1.73:3000/api/";
-  
+    public static final String BASE_URL = "http://192.168.1.152:3000/api/";
+
 
     // Account
-    public static final String ACCOUNT = "account/Login";  
+    public static final String ACCOUNT = "account/Login";
 
     // Contract
     public  static  final String CONTRACTS="contracts";
@@ -41,4 +41,9 @@ public class ManagerUrl {
     public static final String READ_TASKS_ROLE = "tasks/role";
     public static final String UPDATE_TASKS = "update/task/{id}";
     public static final String DELETE_TASKS = "delete/task/{id}";
+    public static final String GET_PRODUCT = "products";
+    public static final String GET_PRODUCT_BY_NAME= "products/search";
+    public static final String DELETE_PRODUCT = "products/delete/{id}";
+    public static final String ADD_PRODUCT = "products/add";
+    public static final String UPDATE_PRODUCT = "products/update/{idSanPham}";
 }
