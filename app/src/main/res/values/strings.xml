@@ -85,5 +85,8 @@
 
 
     <string name="icon_description">Role Icon</string>
+    <string name="update_oncurrent">Cập nhật phát sinh</string>
+    <string name="title_info_incurrent">Thông tin phát sinh</string>
+    <string name="noitem">Không có mục nào để hiển thị</string>
 
 </resources>
