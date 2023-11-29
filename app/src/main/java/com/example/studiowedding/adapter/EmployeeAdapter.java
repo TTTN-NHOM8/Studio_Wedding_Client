@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Employee;
 import com.example.studiowedding.model.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -33,6 +35,20 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
     public void setOnClickItem(OnItemClickListner.EmployeeI itemClickListner){
         this.itemClickListner = itemClickListner;
+    }
+    public void filter  (String text){
+        List<Employee> filteredList = new ArrayList<>();
+        for (Employee employee : employeeList){
+            if (employee.getHoTen().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(employee);
+            }
+
+        }
+        setData(filteredList);
+    }
+    private void setData(List<Employee> data) {
+        employeeList = data;
+        notifyDataSetChanged();
     }
 
     @NonNull

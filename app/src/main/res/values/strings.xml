@@ -63,6 +63,11 @@
     <string name="text_gender_staff_female">Nữ</string>
     <string name="text_btn_add">THÊM MỚI</string>
     <string name="content_update_staff">Thông tin nhân viên</string>
+    <string name="text_menu_manager">Quản lý</string>
+    <string name="text_menu_driver">Lái xe</string>
+    <string name="text_menu_photographer">Thợ Ảnh</string>
+    <string name="text_menu_makeup">Thợ Makeup</string>
+    <string name="text_menu_logistics">Hậu Cần</string>
 
     <string name="text_email_update_staff">nv1@gmail.com</string>
     <string name="text_dob_update_staff">12/21/2001</string>
