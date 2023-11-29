@@ -1,5 +1,6 @@
 package com.example.studiowedding.network;
 
+import com.example.studiowedding.view.activity.task.ResponseEmployeeJoin;
 import com.example.studiowedding.view.activity.task.ResponseTask;
 
 import retrofit2.Call;
@@ -28,21 +29,6 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAILS_URL)
     Call<List<ContractDetail>> getContractDetails();
-  
-    // task
-    @GET(ManagerUrl.READ_TASKS)
-    Call<ResponseTask> readTask();
-
-    @GET(ManagerUrl.READ_TASKS_ROLE)
-    Call<ResponseTask> readTaskByRole(@Query("vaiTro") String role);
-
-    @PUT(ManagerUrl.UPDATE_TASKS)
-    @FormUrlEncoded
-    Call<ResponseTask> updateTaskById(@Path("id") int id,
-                                      @Field("statusTask") String statusTask);
-
-    @DELETE(ManagerUrl.DELETE_TASKS)
-    Call<ResponseTask> deleteTaskById(@Path("id") int id);
   
     // Account
     @FormUrlEncoded
@@ -141,5 +127,34 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAIL_IDCONTRACT)
     Call<List<ContractDetail>>getContractDetailByIdContract(@Path("contractID") String idContract);
+
+
+    // task , join
+    @GET(ManagerUrl.READ_TASKS)
+    Call<ResponseTask> readTask();
+
+    @GET(ManagerUrl.READ_EMPLOYEE)
+    Call<ResponseEmployeeJoin> readEmployee(@Path("idHDCT") String idDetailContract);
+    @POST(ManagerUrl.READ_EMPLOYEE_ROLE)
+    @FormUrlEncoded
+    Call<ResponseEmployeeJoin> readEmployeeByRole(@Field("role") String role);
+    @POST(ManagerUrl.INSERT_EMPLOYEE)
+    @FormUrlEncoded
+    Call<ResponseTask> insertEmployee( @Field("idTask") String idTask,
+                                       @Field("idEmployee") String idEmployee);
+
+    @DELETE(ManagerUrl.DELETE_EMPLOYEE)
+    Call<ResponseTask> deleteEmployeeJoin(@Path("idJoin") int idJoin);
+
+    @GET(ManagerUrl.READ_TASKS_ROLE)
+    Call<ResponseTask> readTaskByRole(@Query("vaiTro") String role);
+
+    @PUT(ManagerUrl.UPDATE_TASKS)
+    @FormUrlEncoded
+    Call<ResponseTask> updateTaskById(@Path("id") int id,
+                                      @Field("statusTask") String statusTask);
+
+    @DELETE(ManagerUrl.DELETE_TASKS)
+    Call<ResponseTask> deleteTaskById(@Path("id") int id);
 }
 

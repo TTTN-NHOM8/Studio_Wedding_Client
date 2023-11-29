@@ -15,7 +15,9 @@
         android:theme="@style/Theme.StudioWedding"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".view.activity.task.SeeEmployeeActivity"
+            android:exported="false" />
         <activity
             android:name=".view.activity.account.EditInformation"
             android:exported="false" />

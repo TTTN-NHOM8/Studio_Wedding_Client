@@ -11,6 +11,8 @@ public class Task implements Serializable {
     private int idTask;
     @SerializedName("idHopDong")
     private String idContract;
+    @SerializedName("idHopDongChiTiet")
+    private String idDetailContract;
     @SerializedName("ngayThucHien")
     private Date dateImplement;
     @SerializedName("trangThaiCongViec")
@@ -19,13 +21,16 @@ public class Task implements Serializable {
     private String nameService;
     @SerializedName("diaDiem")
     private String address;
-    @SerializedName("ngayGiatSanPham")
-    private Date dataLaundry;
-    @SerializedName("ngaySanSang")
-    private Date dataReady;
     @SerializedName("hoVaTen")
     private String employee;
 
+    public String getIdDetailContract() {
+        return idDetailContract;
+    }
+
+    public void setIdDetailContract(String idDetailContract) {
+        this.idDetailContract = idDetailContract;
+    }
 
     public int getIdTask() {
         return idTask;
@@ -75,22 +80,6 @@ public class Task implements Serializable {
         this.address = address;
     }
 
-    public Date getDataLaundry() {
-        return dataLaundry;
-    }
-
-    public void setDataLaundry(Date dataLaundry) {
-        this.dataLaundry = dataLaundry;
-    }
-
-    public Date getDataReady() {
-        return dataReady;
-    }
-
-    public void setDataReady(Date dataReady) {
-        this.dataReady = dataReady;
-    }
-
     public String getEmployee() {
         return employee;
     }
@@ -108,8 +97,6 @@ public class Task implements Serializable {
                 ", statusTask='" + statusTask + '\'' +
                 ", nameService='" + nameService + '\'' +
                 ", address='" + address + '\'' +
-                ", dataLaundry=" + dataLaundry +
-                ", dataReady=" + dataReady +
                 ", employee='" + employee + '\'' +
                 '}';
     }

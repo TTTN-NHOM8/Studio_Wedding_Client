@@ -112,12 +112,7 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
                 if (FormatUtils.checkData(taskList.get(i).getDateImplement())){
                     list.add(taskList.get(i));
                 }
-            }else {
-                if (FormatUtils.checkData(taskList.get(i).getDataLaundry())){
-                    list.add(taskList.get(i));
-                }
             }
-
         }
 
         taskTodayAdapter = new TaskTodayAdapter(list);

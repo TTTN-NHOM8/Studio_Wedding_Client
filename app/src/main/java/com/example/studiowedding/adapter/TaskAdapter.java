@@ -146,15 +146,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         @SuppressLint("SetTextI18n")
         public void bind(Task task){
             tvId.setText(task.getIdContract());
-            if (task.getDateImplement() == null){
-                tvDate.setText(FormatUtils.formatDateToString(task.getDataLaundry()));
-                tvName.setText(AppConstants.NAME_TASK);
-                tvAddress.setText(AppConstants.ADDRESS_TASK);
-            }else {
-                tvDate.setText(FormatUtils.formatDateToString(task.getDateImplement()));
-                tvName.setText(task.getNameService());
-                tvAddress.setText(task.getAddress());
-            }
+            tvDate.setText(FormatUtils.formatDateToString(task.getDateImplement()));
+            tvName.setText(task.getNameService());
+            tvAddress.setText(task.getAddress());
             switch (task.getStatusTask()){
                 case AppConstants.STATUS_TASK_IM   :
                     tvStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.yellow));
