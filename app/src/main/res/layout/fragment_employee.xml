@@ -50,6 +50,7 @@
     <androidx.recyclerview.widget.RecyclerView
         tools:listitem="@layout/item_employee"
         tools:itemCount="4"
+        android:id="@+id/rcv_employee_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"

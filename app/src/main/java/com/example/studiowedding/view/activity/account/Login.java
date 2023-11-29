@@ -2,9 +2,11 @@ package com.example.studiowedding.view.activity.account;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.text.InputType;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,11 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.model.Account;
-import com.example.studiowedding.network.AccountResponse;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.view.activity.MainActivity;
-import com.example.studiowedding.view.activity.contract.FilterContractActivity;
 import com.example.studiowedding.view.activity.task.SeeTaskActivity;
 
 import retrofit2.Call;

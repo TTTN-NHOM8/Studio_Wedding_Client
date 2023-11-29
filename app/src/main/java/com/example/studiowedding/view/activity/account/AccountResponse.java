@@ -1,4 +1,4 @@
-package com.example.studiowedding.network;
+package com.example.studiowedding.view.activity.account;
 
 import com.example.studiowedding.model.Account;
 

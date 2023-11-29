@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -27,15 +28,22 @@ import com.example.studiowedding.R;
 import com.example.studiowedding.adapter.ContractAdapter;
 import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Contract;
+import com.example.studiowedding.network.ApiClient;
+import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.view.activity.contract.AddContractActivity;
 import com.example.studiowedding.view.activity.contract.FilterContractActivity;
 import com.example.studiowedding.view.activity.contract.UpdateContractActivity;
+import com.example.studiowedding.view.activity.detail_contract.AddContractDetailActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,7 +91,6 @@ public class InvoiceFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
         rcvContract.setLayoutManager(linearLayoutManager);
-        contractList = generateSampleData();
         adapter=new ContractAdapter(contractList,getContext());
         rcvContract.setAdapter(adapter);
 
@@ -91,6 +98,8 @@ public class InvoiceFragment extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListner() {
             @Override
             public void onItemClick(int position) {
+                Contract contract=contractList.get(position);
+                String idHD=contract.getIdHopDong();
                 showAlertDialog(position);
             }
         });
@@ -104,40 +113,9 @@ public class InvoiceFragment extends Fragment {
             dialog.show();
 
         });
+        getAllContracts();
 
         return view;
-    }
-
-    public static List<Contract> generateSampleData() {
-        List<Contract> contractList = new ArrayList<>();
-
-        Date currentDate = new Date();
-
-        for (int i = 1; i <= 20; i++) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(currentDate);
-            calendar.add(Calendar.DAY_OF_MONTH, -i);
-            Date randomDate = calendar.getTime();
-
-            Contract contract = new Contract(
-                    "HD20231112192" + i,
-                    randomDate,
-                    currentDate,
-                    1000.0f,
-                    200.0f,
-                    5000.0f,
-                    (i % 2 == 0) ? "Đã thanh toán" : "Chưa thanh toán",
-                    (i % 3 == 0) ? "Đã hoàn thành" : "Đang thực hiện",
-                    (i % 4 == 0) ? "Có phát sinh" : "Không có phát sinh",
-                    1,
-                    i,
-                    "Khách hàng " + i
-            );
-
-            contractList.add(contract);
-        }
-
-        return contractList;
     }
 
 
@@ -149,10 +127,12 @@ public class InvoiceFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
                             case 0:
-                                startActivity(new Intent(getActivity(), UpdateContractActivity.class));
+                                Intent updateIntent = new Intent(getActivity(), UpdateContractActivity.class);
+                                updateIntent.putExtra("contractList", contractList.get(position));
+                                startActivity(updateIntent);
                                 break;
                             case 1:
-                                Toast.makeText(getContext(), "Xoá"+position, Toast.LENGTH_SHORT).show();
+                                comfirmDeleteDialog(position);
                                 break;
                             default:
                                 break;
@@ -189,4 +169,72 @@ public class InvoiceFragment extends Fragment {
 //
 //    }
 
+
+
+    private void comfirmDeleteDialog(int posititon){
+        Contract contract=contractList.get(posititon);
+        String idHD =contract.getIdHopDong();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Xác nhận xoá HĐCT: " + idHD);
+        builder.setNegativeButton("Huỷ", (dialogInterface, i) -> dialogInterface.dismiss());
+        builder.setPositiveButton("Xoá", (dialogInterface, i) -> {
+            deleteContract(idHD);
+        });
+        builder.show();
+
+    }
+    private void getAllContracts(){
+        ApiService apiService=ApiClient.getClient().create(ApiService.class);
+        Call<List<Contract>>call=apiService.getContracts();
+
+        call.enqueue(new Callback<List<Contract>>() {
+            @Override
+            public void onResponse(Call<List<Contract>> call, Response<List<Contract>> response) {
+                if(response.isSuccessful()){
+                    contractList.clear();
+                    contractList.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+                }else{
+                    Log.i("TAG","Lỗi");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Contract>> call, Throwable t) {
+                Log.i("TAG","Lỗi" +t.getMessage());
+            }
+        });
+    }
+
+    private void deleteContract( String idHD){
+        ApiService apiService=ApiClient.getClient().create(ApiService.class);
+        Call<Void>call=apiService.deleteContract(idHD);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    getAllContracts();
+                    Toast.makeText(getContext(), "Xoá thành công", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(getContext(), "Lỗi", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getContext(), "Xoá thành công", Toast.LENGTH_SHORT).show();
+                Log.i("TAG", "Lỗi"+t.getMessage());
+
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAllContracts();
+    }
 }

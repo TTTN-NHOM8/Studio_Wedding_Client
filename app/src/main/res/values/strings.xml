@@ -27,7 +27,7 @@
     <string name="activity_update_job_detail">Chi tiết tham gia</string>
     <string name="activity_update_job_add">Thêm</string>
     <string name="activity_update_job_save">LƯU</string>
-    <string name="activity_update_job_note">Ghi chú</string>
+    <string name="activity_update_job_note">Trạng thái công việc</string>
     <string name="activity_search_job">Nhập tên công việc</string>
     <string name="fragment_job_list">Danh sách công việc</string>
     <string name="fragment_job_see_all">Xem tất cả</string>

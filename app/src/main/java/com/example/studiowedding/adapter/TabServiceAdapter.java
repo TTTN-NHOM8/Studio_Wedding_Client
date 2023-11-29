@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.studiowedding.view.activity.services.ChildServiceFragment;
+import com.example.studiowedding.view.fragment.ServicesFragment;
 
 public class TabServiceAdapter extends FragmentStateAdapter {
 
@@ -19,7 +20,7 @@ public class TabServiceAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
-            case 0 : return new ChildServiceFragment();
+            case 0 : return new ServicesFragment();
 
             case 1 : return new  ChildServiceFragment();
 

@@ -71,19 +71,6 @@ public class ChildServiceFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_child_service, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.rcvProduct);
 
-        // Khởi tạo dữ liệu mẫu
-        dataList = new ArrayList<>();
-        dataList.add(new Product("Váy cưới 001", "Đang cho thuê", 1000000));
-        dataList.add(new Product("Váy cưới 002", "Trạng thái 2", 1500000));
-        // Thêm dữ liệu khác nếu cần
-
-        // Khởi tạo Adapter và kết nối với RecyclerView
-        adapter = new ProductAdapter(dataList);
-        recyclerView.setAdapter(adapter);
-
-        // Đặt LayoutManager (LinearLayoutManager là một ví dụ)
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         return view;
     }
 }

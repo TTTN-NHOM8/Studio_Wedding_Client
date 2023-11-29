@@ -61,7 +61,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="0dp">
 
@@ -71,7 +71,8 @@
                         android:orientation="horizontal"
                         android:paddingLeft="19dp"
                         android:paddingTop="11dp"
-                        android:paddingRight="19dp">
+                        android:paddingRight="20dp"
+                        android:paddingBottom="11dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -101,13 +102,14 @@
                             <TextView
                                 android:id="@+id/tvDepositUpdateContract"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:drawableLeft="@drawable/contract_deposit"
                                 android:drawablePadding="14dp"
                                 android:ellipsize="end"
                                 android:paddingTop="7dp"
                                 android:text="Tiền cọc"
+                                android:textColor="#000000"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
@@ -122,30 +124,36 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center|left"
+                                android:drawablePadding="14dp"
                                 android:ellipsize="end"
                                 android:gravity="center|left"
-                                android:paddingBottom="4dp"
                                 android:text="Mã hợp đồng"
+                                android:textAlignment="textEnd"
                                 android:textColor="@color/blue_g"
-                                android:textSize="15sp" />
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingTop="7dp"
                                 android:text="Ngày tạo"
+                                android:textAlignment="textEnd"
                                 android:textSize="13sp" />
 
                             <TextView
                                 android:id="@+id/tvDatecreateUpdateContract"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:drawableLeft="@drawable/contract_date_created"
+                                android:layout_gravity="center"
+                                android:drawableRight="@drawable/contract_date_created"
+                                android:drawablePadding="14dp"
                                 android:ellipsize="end"
                                 android:paddingTop="7dp"
                                 android:text="Ngày tạo"
-                                android:textSize="15sp"
-                                android:drawablePadding="14dp" />
+                                android:textAlignment="textEnd"
+                                android:textColor="#000000"
+                                android:textSize="15sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -154,20 +162,19 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:layout_marginBottom="22dp"
+                android:layout_margin="13dp"
                 android:text="Thông tin khách hàng"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="146dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     app:cardCornerRadius="15dp"
                     app:cardElevation="0dp">
 
@@ -175,8 +182,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:paddingLeft="23dp"
-                        android:paddingTop="17dp">
+                        android:paddingLeft="19dp"
+                        android:paddingTop="11dp"
+                        android:paddingBottom="11dp">
 
                         <TextView
                             android:id="@+id/tvNameClientUpdateContract"
@@ -184,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:text="Tên KH"
-                            android:textColor="@color/black"
+                            android:textColor="#000000"
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
@@ -195,6 +203,7 @@
                             android:ellipsize="end"
                             android:paddingTop="7dp"
                             android:text="Điện thoại"
+                            android:textColor="#000000"
                             android:textSize="15sp" />
 
                         <TextView
@@ -205,6 +214,7 @@
                             android:maxLines="6"
                             android:paddingTop="7dp"
                             android:text="Địa chỉ"
+                            android:textColor="#000000"
                             android:textSize="15sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -218,8 +228,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_margin="13dp"
                     android:hint="Ngày tạo"
                     android:text="Chi tiết hợp đồng"
                     android:textColor="@color/black"
@@ -240,14 +249,15 @@
                 android:layout_height="52dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/edittext_bgr_white"
+                android:clickable="true"
                 android:drawableLeft="@drawable/contract_dop"
                 android:drawablePadding="14dp"
                 android:ems="10"
                 android:focusable="false"
-                android:clickable="true"
                 android:hint="Ngày thanh toán"
                 android:inputType="text"
                 android:padding="13dp"
+                android:textColor="#000000"
                 android:textSize="14sp" />
 
             <EditText
@@ -277,6 +287,7 @@
                 android:hint="Tổng tiền"
                 android:inputType="text"
                 android:padding="13dp"
+                android:textColor="#000000"
                 android:textSize="14sp" />
 
             <EditText
@@ -294,6 +305,7 @@
                 android:inputType="text"
                 android:padding="13dp"
                 android:text="Trạng thái hợp đồng"
+                android:textColor="#000000"
                 android:textSize="14sp" />
 
             <EditText
@@ -311,6 +323,7 @@
                 android:inputType="text"
                 android:padding="13dp"
                 android:text="Trạng thái phát sinh"
+                android:textColor="#000000"
                 android:textSize="14sp" />
 
             <EditText

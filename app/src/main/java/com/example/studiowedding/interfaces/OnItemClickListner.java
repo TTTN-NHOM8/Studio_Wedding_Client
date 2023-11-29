@@ -1,5 +1,8 @@
 package com.example.studiowedding.interfaces;
 
+import android.view.View;
+
+import com.example.studiowedding.model.Employee;
 import com.example.studiowedding.model.Task;
 
 public interface OnItemClickListner {
@@ -7,7 +10,12 @@ public interface OnItemClickListner {
 
     interface TaskI{
       void nextUpdateScreenTask(Task task);
-      void showConfirmDelete();
+      void showConfirmDelete(Task task, View view);
+    }
+
+    interface EmployeeI{
+        void nextUpdateScreenEmployee(Employee employee);
+        void showConfirmDeleteEmployee();
     }
 
 }
