@@ -1,10 +1,14 @@
 package com.example.studiowedding.view.activity.contract;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 
 import android.annotation.SuppressLint;
-import android.media.Image;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,11 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studiowedding.R;
-import com.example.studiowedding.model.Contract;
 import com.example.studiowedding.model.Incurrent;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,11 +37,12 @@ import retrofit2.Response;
 public class UpdateOncurrentActivity extends AppCompatActivity{
     private ImageView imBack;
     private EditText edNote,edFine,edDor;
-    private TextView tvIDHDCT,tvName,tvPrice,tvvDol,tvDor;
+    private TextView tvIDHDCT,tvName,tvPrice,tvvDol,tvDor,tvTitle;
     private Button btnUpdate;
+    private NestedScrollView nestedScrollView;
     FormatUtils formatUtils;
     SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd");
-    CustomComponent customComponent=new CustomComponent();
+    DialogDatePicker dialogDatePicker=new DialogDatePicker();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -46,17 +51,15 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
         setContentView(R.layout.activity_update_incurrent);
         initView();
 
-        findViewById(R.id.btnUpdateOncurrent).setOnClickListener(view -> {
-            if(validateIncurrent()>0){
-                saveOncurrent();
-                finish();
-            }
-        });
         fillDataToView();
+        onClickView();
+
     }
 
     private void initView(){
+        nestedScrollView=findViewById(R.id.nscvOncurrent);
         imBack=findViewById(R.id.imgBackFromUpdateOncurrent);
+        tvTitle=findViewById(R.id.tvTitleUpdateOncurrent);
         tvIDHDCT=findViewById(R.id.tvIDHDCTOncurrent);
         tvName=findViewById(R.id.tvNameProductOncurrent);
         tvPrice=findViewById(R.id.tvPriceOncurent);
@@ -69,6 +72,7 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
 
     }
     private void fillDataToView(){
+        tvTitle.setText("Thêm phát sinh");
         String formatGiaThue=formatUtils.formatCurrencyVietnam(getIncurentInformation().getGiaThue());
         String formatDol=formatUtils.formatDateToString(getIncurentInformation().getNgayThue());
         String formatDor1=formatUtils.formatDateToString(getIncurentInformation().getNgayTra());
@@ -82,7 +86,9 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
         Float fine=getIncurentInformation().getPhiPhatSinh();
         String dor=getIncurentInformation().getHanTra();
 
+
         if(note!=null){
+            tvTitle.setText("Chi tiết phát sinh");
             edNote.setText(note);
             edFine.setVisibility(View.VISIBLE);
             edFine.setText(""+formatUtils.formatCurrencyVietnam(fine));
@@ -106,6 +112,9 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
 
         }
 
+
+    }
+    private void onClickView(){
         imBack.setOnClickListener(view -> {
             finish();
         });
@@ -115,9 +124,21 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
 
         edDor.setOnClickListener(view -> {
             try {
-                customComponent.showDatePicker(edDor,UpdateOncurrentActivity.this);
+                dialogDatePicker.showDatePicker(edDor,UpdateOncurrentActivity.this);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
+            }
+        });
+        findViewById(R.id.btnUpdateOncurrent).setOnClickListener(view -> {
+            if(validateIncurrent()>0){
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 1000);
+                saveOncurrent();
             }
         });
     }
@@ -125,12 +146,13 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
         int idPS=getIncurentInformation().getIdPhatSinh();
         String idSP=getIncurentInformation().getIdSanPham();
         String idHD=getIncurentInformation().getIdHopDong();
+        String idHDCT=getIncurentInformation().getIdHopDongChiTiet();
         String note=edNote.getText().toString().trim();
         String dor=edDor.getText().toString().isEmpty() ? null: formatUtils.formatStringToStringMySqlFormat(edDor.getText().toString().trim());
         String fine=edFine.getText().toString().trim();
         Float formatFine = fine.isEmpty() ? null : Float.parseFloat(fine);
 
-        Incurrent incurrent=new Incurrent(idPS,note,dor,formatFine,idSP,idHD);
+        Incurrent incurrent=new Incurrent(idPS,note,dor,formatFine,idSP,idHD,idHDCT);
         updateOncurrent(incurrent);
 
     }
@@ -144,16 +166,16 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
 
 
         if(check==1 && note.equalsIgnoreCase("Không có phát sinh") || note.equalsIgnoreCase("Nội dung") || note.isEmpty()){
-            Toast.makeText(this, "Chưa chọn nội dung ", Toast.LENGTH_SHORT).show();
+            showSnackbar("Chưa chọn nội dung");
             check=-1;
         }
 
         if(check == 1 && edDor.getVisibility() == View.VISIBLE && dor.isEmpty()){
-            Toast.makeText(this, "Chưa chọn hạn trả ", Toast.LENGTH_SHORT).show();
+            showSnackbar("Chưa chọn hạn trả");
             check = -1;
         }
         if(check == 1 && edFine.getVisibility() == View.VISIBLE && fine.isEmpty()){
-            Toast.makeText(this, "Chưa nhập tiền phạt ", Toast.LENGTH_SHORT).show();
+            showSnackbar("Chưa nhập tiền phạt");
             check = -1;
         }
 
@@ -163,7 +185,7 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
                 Date newDor=formatUtils.parserStringToDate(dor);
 
                 if(check==1 && newDor.before(oldDor)){
-                    Toast.makeText(this, "Hạn trả không hợp lệ ", Toast.LENGTH_SHORT).show();
+                    showSnackbar("Hạn trả không hợp lệ");
                     check = -1;
                 }
 
@@ -176,7 +198,8 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
     }
 
     private void showPopupMenuIncurrentNote(View v) {
-        PopupMenu popupMenu = new PopupMenu(this, v);
+        Context wrapper = new ContextThemeWrapper(this, R.style.PopupMenuWindow);
+        PopupMenu popupMenu = new PopupMenu(wrapper, v, Gravity.END);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.popup_menu_incurrent_note, popupMenu.getMenu());
 
@@ -214,17 +237,17 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(UpdateOncurrentActivity.this,"Cập nhật phát sinh thành công",Toast.LENGTH_SHORT).show();
+                    showSnackbar("Cập nhật phát sinh thành công");
                 }else{
                     Toast.makeText(UpdateOncurrentActivity.this,"Lỗi",Toast.LENGTH_SHORT).show();
+                    showSnackbar("Lỗi");
 
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(UpdateOncurrentActivity.this,"Lỗi"+t.getMessage(),Toast.LENGTH_SHORT).show();
-
+                showSnackbar("Lỗi"+t.getMessage());
             }
         });
     }
@@ -232,5 +255,11 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
     private Incurrent getIncurentInformation(){
         Incurrent incurrent=(Incurrent) getIntent().getSerializableExtra("oncurrentList");
         return incurrent;
+    }
+
+    private void showSnackbar(String message){
+        Snackbar.make(nestedScrollView,message, Snackbar.LENGTH_SHORT)
+                .setAnchorView(btnUpdate)
+                .show();
     }
 }

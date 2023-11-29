@@ -18,6 +18,7 @@ import com.example.studiowedding.model.Contract;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHolder> {
@@ -36,6 +37,8 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
     public void setOnItemClickListener(OnItemClickListner itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
+
+
 
     @NonNull
     @Override
@@ -64,23 +67,28 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             holder.tvPaymentStatus.setTextColor(paymentStatusColor);
 
             String trangThaiHopDong = contract.getTrangThaiHopDong();
-            holder.tvStatusHD.setText(trangThaiHopDong);
+            String trangThaiPhatSinh = contract.getTrangThaiPhatSinh();
 
 
             int statusHDColor;
-            switch (trangThaiHopDong) {
-                case "Hoàn thành":
-                    statusHDColor = ContextCompat.getColor(context, R.color.dark_green);
-                    break;
-                case "Đang thực hiện":
-                    statusHDColor = ContextCompat.getColor(context, R.color.earthy);
-                    break;
-                case "Có phát sinh":
-                    statusHDColor = ContextCompat.getColor(context, R.color.red_light);
-                    break;
-                default:
-                    statusHDColor = ContextCompat.getColor(context, android.R.color.black);
+            if ("Có phát sinh".equals(trangThaiPhatSinh)) {
+                holder.tvStatusHD.setText(trangThaiPhatSinh);
+                statusHDColor = ContextCompat.getColor(context, R.color.red_light);
+            } else {
+                holder.tvStatusHD.setText(trangThaiHopDong);
+
+                switch (trangThaiHopDong) {
+                    case "Đã hoàn thành":
+                        statusHDColor = ContextCompat.getColor(context, R.color.blue_g);
+                        break;
+                    case "Đang thực hiện":
+                        statusHDColor = ContextCompat.getColor(context, R.color.earthy);
+                        break;
+                    default:
+                        statusHDColor = ContextCompat.getColor(context, android.R.color.black);
+                }
             }
+
             holder.tvStatusHD.setTextColor(statusHDColor);
 
             holder.position = position;
@@ -117,6 +125,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
                     }
                 }
             });
+
         }
     }
 
