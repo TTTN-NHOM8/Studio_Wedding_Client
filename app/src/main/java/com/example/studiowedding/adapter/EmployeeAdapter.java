@@ -27,28 +27,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder> {
     private List<Employee> employeeList;
+    private List<Employee> employeeListold;
     private OnItemClickListner.EmployeeI itemClickListner;
 
-    public EmployeeAdapter(List<Employee> employeeList) {
+    public EmployeeAdapter(List<Employee> employeeList, List<Employee> employeeListold) {
+
         this.employeeList = employeeList;
+        this.employeeListold = employeeListold;
     }
 
     public void setOnClickItem(OnItemClickListner.EmployeeI itemClickListner){
         this.itemClickListner = itemClickListner;
-    }
-    public void filter  (String text){
-        List<Employee> filteredList = new ArrayList<>();
-        for (Employee employee : employeeList){
-            if (employee.getHoTen().toLowerCase().contains(text.toLowerCase())){
-                filteredList.add(employee);
-            }
-
-        }
-        setData(filteredList);
-    }
-    private void setData(List<Employee> data) {
-        employeeList = data;
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -91,7 +80,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         return employeeList.size();
     }
 
-    public class EmployeeViewHolder extends RecyclerView.ViewHolder{
+    public class EmployeeViewHolder extends RecyclerView.ViewHolder {
         public CircleImageView circleImageView;
         public TextView tvNameEmployee, tvRoleEmployee;
         public ImageView ivMenu;
@@ -104,9 +93,38 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             ivMenu = itemView.findViewById(R.id.iv_menu_employee);
         }
 
-        public void setListener(Employee employee){
+        public void setListener(Employee employee) {
             tvNameEmployee.setText(employee.getHoTen());
             tvRoleEmployee.setText(employee.getVaiTro());
         }
+    }
+    public Filter getFilter(){
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String strSearch = charSequence.toString();
+                if (strSearch.isEmpty()) {
+                    employeeList = employeeListold;
+                } else {
+                    List<Employee> list = new ArrayList<>();
+                    for (Employee employee : employeeListold) {
+                        if (employee.getHoTen().toLowerCase().contains(strSearch.toLowerCase())) {
+                            list.add(employee);
+                        }
+                    }
+                    employeeList = list;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = employeeList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                employeeList = (List<Employee>) filterResults.values;
+                notifyDataSetChanged();
+
+            }
+        };
     }
 }
