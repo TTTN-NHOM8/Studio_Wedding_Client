@@ -131,6 +131,9 @@ public interface ApiService {
     @GET(ManagerUrl.READ_TASKS)
     Call<ResponseTask> readTask();
 
+    @GET(ManagerUrl.READ_TASK_EMPLOYEE)
+    Call<ResponseEmployeeJoin> readTaskEmployee();
+
     @GET(ManagerUrl.READ_EMPLOYEE)
     Call<ResponseEmployeeJoin> readEmployee(@Path("idHDCT") String idDetailContract);
     @POST(ManagerUrl.READ_EMPLOYEE_ROLE)
