@@ -60,23 +60,8 @@ public interface ApiService {
     @GET(ManagerUrl.CONTRACTS_ID)
     Call<Contract> getContractById(@Path("idHopDong") String idHopDong);
 
-    @GET(ManagerUrl.CONTRACTS_PAYMENT)
-    Call<List<Contract>> getContractsByPayment();
-
-    @GET(ManagerUrl.CONTRACTS_PROGESS)
-    Call<List<Contract>> getContractsByProgess();
-
-    @GET(ManagerUrl.CONTRACTS_INCURRENT)
-    Call<List<Contract>> getContractsByIncurrent();
-
-    @GET(ManagerUrl.INCURRENT)
-    Call<List<Incurrent>> getIncurrent();
-
     @POST(ManagerUrl.ADD_CONTRACT)
     Call<Void> insertContract(@Body Contract newContract);
-
-    @POST(ManagerUrl.INCURRENT_ADD)
-    Call<Void> insertIncurrent(@Body Incurrent newIncurrent);
 
     @PUT(ManagerUrl.CONTRACT_UPDATE)
     Call<Void> updateContract(@Path("idHopDong") String idHopDong, @Body Contract updatedContract);
@@ -84,10 +69,20 @@ public interface ApiService {
     @PUT(ManagerUrl.CONTRACT_DELETE)
     Call<Void> deleteContract(@Path("idHopDong") String idHopDong);
 
-    @PUT(ManagerUrl.INCURRENT_DELETE)
-    Call<Void> deleteIncurrent(@Path("idPhatSinh") String idPhatSinh);
+    @DELETE(ManagerUrl.CONTRACT_DELETE_TASK)
+    Call<Void>deleteTaskByTemporaryID(@Path("idHDTamThoi")String idHDTamThoi);
 
-  // Detail contract
+    @GET(ManagerUrl.INCURRENT_LIST)
+    Call<List<Incurrent>>getIncurrentList(@Path("idHopDong")String idHDTamThoi);
+
+    @PUT(ManagerUrl.INCURREN_UPDATE)
+    Call<Void>updateIncurrent(@Path("idPhatSinh") String idPhatSinh,@Body Incurrent incurrent);
+    @PUT(ManagerUrl.INCURREN_UPDATE_NONE)
+    Call<Void>updateIncurrentNone(@Path("idPhatSinh")int idPhatSinh,@Body Incurrent incurrent);
+
+
+
+    // Detail contract
     @FormUrlEncoded
     @POST(ManagerUrl.INSERT_CONTRACT_DETAIL_PRODUCT)
     Call<ServerResponse> insertContractDetailWithProduct(

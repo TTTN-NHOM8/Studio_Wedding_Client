@@ -16,10 +16,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+
             android:name=".view.activity.services.UpdateServiceActivity"
             android:exported="false" />
         <activity
             android:name=".view.activity.services.AddServiceActivity"
+            android:name=".view.activity.contract.UpdateOncurrentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.contract.DialogDatePicker"
             android:exported="false" />
         <activity
             android:name=".view.activity.account.EditInformation"
