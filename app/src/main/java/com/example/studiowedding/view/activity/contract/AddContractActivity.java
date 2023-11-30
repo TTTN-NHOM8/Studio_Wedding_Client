@@ -486,25 +486,31 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
 
     // Hàm gọi API xoá công việc
     private void deleteTaskByTemporaryID(){
-        String idHDTT=edIdHD.getText().toString().trim();
-        ApiService apiService=ApiClient.getClient().create(ApiService.class);
-        Call<Void> call=apiService.deleteTaskByTemporaryID(idHDTT);
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()){
-                    deleteContractDetail();
-                    Log.i("TAG","Xoá CV Thành công");
+        List<ContractDetail> contractDetails = this.contractDetailList;
+        for (ContractDetail contractDetail : contractDetails) {
+            // Thực hiện xoá HĐCT theo mã HĐCT
+            ApiService apiService = ApiClient.getClient().create(ApiService.class);
+            Call<ServerResponse> call = apiService.deleteContractDetailByContractDetailID(contractDetail.getId(), contractDetail.getProductID());
+            call.enqueue(new Callback<ServerResponse>() {
+                @Override
+                public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                    if (response.isSuccessful()) {
+                        ServerResponse serverResponse = response.body();
+                        if (serverResponse.isSuccess()) {
+
+
+                        } else {
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ServerResponse> call, Throwable t) {
 
                 }
-            }
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.i("TAG","Lỗi"+t.getMessage());
-
-            }
-        });
-
+            });
+        }
     }
 
     private ActivityResultLauncher<Intent> pickCustomerActivityResultLauncher = registerForActivityResult(
