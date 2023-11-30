@@ -91,9 +91,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             }
 
             holder.tvStatusHD.setTextColor(statusHDColor);
-
-            holder.cardView.startAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(),R.anim.slide_right));
-
+            
             holder.position = position;
         }
     }

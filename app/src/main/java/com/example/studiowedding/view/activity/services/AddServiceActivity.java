@@ -67,7 +67,9 @@ public class AddServiceActivity extends AppCompatActivity {
                         if (serviceResponse != null) {
                             if (serviceResponse.isSuccess()) {
                                 showSnackbar("Thêm dịch vụ thành công");
-                                refreshUI();
+                                new Handler().postDelayed(() -> finish(), 1000);
+
+//                                refreshUI();
                             } else {
                                 showSnackbar("Xảy ra lỗi khi thêm dịch vụ.");
                             }
