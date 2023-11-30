@@ -6,20 +6,30 @@
     android:background="@drawable/bg_employee_join"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/iv_employee_join_avt"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/avt_demo_employee" />
+
     <TextView
         android:id="@+id/tv_employee_join_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:text="Tuấn Đăng"
-        android:lines="1"
         android:ellipsize="end"
         android:fontFamily="@font/inter_bold"
+        android:lines="1"
+        android:text="Tuấn Đăng"
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/iv_employee_join_menu"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_employee_join_avt"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -35,15 +45,14 @@
         android:id="@+id/tv_employee_join_role"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="24dp"
-        android:text="Thợ ảnh"
         android:fontFamily="@font/inter_regular"
+        android:text="Thợ ảnh"
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/iv_employee_join_menu"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_employee_join_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_employee_join_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>
