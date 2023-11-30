@@ -21,8 +21,11 @@
             android:exported="false" />
         <activity
             android:name=".view.activity.services.AddServiceActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.contract.UpdateOncurrentActivity"
             android:exported="false" />
+
         <activity
             android:name=".view.activity.contract.DialogDatePicker"
             android:exported="false" />

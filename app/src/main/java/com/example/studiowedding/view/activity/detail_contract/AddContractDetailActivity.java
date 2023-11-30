@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -240,7 +241,10 @@ public class AddContractDetailActivity extends AppCompatActivity {
                                     dateOfHireEditText.setText(null);
                                     dateOfReturnEditText.setText(null);
                                     generateContractDetailCode();
+
                                     showSnackbar("Thêm HĐCT thành công.");
+                                    new Handler().postDelayed(() -> finish(), 1000);
+
                                     // TODO: Thêm công việc mặt định giặt ủi
                                 } else {
                                     showSnackbar("Thêm HĐCT có lỗi");
@@ -292,6 +296,8 @@ public class AddContractDetailActivity extends AppCompatActivity {
                                     dateOfPerformEditText.setText(null);
                                     generateContractDetailCode();
                                     showSnackbar("Thêm HĐCT thành công.");
+                                    new Handler().postDelayed(() -> finish(), 1000);
+
                                 } else {
                                     showSnackbar("Thêm HĐCT có lỗi");
                                 }

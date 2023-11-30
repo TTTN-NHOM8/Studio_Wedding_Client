@@ -86,9 +86,6 @@ public class ProductAndServicesFragment extends Fragment {
         vp_service = view.findViewById(R.id.vp_service);
 
 
-//        mAdapter = new MyRecyclerViewAdapter(dataSanPham, null); // Ban đầu hiển thị dữ liệu của "Sản Phẩm"
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        recyclerView.setAdapter(mAdapter);
 
         TabServiceAdapter adapter = new TabServiceAdapter(getActivity());
         vp_service.setAdapter(adapter);
@@ -110,9 +107,7 @@ public class ProductAndServicesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         vp_service = view.findViewById(R.id.vp_service);
-        iv_product = view.findViewById(R.id.iv_product);
 
-        onClick();
     }
     public void showConfirmDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());

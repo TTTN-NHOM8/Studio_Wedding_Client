@@ -5,10 +5,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,7 +20,6 @@ import com.example.studiowedding.model.Contract;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHolder> {
@@ -90,7 +91,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             }
 
             holder.tvStatusHD.setTextColor(statusHDColor);
-
+            
             holder.position = position;
         }
     }
@@ -103,11 +104,13 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvIdHD, tvDateCreate, tvAmount, tvName, tvPaymentStatus, tvStatusHD;
         public ImageView imgMenu;
+        private CardView cardView;
         public int position;
 
         public ViewHolder(View view) {
             super(view);
 
+            cardView=view.findViewById(R.id.cardViewItemContract);
             tvIdHD = view.findViewById(R.id.tvIdHDItem);
             tvDateCreate = view.findViewById(R.id.tvDateCreateHDItem);
             tvAmount = view.findViewById(R.id.tvTotalAmountHDItem);
