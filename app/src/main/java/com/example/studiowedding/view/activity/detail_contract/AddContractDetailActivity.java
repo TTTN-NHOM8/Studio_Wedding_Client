@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -22,6 +23,7 @@ import com.example.studiowedding.model.Service;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,6 +38,7 @@ import retrofit2.Response;
 
 public class AddContractDetailActivity extends AppCompatActivity {
     private Toolbar toolbar;
+    private ConstraintLayout container;
     private EditText
             contractIdEditText,
             productSelectEditText,
@@ -99,6 +102,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
         addButton = findViewById(R.id.addButton);
         backImageView = findViewById(R.id.backImageView);
         servicePriceEditText = findViewById(R.id.servicePriceEditText);
+        container = findViewById(R.id.container);
     }
 
     private void setListeners() {
@@ -236,11 +240,10 @@ public class AddContractDetailActivity extends AppCompatActivity {
                                     dateOfHireEditText.setText(null);
                                     dateOfReturnEditText.setText(null);
                                     generateContractDetailCode();
-                                    Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT thành công", Toast.LENGTH_SHORT).show();
-                                    // TODO: Cập nhật lại trạng thái sản phẩm "Đã thuê"
+                                    showSnackbar("Thêm HĐCT thành công.");
                                     // TODO: Thêm công việc mặt định giặt ủi
                                 } else {
-                                    Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT có lỗi", Toast.LENGTH_SHORT).show();
+                                    showSnackbar("Thêm HĐCT có lỗi");
                                 }
                             }
                         }
@@ -288,10 +291,9 @@ public class AddContractDetailActivity extends AppCompatActivity {
                                     locationEditText.setText(null);
                                     dateOfPerformEditText.setText(null);
                                     generateContractDetailCode();
-                                    Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT thành công", Toast.LENGTH_SHORT).show();
-                                    // TODO: Thêm công việc
+                                    showSnackbar("Thêm HĐCT thành công.");
                                 } else {
-                                    Toast.makeText(AddContractDetailActivity.this, "Thêm HĐCT có lỗi", Toast.LENGTH_SHORT).show();
+                                    showSnackbar("Thêm HĐCT có lỗi");
                                 }
                             }
                         }
@@ -305,21 +307,20 @@ public class AddContractDetailActivity extends AppCompatActivity {
             }
         }
     }
-
     // Kiểm tra tính hợp lệ của dữ liệu đầu vào với sản phẩm
     public boolean isValidDataInputProduct(String dateOfHireStr, String dateOfReturnStr) {
         if (productSeleted == null) {
-            Toast.makeText(this, "Vui lòng chọn sản phẩm", Toast.LENGTH_SHORT).show();
+            showSnackbar("Vui lòng chọn sản phẩm");
             return false;
         }
 
         if (dateOfHireStr.isEmpty()) {
-            Toast.makeText(this, "Vui lòng chọn ngày thuê", Toast.LENGTH_SHORT).show();
+            showSnackbar("Vui lòng chọn ngày thuê");
             return false;
         }
 
         if (dateOfReturnStr.isEmpty()) {
-            Toast.makeText(this, "Vui lòng chọn ngày trả", Toast.LENGTH_SHORT).show();
+            showSnackbar("Vui lòng chọn ngày trả");
             return false;
         }
 
@@ -328,7 +329,7 @@ public class AddContractDetailActivity extends AppCompatActivity {
             Date dateOfReturn = FormatUtils.parserStringToDate(dateOfReturnStr);
 
             if (dateOfReturn.before(dateOfHire)) {
-                Toast.makeText(this, "Ngày trả sản phẩm không hợp lệ", Toast.LENGTH_SHORT).show();
+                showSnackbar("Ngày trả sản phẩm không hợp lệ");
                 return false;
             }
 
@@ -342,22 +343,22 @@ public class AddContractDetailActivity extends AppCompatActivity {
     // Kiểm tra tính hợp lệ của dữ liệu đầu vào với dịch vụ
     public boolean isValidDataInputService(String location, String dateOfPerform) {
         if (serviceSeleted == null) {
-            Toast.makeText(this, "Vui lòng chọn dịch vụ", Toast.LENGTH_SHORT).show();
+            showSnackbar("Vui lòng chọn dịch vụ");
             return false;
         }
 
         if (location.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập địa điểm", Toast.LENGTH_SHORT).show();
+            showSnackbar("Vui lòng nhập địa điểm");
             return false;
         }
 
         if (!isValidLocation(location)) {
-            Toast.makeText(this, "Địa điểm không hợp lệ", Toast.LENGTH_SHORT).show();
+            showSnackbar("Địa điểm không hợp lệ");
             return false;
         }
 
         if (dateOfPerform.isEmpty()) {
-            Toast.makeText(this, "Vui lòng chọn thực hiện", Toast.LENGTH_SHORT).show();
+            showSnackbar("Vui lòng chọn thực hiện");
             return false;
         }
 
@@ -383,5 +384,9 @@ public class AddContractDetailActivity extends AppCompatActivity {
 
         String contractID = "HDCT" + currentDateAndTime;
         contractIdEditText.setText(contractID);
+    }
+
+    private void showSnackbar(String message) {
+        Snackbar.make(container,message, Snackbar.LENGTH_SHORT).setAnchorView(addButton).show();
     }
 }

@@ -2,6 +2,7 @@ package com.example.studiowedding.network;
 
 public class ManagerUrl {
 
+
     public static final String BASE_URL = "http://192.168.1.4:3000/api/";
   
 
@@ -41,4 +42,10 @@ public class ManagerUrl {
     public static final String READ_TASKS_ROLE = "tasks/role";
     public static final String UPDATE_TASKS = "update/task/{id}";
     public static final String DELETE_TASKS = "delete/task/{id}";
+
+    // Service
+    public static final String GET_SERVICES_URL = "services";
+    public static final String INSERT_SERVICE_URL = "services";
+    public static final String UPDATE_SERVICE_URL = "services/{serviceID}/update";
+    public static final String REMOVE_SERVICE_URL = "services/{serviceID}/delete";
 }
