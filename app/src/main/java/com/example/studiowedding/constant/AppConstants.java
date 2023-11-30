@@ -16,11 +16,7 @@ public class AppConstants {
     public static final String ADD_EMPLOYEE_SUCCESS_MESSAGE = "Thêm thành công";
     public static final String UPDATE_EMPLOYEE_SUCCESS_MESSAGE = "Chỉnh sửa thành công";
     public static final String UPDATE_EMPLOYEE_FAILED_MESSAGE = "Chỉnh sửa thất bại";
-    public static final String ADD_EMPLOYEE_FAILED_MESSAGE = "Thêm thất bại";
-    public static final String PICK_IMAGE = "Đã chọn ảnh";
-
-    public static final String EXTRA_EMPLOYEE = "Employee_object";
-    public static final int FIRST_USER_INDEX = 0;
+    public static final String EMPLOYEE_EXIST = "Email đã tồn tại";
 
     private AppConstants() {
 

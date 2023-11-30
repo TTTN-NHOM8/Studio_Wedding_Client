@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FormatUtils {
-
+    //chuỗi kiểm tra định dạng ngày tháng năm
     private static final String DATE_REGEX = "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$";
 
     /**
@@ -104,5 +104,10 @@ public class FormatUtils {
 
         String emailPattern = "[a-zA-Z\\d._-]+@[a-z]+\\.+[a-z]+";
         return email.matches(emailPattern);
+    }
+
+    public static String formatDateToStringEmployee(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return sdf.format(date);
     }
 }

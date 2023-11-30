@@ -32,7 +32,7 @@ public interface ApiService {
             @Field("anhDaiDien") String anh,
             @Field("vaiTro") String vaiTro
     );
-
+    @FormUrlEncoded
     @PUT(ManagerUrl.URL_UPDATE_EMPLOYEE)
     Call<ResponseEmployee> updateEmployee(
             @Path("idNhanVien") String id,

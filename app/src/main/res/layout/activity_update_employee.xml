@@ -75,6 +75,7 @@
                 android:fontFamily="@font/inter_regular"
                 android:minHeight="52dp"
                 android:paddingStart="17dp"
+                android:enabled="false"
                 android:text="@string/text_email_update_staff"
                 android:textColor="@color/black"
                 android:textSize="15sp"
