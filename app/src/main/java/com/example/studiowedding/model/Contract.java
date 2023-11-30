@@ -74,14 +74,6 @@ public class Contract implements Serializable {
         this.diaChi = diaChi;
     }
 
-    public Contract(String idHopDong, Date ngayTao, Float tongTien, String trangThaiThanhToan, String trangThaiHopDong, String tenKH) {
-        this.idHopDong = idHopDong;
-        this.ngayTao = ngayTao;
-        this.tongTien = tongTien;
-        this.trangThaiThanhToan = trangThaiThanhToan;
-        this.trangThaiHopDong = trangThaiHopDong;
-        this.tenKH = tenKH;
-    }
 
     public Contract(String idHopDong, String ngayThanhToan, Float tienCoc, Float giamGia, Float tongTien, String trangThaiThanhToan, String trangThaiHopDong, int idKH) {
         this.idHopDong = idHopDong;
@@ -92,6 +84,14 @@ public class Contract implements Serializable {
         this.trangThaiThanhToan = trangThaiThanhToan;
         this.trangThaiHopDong = trangThaiHopDong;
         this.idKH = idKH;
+    }
+
+    public Contract(String idHopDong, String ngayThanhToan, Float giamGia, Float tongTien, String trangThaiThanhToan) {
+        this.idHopDong = idHopDong;
+        this.ngayThanhToan = ngayThanhToan;
+        this.giamGia = giamGia;
+        this.tongTien = tongTien;
+        this.trangThaiThanhToan = trangThaiThanhToan;
     }
 
     public String getIdHopDong() {

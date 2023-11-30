@@ -1,0 +1,10 @@
+<!-- res/menu/popup_menu.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/Pop_product_update"
+        android:title="Cập nhật"/>
+    <item
+        android:id="@+id/Pop_product_delete"
+        android:title="Xóa"/>
+    <!-- Thêm các mục menu khác nếu cần -->
+</menu>
