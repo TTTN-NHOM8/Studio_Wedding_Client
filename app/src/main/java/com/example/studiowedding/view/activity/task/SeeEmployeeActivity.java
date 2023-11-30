@@ -50,11 +50,8 @@ public class SeeEmployeeActivity extends AppCompatActivity implements OnItemClic
 
     private void checkRoleCallApi() {
         String role = getIntent().getStringExtra("role");
-        if (role.equals("")){
             readEmployeeApi();
-        }else {
-            readEmployeeByRoleApi(role);
-        }
+
     }
 
     private void onClick() {
