@@ -80,8 +80,12 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
                 intent.putExtra("role", mTask.getRole());
                 intent.putExtra("task", mTask.getIdTask());
             }else {
-                intent.putExtra("role", "");
+                intent.putExtra("role", mTask.getRole());
+                intent.putExtra("task", mTask.getIdTask());
             }
+            Log.i("TAG",""+mTask.getRole());
+            Log.i("TAG",""+mTask.getIdTask());
+
             mLauncher.launch(intent);
         });
     }
