@@ -14,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.adapter.EmployeeAdapter;
@@ -39,7 +41,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     private SearchView searchView;
 
     private EmployeeAdapter employeeAdapter;
-    private List<Employee> employeeList;
+    private List<Employee> employeeListold;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,25 +67,23 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         searchView = view.findViewById(R.id.searchView);
         floatingActionButton.setOnClickListener(view1 -> startActivity(new Intent(getContext(), AddEmployeeActivity.class)));
         setAdapter();
+        setSearchView();
+
+        }
+
+
+    private void setSearchView() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (employeeAdapter != null){
-                    employeeAdapter.filter(query);
-                }
-                return true;
+                employeeAdapter.getFilter().filter(query);
+                return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                employeeAdapter.getFilter().filter(newText);
                 return true;
-            }
-        });
-        ImageView clearButton = searchView.findViewById(R.id.searchView);
-        clearButton.setOnClickListener(v -> {
-            searchView.setQuery("", false);
-            if (employeeAdapter != null) {
-                employeeAdapter.filter("");
             }
         });
     }
@@ -95,7 +95,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         list.add(new Employee("NV1@gmail.com", "Lê Viết Dũng", "abc", "28/08/2003", "Nam", "0365411154", "Hà Tĩnh", "https://www.pngmart.com/files/21/Admin-Profile-PNG-Clipart.png", "Thợ Ảnh", 1));
         list.add(new Employee("NV1@gmail.com", "Lê Viết Dũng", "abc", "28/08/2003", "Nam", "0365411154", "Hà Tĩnh", "https://www.pngmart.com/files/21/Admin-Profile-PNG-Clipart.png", "Thợ Ảnh", 1));
 
-        EmployeeAdapter employeeAdapter = new EmployeeAdapter(list);
+        EmployeeAdapter employeeAdapter = new EmployeeAdapter(list,list);
         employeeAdapter.setOnClickItem(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rcvEmployee.setLayoutManager(linearLayoutManager);
