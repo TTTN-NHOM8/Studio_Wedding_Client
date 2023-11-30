@@ -49,7 +49,7 @@ import retrofit2.Response;
 
 public class UpdateEmployeeActivity extends AppCompatActivity {
     private ProgressDialog loadingDialog;
-    private ImageView ivBack, ivSpinnerRole;
+    private ImageView ivBack, ivSpinnerRole, ivHidingPass;
     private CircleImageView civEmployee;
     private EditText etEmail, etPass, etName, etDob, etPhone, etLocation, etRole;
     private RadioGroup radioGender;
@@ -84,6 +84,7 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         btnUpdate = findViewById(R.id.btnUpdateEmployee);
         radioMale = findViewById(R.id.radioButtonUpdateMale);
         radioFemale = findViewById(R.id.radioButtonUpdateFemale);
+        ivHidingPass = findViewById(R.id.iv_hiding_pass);
     }
 
     /**
@@ -134,6 +135,7 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         etDob.setOnClickListener(view -> showDatePicker());
         ivSpinnerRole.setOnClickListener(view -> showRoleOptions());
         btnUpdate.setOnClickListener(view -> startUpdateEmployee());
+        ivHidingPass.setOnClickListener(view -> onPasswordToggleImageClick());
     }
 
     /**
@@ -331,6 +333,10 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         } else {
             showSnackbar(AppConstants.UPDATE_EMPLOYEE_FAILED_MESSAGE);
         }
+    }
+
+    public void onPasswordToggleImageClick(){
+        UIutils.togglePasswordVisibleWithImage(etPass, ivHidingPass);
     }
 
     private void showLoadingDialog(boolean show) {

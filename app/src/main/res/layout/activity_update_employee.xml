@@ -83,26 +83,48 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/civ_update_img_employee" />
 
-            <EditText
-                android:id="@+id/et_update_pass_employee"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/edittext_bgr_white"
-                android:drawableStart="@drawable/login_password"
-                android:drawablePadding="23dp"
-                android:fontFamily="@font/inter_regular"
-                android:minHeight="52dp"
-                android:paddingStart="17dp"
-                android:password="true"
-                android:text="@string/edt_pass_staff"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_update_email_employee" />
+                app:layout_constraintTop_toBottomOf="@+id/et_update_email_employee">
+
+                <EditText
+                    android:id="@+id/et_update_pass_employee"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_bgr_white"
+                    android:drawableStart="@drawable/login_password"
+                    android:drawablePadding="23dp"
+                    android:fontFamily="@font/inter_regular"
+                    android:minHeight="52dp"
+                    android:paddingStart="17dp"
+                    android:password="true"
+                    android:text="@string/edt_pass_staff"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_hiding_pass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="14dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/ic_eye" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
                 android:id="@+id/et_update_name_employee"
@@ -122,7 +144,7 @@
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_update_pass_employee" />
+                app:layout_constraintTop_toBottomOf="@+id/layoutPassword" />
 
             <EditText
                 android:id="@+id/et_update_dob_employee"
