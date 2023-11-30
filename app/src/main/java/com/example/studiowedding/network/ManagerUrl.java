@@ -2,7 +2,9 @@ package com.example.studiowedding.network;
 
 public class ManagerUrl {
 
-    public static final String BASE_URL = "http://172.16.54.180:3000/api/";
+
+    public static final String BASE_URL = "http://172.16.51.134:3000/api/";
+
   
 
     // Account
@@ -11,17 +13,17 @@ public class ManagerUrl {
     // Contract
     public  static  final String CONTRACTS="contracts";
     public  static  final String CONTRACTS_ID="contract/{idHopDong}";
-    public  static  final String CONTRACTS_PAYMENT="contracts/payment";
-    public  static  final String CONTRACTS_PROGESS="contracts/progess";
-    public  static  final String CONTRACTS_INCURRENT="contracts/incurrent";
     public  static  final String ADD_CONTRACT="contract/add";
     public  static  final String CONTRACT_UPDATE="contract/update/{idHopDong}";
     public  static  final String CONTRACT_DELETE="contract/delete/{idHopDong}";
-    public  static  final String INCURRENT="incurrent";
-    public  static  final String INCURRENT_ADD="incurrent/add";
-    public  static  final String INCURRENT_DELETE="incurrent/delete/{idPhatSinh}";
+    public  static  final String INCURRENT_LIST="incurrent/incurrentList/{idHopDong}";
+    public  static  final String INCURREN_UPDATE="incurrent/update/{idPhatSinh}";
+    public  static  final String INCURREN_UPDATE_NONE="incurrent/update/none/{idPhatSinh}";
     public  static  final String CONTRACT_CLIENTS="contracts/clients";
     public  static  final String CONTRACT_DETAIL_CONTRACT="contracts/detail-contract/{idHDTamThoi}";
+    public  static  final String CONTRACT_DELETE_TASK="contract/task/delete/{idHDTamThoi}";
+
+
 
     // Detail Contract
     public static final String CONTRACT_DETAILS_URL = "contract-details";
@@ -38,12 +40,18 @@ public class ManagerUrl {
 
     // Task
     public static final String READ_TASKS = "tasks";
-    public static final String READ_TASK_EMPLOYEE = "task/employees";
     public static final String READ_TASKS_ROLE = "tasks/role";
     public static final String UPDATE_TASKS = "update/task/{id}";
     public static final String DELETE_TASKS = "delete/task/{id}";
+
     public static final String READ_EMPLOYEE = "employees/{idHDCT}";
     public static final String READ_EMPLOYEE_ROLE = "role/employees";
     public static final String INSERT_EMPLOYEE = "insert/employee";
     public static final String DELETE_EMPLOYEE = "delete/employee/{idJoin}";
+
+    // Service
+    public static final String GET_SERVICES_URL = "services";
+    public static final String INSERT_SERVICE_URL = "services";
+    public static final String UPDATE_SERVICE_URL = "services/{serviceID}/update";
+    public static final String REMOVE_SERVICE_URL = "services/{serviceID}/delete";
 }

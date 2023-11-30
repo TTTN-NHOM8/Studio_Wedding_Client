@@ -25,5 +25,11 @@ public interface OnItemClickListner {
         void nextUpdateScreenEmployee(Employee employee);
         void showConfirmDeleteEmployee();
     }
+  
+    interface Child {
+        void showConfirmDelete();
 
-}
+        void onDeleteButtonClick(int position);
+    }
+    }
+

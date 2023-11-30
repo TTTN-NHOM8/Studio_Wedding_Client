@@ -1,7 +1,9 @@
 package com.example.studiowedding.network;
 
+
 import com.example.studiowedding.view.activity.task.ResponseEmployeeJoin;
 import com.example.studiowedding.view.activity.task.ResponseJoin;
+import com.example.studiowedding.view.activity.services.ServiceResponse;
 import com.example.studiowedding.view.activity.task.ResponseTask;
 
 import retrofit2.Call;
@@ -20,7 +22,6 @@ import com.example.studiowedding.model.ContractDetail;
 import com.example.studiowedding.model.Customer;
 import com.example.studiowedding.model.Incurrent;
 import com.example.studiowedding.view.activity.account.AccountResponse;
-import com.example.studiowedding.view.activity.task.ResponseTask;
 import com.example.studiowedding.model.Product;
 import com.example.studiowedding.model.Service;
 import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
@@ -30,7 +31,7 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAILS_URL)
     Call<List<ContractDetail>> getContractDetails();
-  
+
     // Account
     @FormUrlEncoded
     @POST(ManagerUrl.ACCOUNT)
@@ -47,23 +48,8 @@ public interface ApiService {
     @GET(ManagerUrl.CONTRACTS_ID)
     Call<Contract> getContractById(@Path("idHopDong") String idHopDong);
 
-    @GET(ManagerUrl.CONTRACTS_PAYMENT)
-    Call<List<Contract>> getContractsByPayment();
-
-    @GET(ManagerUrl.CONTRACTS_PROGESS)
-    Call<List<Contract>> getContractsByProgess();
-
-    @GET(ManagerUrl.CONTRACTS_INCURRENT)
-    Call<List<Contract>> getContractsByIncurrent();
-
-    @GET(ManagerUrl.INCURRENT)
-    Call<List<Incurrent>> getIncurrent();
-
     @POST(ManagerUrl.ADD_CONTRACT)
     Call<Void> insertContract(@Body Contract newContract);
-
-    @POST(ManagerUrl.INCURRENT_ADD)
-    Call<Void> insertIncurrent(@Body Incurrent newIncurrent);
 
     @PUT(ManagerUrl.CONTRACT_UPDATE)
     Call<Void> updateContract(@Path("idHopDong") String idHopDong, @Body Contract updatedContract);
@@ -71,10 +57,20 @@ public interface ApiService {
     @PUT(ManagerUrl.CONTRACT_DELETE)
     Call<Void> deleteContract(@Path("idHopDong") String idHopDong);
 
-    @PUT(ManagerUrl.INCURRENT_DELETE)
-    Call<Void> deleteIncurrent(@Path("idPhatSinh") String idPhatSinh);
+    @DELETE(ManagerUrl.CONTRACT_DELETE_TASK)
+    Call<Void>deleteTaskByTemporaryID(@Path("idHDTamThoi")String idHDTamThoi);
 
-  // Detail contract
+    @GET(ManagerUrl.INCURRENT_LIST)
+    Call<List<Incurrent>>getIncurrentList(@Path("idHopDong")String idHDTamThoi);
+
+    @PUT(ManagerUrl.INCURREN_UPDATE)
+    Call<Void>updateIncurrent(@Path("idPhatSinh") String idPhatSinh,@Body Incurrent incurrent);
+    @PUT(ManagerUrl.INCURREN_UPDATE_NONE)
+    Call<Void>updateIncurrentNone(@Path("idPhatSinh")int idPhatSinh,@Body Incurrent incurrent);
+
+
+
+    // Detail contract
     @FormUrlEncoded
     @POST(ManagerUrl.INSERT_CONTRACT_DETAIL_PRODUCT)
     Call<ServerResponse> insertContractDetailWithProduct(
@@ -130,6 +126,7 @@ public interface ApiService {
     Call<List<ContractDetail>>getContractDetailByIdContract(@Path("contractID") String idContract);
 
 
+
     // task , join
     @GET(ManagerUrl.READ_TASKS)
     Call<ResponseTask> readTask();
@@ -160,5 +157,25 @@ public interface ApiService {
 
     @DELETE(ManagerUrl.DELETE_TASKS)
     Call<ResponseTask> deleteTaskById(@Path("id") int id);
+
+    // Service
+    @GET(ManagerUrl.GET_SERVICES_URL)
+    Call<List<Service>> getServices();
+
+    @FormUrlEncoded
+    @POST(ManagerUrl.INSERT_SERVICE_URL)
+    Call<ServiceResponse> insertService(@Field("serviceName") String serviceName, @Field("servicePrice") float servicePrice);
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.UPDATE_SERVICE_URL)
+    Call<ServiceResponse> updateService(
+            @Path("serviceID") int serviceID,
+            @Field("serviceName") String serviceName,
+            @Field("servicePrice") float servicePrice
+    );
+
+    @PUT(ManagerUrl.REMOVE_SERVICE_URL)
+    Call<ServiceResponse> removeService(@Path("serviceID") int serviceID);
+
 }
 

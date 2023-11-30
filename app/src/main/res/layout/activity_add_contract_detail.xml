@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/container"
     android:background="@color/line"
     tools:context=".view.activity.detail_contract.AddContractDetailActivity">
 
@@ -57,7 +58,7 @@
                     android:id="@+id/contractIdEditText"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:background="@drawable/edittext_bgr_white"
+                    android:background="@drawable/bgr_edt_disable"
                     android:drawableStart="@drawable/detail_contract_id"
                     android:drawablePadding="14dp"
                     android:focusable="false"
