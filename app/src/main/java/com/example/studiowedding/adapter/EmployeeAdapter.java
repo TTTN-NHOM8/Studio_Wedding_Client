@@ -85,12 +85,15 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         public TextView tvNameEmployee, tvRoleEmployee;
         public ImageView ivMenu;
 
+        public ImageView ivFiler;
+
         public EmployeeViewHolder(@NonNull View itemView) {
             super(itemView);
             circleImageView = itemView.findViewById(R.id.civ_avt_employee);
             tvNameEmployee = itemView.findViewById(R.id.tv_name_employee);
             tvRoleEmployee = itemView.findViewById(R.id.tv_role_employee);
             ivMenu = itemView.findViewById(R.id.iv_menu_employee);
+            ivFiler = itemView.findViewById(R.id.imgFilterContract);
         }
 
         public void setListener(Employee employee) {
@@ -126,5 +129,15 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
             }
         };
+    }
+    public void filterByRole (String role) {
+        List<Employee> filterList = new ArrayList<>();
+        for (Employee employee : employeeListold) {
+            if (employee.getVaiTro().equals(role)) {
+                filterList.add(employee);
+            }
+        }
+        employeeList = filterList;
+        notifyDataSetChanged();
     }
 }

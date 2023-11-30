@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +19,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.adapter.EmployeeAdapter;
@@ -42,6 +42,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
 
     private EmployeeAdapter employeeAdapter;
     private List<Employee> employeeListold;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,8 +69,43 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         floatingActionButton.setOnClickListener(view1 -> startActivity(new Intent(getContext(), AddEmployeeActivity.class)));
         setAdapter();
         setSearchView();
-
+        ivFilter.setOnClickListener(v -> showFilterPopupMenu(v));
         }
+    private void showFilterPopupMenu(View view){
+        PopupMenu popupMenu = new PopupMenu(requireContext(),view);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.filternv, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.quanly:
+                    filterByRole("Quản Lý");
+                    break;
+                case R.id.makeup:
+                    filterByRole("Make Up");
+                    break;
+                case R.id.laixe:
+                    filterByRole("Lái Xe");
+                    break;
+                case R.id.chuphinh:
+                    filterByRole("Chụp Hình");
+                    break;
+                case R.id.haucan:
+                    filterByRole("Hậu Cần");
+                    break;
+                case R.id.loctatca:
+                    filterByRole("Lọc tất cả trạng thái");
+                    break;
+            }
+            return true;
+        });
+        popupMenu.show();
+    }
+    private void filterByRole (String role){
+        if (employeeAdapter != null){
+            employeeAdapter.filterByRole(role);
+        }
+    }
 
 
     private void setSearchView() {
