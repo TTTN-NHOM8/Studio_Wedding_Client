@@ -43,9 +43,18 @@ public class SeeEmployeeActivity extends AppCompatActivity implements OnItemClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_employee);
         mProgressDialog = ProgressDialog.show(this, "", "Loading...");
-        readEmployeeByRoleApi(getIntent().getStringExtra("role"));
+        checkRoleCallApi();
         initUI();
         onClick();
+    }
+
+    private void checkRoleCallApi() {
+        String role = getIntent().getStringExtra("role");
+        if (role.equals("")){
+            readEmployeeApi();
+        }else {
+            readEmployeeByRoleApi(role);
+        }
     }
 
     private void onClick() {
@@ -95,6 +104,31 @@ public class SeeEmployeeActivity extends AppCompatActivity implements OnItemClic
             }
         });
     }
+
+    private void readEmployeeApi() {
+        ApiClient.getClient().create(ApiService.class).readTaskEmployee().enqueue(new Callback<ResponseEmployeeJoin>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseEmployeeJoin> call, @NonNull Response<ResponseEmployeeJoin> response) {
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
+                        setAdapter(response.body().getEmployeeList());
+                        tvShowMessage.setVisibility(View.GONE);
+                        mProgressDialog.dismiss();
+                    }else {
+                        mProgressDialog.dismiss();
+                    }
+                }else {
+                    mProgressDialog.dismiss();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ResponseEmployeeJoin> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
 
     private void setAdapter(List<Employee> employeeList) {
         adapter = new TaskEmployeeJoinAdapter(employeeList);
