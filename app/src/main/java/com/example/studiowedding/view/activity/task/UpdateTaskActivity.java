@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,9 +33,11 @@ import com.example.studiowedding.model.Task;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
+import com.example.studiowedding.view.activity.MainActivity;
 import com.example.studiowedding.view.fragment.EmployeeFragment;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -50,11 +53,14 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
     private RecyclerView mRCV;
     private ProgressDialog mProgressDialog;
     private List<Employee> mListEmployee;
+    private List<Integer> responseJoinList;
+    private TaskJoinAdapter taskJoinAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_task);
         mTask = (Task) getIntent().getSerializableExtra("task");
+        responseJoinList = new ArrayList<>();
         initUI();
         setValue();
         onClick();
@@ -71,12 +77,12 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
         tvAddEmployee.setOnClickListener(view -> {
             Intent intent = new Intent(this, SeeEmployeeActivity.class);
             if (mListEmployee != null){
-                intent.putExtra("role", mListEmployee.get(0).getVaiTro());
+                intent.putExtra("role", mTask.getRole());
+                intent.putExtra("task", mTask.getIdTask());
             }else {
                 intent.putExtra("role", "");
             }
             mLauncher.launch(intent);
-            startActivity(intent);
         });
     }
 
@@ -123,7 +129,7 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
     }
 
     private void setAdapter(List<Employee> employeeList) {
-        TaskJoinAdapter taskJoinAdapter = new TaskJoinAdapter(employeeList, this);
+        taskJoinAdapter = new TaskJoinAdapter(employeeList, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRCV.setLayoutManager(layoutManager);
         mRCV.setAdapter(taskJoinAdapter);
@@ -157,7 +163,9 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
                 if (response.isSuccessful()){
                     assert response.body() != null;
                     if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
-                        Snackbar.make(findViewById(R.id.btn_update_job),"Cập nhật thành công", Snackbar.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("saveTask",true);
+                        startActivity(intent);
                     }else {
                         Snackbar.make(findViewById(R.id.btn_update_job),"Cập nhật thất bại", Snackbar.LENGTH_SHORT).show();
                     }
@@ -179,8 +187,9 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
                         if (result.getResultCode() == RESULT_OK){
                             Intent intent = result.getData();
                             assert intent != null;
+                            int idJoin =  intent.getIntExtra("idJoin", 0);
+                            responseJoinList.add(idJoin);
                         }
-
                     });
 
     @Override
@@ -190,6 +199,77 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
 
     @Override
     public void showConfirmDelete(Employee employee, View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xóa nhân viên")
+                .setMessage("Bạn chắc chắn muốn xóa nhân viên này ?")
+                .setPositiveButton("Đồng ý", (dialog, which) -> {
+                    mProgressDialog = ProgressDialog.show(this, "", "Loading...");
+                    deleteTaskApi(employee, view);
+                })
+                .setNegativeButton("Hủy", (dialog, which) -> dialog.dismiss());
 
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void deleteTaskApi(Employee employee, View view) {
+        ApiClient.getClient().create(ApiService.class).deleteEmployeeJoin(employee.getIdJoin()).enqueue(new Callback<ResponseTask>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
+                mProgressDialog.dismiss();
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
+                        mListEmployee.remove(employee);
+                        taskJoinAdapter.setList(mListEmployee);
+                        Snackbar.make(view,"Xóa thành công", Snackbar.LENGTH_SHORT).show();
+                    }else {
+                        Snackbar.make(view,"Xóa thất bại", Snackbar.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Snackbar.make(view,"Xóa thất bại", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseTask> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void deleteTaskBackApi(int idJoin) {
+        ApiClient.getClient().create(ApiService.class).deleteEmployeeJoin(idJoin).enqueue(new Callback<ResponseTask>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    if (!AppConstants.STATUS_TASK.equals(response.body().getStatus())){
+                        Snackbar.make(mRCV,"Xóa thất bại", Snackbar.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Snackbar.make(mRCV,"Xóa thất bại", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseTask> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        readEmployeeJoinApi();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        for (int join: responseJoinList) {
+            deleteTaskBackApi(join);
+        }
     }
 }

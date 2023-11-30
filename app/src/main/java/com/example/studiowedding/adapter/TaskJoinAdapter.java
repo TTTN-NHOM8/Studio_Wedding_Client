@@ -13,18 +13,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.studiowedding.R;
 import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Employee;
+import com.example.studiowedding.model.Task;
 
 import java.util.List;
 
 public class TaskJoinAdapter extends RecyclerView.Adapter<TaskJoinAdapter.ViewHolder> {
-    private final List<Employee> mList;
-    private OnItemClickListner.TaskJoinI mOnClickItem;
+    private  List<Employee> mList;
+    private final OnItemClickListner.TaskJoinI mOnClickItem;
 
     public TaskJoinAdapter(List<Employee> mList, OnItemClickListner.TaskJoinI mOnClickItem) {
         this.mList = mList;
         this.mOnClickItem = mOnClickItem;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void setList(List<Employee> mList){
+        this.mList = mList;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

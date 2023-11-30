@@ -23,6 +23,16 @@ public class Task implements Serializable {
     private String address;
     @SerializedName("hoVaTen")
     private String employee;
+    @SerializedName("vaiTro")
+    private String role;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getIdDetailContract() {
         return idDetailContract;

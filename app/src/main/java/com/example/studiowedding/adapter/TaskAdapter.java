@@ -10,19 +10,15 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.studiowedding.R;
 import com.example.studiowedding.constant.AppConstants;
 import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Task;
 import com.example.studiowedding.utils.FormatUtils;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,9 +26,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     private List<Task> mList;
     private List<Task> filteredTasks;
+    private final int selectFragment;
     private OnItemClickListner.TaskI mOnClickItem;
-    public TaskAdapter(List<Task> mList) {
+    public TaskAdapter(List<Task> mList, int selectFragment) {
         this.mList = mList;
+        this.selectFragment = selectFragment;
         this.filteredTasks = mList;
     }
 
@@ -88,7 +86,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     @Override
     public int getItemCount() {
-        return mList != null ? mList.size() : 0;
+        return (mList != null && selectFragment == 0) ? Math.min(mList.size(), 3) : (mList != null ? mList.size() : 0);
     }
 
     @Override
@@ -104,9 +102,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                     listTask.addAll(filteredTasks);
                 }else {
                     for (Task task : filteredTasks ) {
-                        if (task.getDateImplement() != null && task.getNameService().toLowerCase(Locale.getDefault()).contains(search.toLowerCase())){
-                                listTask.add(task);
-                        }else if(task.getDateImplement() == null && AppConstants.NAME_TASK.toLowerCase(Locale.getDefault()).contains(search.toLowerCase())){
+                        if (task.getNameService().toLowerCase(Locale.getDefault()).contains(search.toLowerCase())){
                                 listTask.add(task);
                         }
                     }

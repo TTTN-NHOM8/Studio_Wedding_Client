@@ -1,6 +1,7 @@
 package com.example.studiowedding.network;
 
 import com.example.studiowedding.view.activity.task.ResponseEmployeeJoin;
+import com.example.studiowedding.view.activity.task.ResponseJoin;
 import com.example.studiowedding.view.activity.task.ResponseTask;
 
 import retrofit2.Call;
@@ -140,8 +141,8 @@ public interface ApiService {
     Call<ResponseEmployeeJoin> readEmployeeByRole(@Field("role") String role);
     @POST(ManagerUrl.INSERT_EMPLOYEE)
     @FormUrlEncoded
-    Call<ResponseTask> insertEmployee( @Field("idTask") String idTask,
-                                       @Field("idEmployee") String idEmployee);
+    Call<ResponseJoin> insertEmployee(@Field("idTask") int idTask,
+                                      @Field("idEmployee") String idEmployee);
 
     @DELETE(ManagerUrl.DELETE_EMPLOYEE)
     Call<ResponseTask> deleteEmployeeJoin(@Path("idJoin") int idJoin);

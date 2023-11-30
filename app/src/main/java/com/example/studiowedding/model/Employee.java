@@ -15,6 +15,8 @@ public class Employee {
     private String diaChi;
     private String anh;
     private String vaiTro;
+    @SerializedName("idThamGia")
+    private int idJoin;
     private int hienThi;
 
     public Employee(String idNhanVien, String hoTen, String matKhau, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro, int hienThi) {
@@ -108,6 +110,14 @@ public class Employee {
 
     public void setHienThi(int hienThi) {
         this.hienThi = hienThi;
+    }
+
+    public int getIdJoin() {
+        return idJoin;
+    }
+
+    public void setIdJoin(int idJoin) {
+        this.idJoin = idJoin;
     }
 
     @Override
