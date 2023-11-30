@@ -1,7 +1,7 @@
 package com.example.studiowedding.adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -18,7 +18,6 @@ import com.bumptech.glide.Glide;
 import com.example.studiowedding.R;
 import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Employee;
-import com.example.studiowedding.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +26,22 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder> {
     private List<Employee> employeeList;
-    private List<Employee> employeeListold;
+
     private OnItemClickListner.EmployeeI itemClickListner;
 
-    public EmployeeAdapter(List<Employee> employeeList, List<Employee> employeeListold) {
+    public EmployeeAdapter(List<Employee> employeeList) {
 
         this.employeeList = employeeList;
-        this.employeeListold = employeeListold;
     }
+
 
     public void setOnClickItem(OnItemClickListner.EmployeeI itemClickListner){
         this.itemClickListner = itemClickListner;
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -50,7 +54,19 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     @Override
     public void onBindViewHolder(@NonNull EmployeeViewHolder holder, int position) {
         Employee employee = employeeList.get(position);
-        holder.setListener(employee);
+        if (employee == null){
+            return;
+        }
+
+//
+//        Log.e("img", employee.getAnh() + "abc");
+        Glide.with(holder.itemView.getContext())
+                .load(employee.getAnh())
+                .centerCrop()
+                .placeholder(R.drawable.error_image)
+                .into(holder.circleImageView);
+        holder.tvNameEmployee.setText(employee.getHoTen());
+        holder.tvRoleEmployee.setText(employee.getVaiTro());
         holder.ivMenu.setOnClickListener(view -> showPopupEdit(holder, employee));
     }
 
@@ -77,7 +93,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
     @Override
     public int getItemCount() {
-        return employeeList.size();
+        return employeeList == null ? 0 : employeeList.size();
     }
 
     public class EmployeeViewHolder extends RecyclerView.ViewHolder {
@@ -100,6 +116,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             tvNameEmployee.setText(employee.getHoTen());
             tvRoleEmployee.setText(employee.getVaiTro());
         }
+
     }
     public Filter getFilter(){
         return new Filter() {
@@ -107,10 +124,10 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String strSearch = charSequence.toString();
                 if (strSearch.isEmpty()) {
-                    employeeList = employeeListold;
+                    employeeList = new ArrayList<>();
                 } else {
                     List<Employee> list = new ArrayList<>();
-                    for (Employee employee : employeeListold) {
+                    for (Employee employee : employeeList) {
                         if (employee.getHoTen().toLowerCase().contains(strSearch.toLowerCase())) {
                             list.add(employee);
                         }
@@ -132,11 +149,12 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     }
     public void filterByRole (String role) {
         List<Employee> filterList = new ArrayList<>();
-        for (Employee employee : employeeListold) {
+        for (Employee employee : employeeList) {
             if (employee.getVaiTro().equals(role)) {
                 filterList.add(employee);
             }
         }
+        employeeList.clear();
         employeeList = filterList;
         notifyDataSetChanged();
     }
