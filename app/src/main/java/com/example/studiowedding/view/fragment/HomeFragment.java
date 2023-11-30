@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studiowedding.R;
@@ -29,6 +30,7 @@ import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
 import com.example.studiowedding.view.activity.task.ResponseTask;
+import com.example.studiowedding.view.activity.task.SeeTaskActivity;
 import com.example.studiowedding.view.activity.task.UpdateTaskActivity;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -44,6 +46,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     private RecyclerView mRCV, mRCVToday;
+    private TextView tvSeeTask, tvSeeTaskToday;
     private List<Task> mList;
     private List<Task> mListToday;
     private TaskAdapter adapterTask;
@@ -66,12 +69,23 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
         super.onViewCreated(view, savedInstanceState);
         mRCV = view.findViewById(R.id.rcv_job_home);
         mRCVToday = view.findViewById(R.id.rcv_today_job_home);
+        tvSeeTask = view.findViewById(R.id.tv_see_all_job);
+        tvSeeTaskToday = view.findViewById(R.id.tv_see_all_job_today);
         onClick();
         readTasksApi();
     }
 
     private void onClick() {
-
+        tvSeeTask.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), SeeTaskActivity.class);
+            intent.putExtra("seeJob", 0);
+            startActivity(intent);
+        });
+        tvSeeTaskToday.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), SeeTaskActivity.class);
+            intent.putExtra("seeJob", 1);
+            startActivity(intent);
+        });
     }
 
     private void readTasksApi() {
@@ -97,7 +111,8 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     }
 
     private void setAdapter(List<Task> taskList) {
-        adapterTask = new TaskAdapter(taskList);
+
+        adapterTask = new TaskAdapter(taskList, 0);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCV.setLayoutManager(layoutManager);
@@ -112,15 +127,10 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
                 if (FormatUtils.checkData(taskList.get(i).getDateImplement())){
                     list.add(taskList.get(i));
                 }
-            }else {
-                if (FormatUtils.checkData(taskList.get(i).getDataLaundry())){
-                    list.add(taskList.get(i));
-                }
             }
-
         }
 
-        taskTodayAdapter = new TaskTodayAdapter(list);
+        taskTodayAdapter = new TaskTodayAdapter(list, 0);
         taskTodayAdapter.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCVToday.setLayoutManager(layoutManager);
@@ -159,9 +169,13 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     }
     @Override
     public void nextUpdateScreenTask(Task task) {
-        Intent intent = new Intent(getActivity(), UpdateTaskActivity.class);
-        intent.putExtra("task", task);
-        startActivity(intent);
+        if (AppConstants.STATUS_TASK_DONE.equals(task.getStatusTask())){
+            Snackbar.make(mRCV, "Cập việc đã xong không thể cập nhật", Snackbar.LENGTH_SHORT).show();
+        }else {
+            Intent intent = new Intent(getActivity(), UpdateTaskActivity.class);
+            intent.putExtra("task", task);
+            startActivity(intent);
+        }
     }
     @Override
     public void showConfirmDelete(Task task, View view) {
