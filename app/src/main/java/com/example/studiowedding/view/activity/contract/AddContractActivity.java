@@ -566,7 +566,7 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
         builder.setPositiveButton("Xoá", (dialogInterface, i) -> {
             // Thực hiện xoá HĐCT theo mã HĐCT
             ApiService apiService = ApiClient.getClient().create(ApiService.class);
-            Call<ServerResponse> call = apiService.deleteContractDetailByContractDetailID(contractDetail.getId());
+            Call<ServerResponse> call = apiService.deleteContractDetailByContractDetailID(contractDetail.getId(), contractDetail.getProductID());
             call.enqueue(new Callback<ServerResponse>() {
                 @Override
                 public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {

@@ -96,9 +96,9 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAIL_PRODUCTS)
     Call<List<Product>> getProductsByStatusReady();
-
-    @DELETE(ManagerUrl.DELETE_CONTRACT_DETAIL_BY_CONTRACT_DETAIL_ID)
-    Call<ServerResponse> deleteContractDetailByContractDetailID(@Path("contractDetailID") String contractDetailID);
+    @FormUrlEncoded
+    @POST(ManagerUrl.DELETE_CONTRACT_DETAIL_BY_CONTRACT_DETAIL_ID)
+    Call<ServerResponse> deleteContractDetailByContractDetailID(@Path("contractDetailID") String contractDetailID, @Field("productID") int productID);
 
     @FormUrlEncoded
     @PUT(ManagerUrl.UPDATE_CONTRACT_DETAIL_PRODUCT)
