@@ -2,6 +2,10 @@ package com.example.studiowedding.network;
 
 import com.example.studiowedding.adapter.ProductAdapter;
 import com.example.studiowedding.view.activity.task.ResponseTask;
+import com.example.studiowedding.model.Employee;
+import com.example.studiowedding.view.activity.employee.ResponseEmployee;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -19,7 +23,6 @@ import com.example.studiowedding.model.ContractDetail;
 import com.example.studiowedding.model.Customer;
 import com.example.studiowedding.model.Incurrent;
 import com.example.studiowedding.view.activity.account.AccountResponse;
-import com.example.studiowedding.view.activity.task.ResponseTask;
 import com.example.studiowedding.model.Product;
 import com.example.studiowedding.model.Service;
 import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
@@ -44,13 +47,20 @@ public interface ApiService {
 
     @DELETE(ManagerUrl.DELETE_TASKS)
     Call<ResponseTask> deleteTaskById(@Path("id") int id);
+
     @DELETE(ManagerUrl.DELETE_PRODUCT)
     Call<ResponseTask> deleteProductId(@Path("id") int id);
+  
     // Account
     @FormUrlEncoded
     @POST(ManagerUrl.ACCOUNT)
     Call<AccountResponse> loginAccount(@Field("idNhanVien") String idNhanVien, @Field("matKhau") String matKhau);
 
+//Customer
+@GET(ManagerUrl.READ_CUSTOMER)
+Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
+    @PUT(ManagerUrl.UPDATE_Customer)
+    Call<Void> updateCustomer(@Path("idKhachHang") int idKhachHang,@Body Customer updateCustomer);
 
     // CONTRACT
     @GET(ManagerUrl.CONTRACTS)
@@ -153,5 +163,38 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAIL_IDCONTRACT)
     Call<List<ContractDetail>>getContractDetailByIdContract(@Path("contractID") String idContract);
-}
 
+    @POST(ManagerUrl.UPDATE_CUSTOMER)
+    Call<Void> updateCustomer(@Path("id") String id,@Body Customer customer);
+
+    //Employee
+    @GET(ManagerUrl.URL_GET_EMPLOYEE)
+        Call<ResponseEmployee> getEmployees();
+
+    @FormUrlEncoded
+    @POST(ManagerUrl.URL_ADD_EMPLOYEE)
+    Call<ResponseEmployee> addEmployee(
+            @Field("idNhanVien") String id,
+            @Field("hoVaTen") String hoTen,
+            @Field("ngaySinh") String ngaySinh,
+            @Field("gioiTinh") String gioiTinh,
+            @Field("dienThoai") String dienThoai,
+            @Field("diaChi") String diaChi,
+            @Field("anhDaiDien") String anh,
+            @Field("vaiTro") String vaiTro
+    );
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.URL_UPDATE_EMPLOYEE)
+    Call<ResponseEmployee> updateEmployee(
+            @Path("idNhanVien") String id,
+            @Field("hoVaTen") String hoTen,
+            @Field("matKhau") String matKhau,
+            @Field("ngaySinh") String ngaySinh,
+            @Field("gioiTinh") String gioiTinh,
+            @Field("dienThoai") String dienThoai,
+            @Field("diaChi") String diaChi,
+            @Field("anhDaiDien") String anh,
+            @Field("vaiTro") String vaiTro
+    );
+}

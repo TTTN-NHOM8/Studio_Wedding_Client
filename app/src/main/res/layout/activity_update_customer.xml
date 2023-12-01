@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/line"
     tools:context=".view.activity.customer.UpdateCustomerActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -44,10 +43,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_bgr_white"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
             android:padding="5dp"
             android:orientation="horizontal">
 
@@ -58,9 +56,11 @@
                 android:src="@drawable/client_name" />
 
             <EditText
+                android:id="@+id/edNameCustomer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:singleLine="true"
                 android:fontFamily="@font/inter_bold"
                 android:background="@android:color/transparent"
                 android:text="Floly" />
@@ -70,10 +70,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_bgr_white"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
             android:padding="5dp"
             android:orientation="horizontal">
 
@@ -84,9 +83,11 @@
                 android:src="@drawable/client_phone" />
 
             <EditText
+                android:id="@+id/edPhoneCustomer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:singleLine="true"
                 android:fontFamily="@font/inter_regular"
                 android:background="@android:color/transparent"
                 android:text="Phone" />
@@ -96,10 +97,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_bgr_white"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="3dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
             android:padding="5dp"
             android:orientation="horizontal">
 
@@ -110,13 +110,13 @@
                 android:src="@drawable/locaion" />
 
             <EditText
+                android:id="@+id/edAddressCustomer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:cursorVisible="false"
                 android:fontFamily="@font/inter_regular"
                 android:padding="10dp"
-
                 android:text="Address" />
 
         </LinearLayout>
@@ -124,17 +124,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
+                android:id="@+id/btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:fontFamily="@font/inter_bold"
                 android:textColor="#ffffff"
-
                 android:background="@drawable/button_bgr_primary"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginBottom="10dp"
-                android:text="Thêm mới"/>
+                android:text="@string/activity_update_job_save"/>
         </LinearLayout>
 
     </LinearLayout>
