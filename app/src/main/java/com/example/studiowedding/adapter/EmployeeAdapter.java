@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -18,13 +19,21 @@ import com.example.studiowedding.R;
 import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Employee;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder> {
     private List<Employee> employeeList;
+
     private OnItemClickListner.EmployeeI itemClickListner;
+
+    public EmployeeAdapter(List<Employee> employeeList) {
+
+        this.employeeList = employeeList;
+    }
+
 
     public void setOnClickItem(OnItemClickListner.EmployeeI itemClickListner){
         this.itemClickListner = itemClickListner;
@@ -49,6 +58,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             return;
         }
 
+//
 //        Log.e("img", employee.getAnh() + "abc");
         Glide.with(holder.itemView.getContext())
                 .load(employee.getAnh())
@@ -86,10 +96,12 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         return employeeList == null ? 0 : employeeList.size();
     }
 
-    public class EmployeeViewHolder extends RecyclerView.ViewHolder{
+    public class EmployeeViewHolder extends RecyclerView.ViewHolder {
         public CircleImageView circleImageView;
         public TextView tvNameEmployee, tvRoleEmployee;
         public ImageView ivMenu;
+
+        public ImageView ivFiler;
 
         public EmployeeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -97,6 +109,53 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             tvNameEmployee = itemView.findViewById(R.id.tv_name_employee);
             tvRoleEmployee = itemView.findViewById(R.id.tv_role_employee);
             ivMenu = itemView.findViewById(R.id.iv_menu_employee);
+            ivFiler = itemView.findViewById(R.id.imgFilterContract);
         }
+
+        public void setListener(Employee employee) {
+            tvNameEmployee.setText(employee.getHoTen());
+            tvRoleEmployee.setText(employee.getVaiTro());
+        }
+
+    }
+    public Filter getFilter(){
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String strSearch = charSequence.toString();
+                if (strSearch.isEmpty()) {
+                    employeeList = new ArrayList<>();
+                } else {
+                    List<Employee> list = new ArrayList<>();
+                    for (Employee employee : employeeList) {
+                        if (employee.getHoTen().toLowerCase().contains(strSearch.toLowerCase())) {
+                            list.add(employee);
+                        }
+                    }
+                    employeeList = list;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = employeeList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                employeeList = (List<Employee>) filterResults.values;
+                notifyDataSetChanged();
+
+            }
+        };
+    }
+    public void filterByRole (String role) {
+        List<Employee> filterList = new ArrayList<>();
+        for (Employee employee : employeeList) {
+            if (employee.getVaiTro().equals(role)) {
+                filterList.add(employee);
+            }
+        }
+        employeeList.clear();
+        employeeList = filterList;
+        notifyDataSetChanged();
     }
 }

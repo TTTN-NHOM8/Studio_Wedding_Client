@@ -20,10 +20,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <SearchView
+            android:id="@+id/searchView"
             android:layout_width="281dp"
             android:layout_height="52dp"
             android:layout_weight="1"
-            android:background="@drawable/edittext_bgr_white" />
+            android:background="@drawable/edittext_bgr_white"
+            app:queryHint="Tìm nhân viên"/>
 
         <ImageView
             android:id="@+id/imgFilterContract"
