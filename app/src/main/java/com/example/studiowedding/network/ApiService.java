@@ -1,5 +1,6 @@
 package com.example.studiowedding.network;
 
+import com.example.studiowedding.model.Account;
 import com.example.studiowedding.view.activity.task.ResponseTask;
 
 import retrofit2.Call;
@@ -28,7 +29,10 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAILS_URL)
     Call<List<ContractDetail>> getContractDetails();
-  
+
+
+
+
     // task
     @GET(ManagerUrl.READ_TASKS)
     Call<ResponseTask> readTask();
@@ -48,6 +52,34 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(ManagerUrl.ACCOUNT)
     Call<AccountResponse> loginAccount(@Field("idNhanVien") String idNhanVien, @Field("matKhau") String matKhau);
+
+    @GET(ManagerUrl.ACCOUNT_ALL)
+    Call<AccountResponse> getEmployeeInfo(@Path("idNhanVien") String idNhanVien);
+    @FormUrlEncoded
+    @POST(ManagerUrl.ACCOUNT_CHANGEPASSWORK)
+    Call<AccountResponse> changePassword(@Field("idNhanVien") String idNhanVien,
+                                                @Field("matKhauCu") String matKhauCu,
+                                                @Field("matKhauMoi") String matKhauMoi);
+
+    @FormUrlEncoded
+    @POST(ManagerUrl.ACCOUNT_UPDATE_EMPLOYEE_INFO)
+    Call<AccountResponse> updateEmployeeInfo(
+            @Field("idNhanVien") String idNhanVien,
+            @Field("hoVaTen") String hoVaTen,
+            @Field("ngaySinh") String ngaySinh,
+            @Field("gioiTinh") String gioiTinh,
+            @Field("dienThoai") String dienThoai,
+            @Field("diaChi") String diaChi,
+            @Field("vaiTro") String vaiTro
+
+    );
+    @GET(ManagerUrl.ACCOUNT_DOANHTHU)
+    Call<AccountResponse> getDailyRevenue(@Path("ngay") String ngay);
+    @GET(ManagerUrl.ACCOUNT_DOANHTHUMONTH)
+    Call<AccountResponse> getDailyRevenuemonth(@Path("thang") String thang);
+
+    @GET(ManagerUrl.ACCOUNT_DOANHTHUYERT)
+    Call<AccountResponse> getDailyRevenueyert(@Path("nam") String nam);
 
 
     // CONTRACT

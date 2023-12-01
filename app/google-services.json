@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1044041031886",
+    "project_id": "nshop-3b064",
+    "storage_bucket": "nshop-3b064.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044041031886:android:99714ad4214cc98f94709f",
+        "android_client_info": {
+          "package_name": "com.example.studiowedding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044041031886-6qrjviuavme6n7uekben19qergqcnhu4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2sJDqL2Fa-TysKwz-Zx7uAPWCRdAb-10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044041031886-6qrjviuavme6n7uekben19qergqcnhu4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

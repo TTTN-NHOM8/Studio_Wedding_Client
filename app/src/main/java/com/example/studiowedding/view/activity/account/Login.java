@@ -1,6 +1,7 @@
 package com.example.studiowedding.view.activity.account;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.text.InputType;
@@ -23,6 +24,11 @@ import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.view.activity.MainActivity;
 import com.example.studiowedding.view.activity.task.SeeTaskActivity;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -93,10 +99,39 @@ public class Login extends AppCompatActivity {
                     if ("success".equals(status)) {
                         Account userAccount = accountResponse.getUserAccount();
                         if (userAccount != null) {
-                            String vaitro = userAccount.getVaitro();
-                            if (vaitro.equals("1")) {
-                                Toast.makeText(Login.this, "Đăng nhập thành công admin ", Toast.LENGTH_SHORT).show();
+                            String vaitro = userAccount.getVaiTro();
+                            String idnhanvien = userAccount.getIdNhanVien();
+                            String pass = edtMatKhau.getText().toString().trim();
+                            String hoten = userAccount.getHoVaTen();
+                            String sdt = userAccount.getDienThoai();
+                            String diachi = userAccount.getDiaChi();
+                            String ngaysinh = userAccount.getNgaySinh();
+                            String gioitinhs = userAccount.getGioiTinh();
+                            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+                            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                            try {
+                                Date date = inputFormat.parse(ngaysinh);
+                                    String formattedNgaySinh = outputFormat.format(date);
+                                    SharedPreferences preferences = getSharedPreferences("LuuIdNhanvien", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferences.edit();
+                                    editor.putString("IdNhanvien", idnhanvien);
+                                    editor.putString("Hoten", hoten);
+                                    editor.putString("Vaitro", vaitro);
+                                    editor.putString("Matkhau", pass);
+                                    editor.putString("SDT", sdt);
+                                    editor.putString("Diachi", diachi);
+                                    editor.putString("ngay", formattedNgaySinh);
+                                    editor.putString("gioitinh", gioitinhs);
+                                    editor.apply();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.d("err: ",e.getMessage());
+                            }
+
+                            if (vaitro.equals("Quan li")) {
+                                Toast.makeText(Login.this, "Đăng nhập thành công admin ",Toast.LENGTH_SHORT).show();
                                 navigateToNextScreenAdmin();
+
                             } else {
                                 Toast.makeText(Login.this, "Đăng nhập thành công nhân viên ", Toast.LENGTH_SHORT).show();
                                 navigateToNextScreenEmployee();
@@ -128,7 +163,7 @@ public class Login extends AppCompatActivity {
 
     private void navigateToNextScreenEmployee() {
         // Thực hiện chuyển màn hình nhân viên
-        Intent intent = new Intent(Login.this, SeeTaskActivity.class);
+        Intent intent = new Intent(Login.this, MainActivity.class);
         startActivity(intent);
     }
 

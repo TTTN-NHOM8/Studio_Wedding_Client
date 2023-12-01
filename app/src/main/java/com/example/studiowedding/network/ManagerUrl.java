@@ -2,11 +2,16 @@ package com.example.studiowedding.network;
 
 public class ManagerUrl {
 
-    public static final String BASE_URL = "http://172.16.51.193:3000/api/";
-  
+    public static final String BASE_URL = "http://192.168.1.10:3000/api/";
 
-    // Account
-    public static final String ACCOUNT = "account/Login";  
+    //account
+    public static final String ACCOUNT = "account/Login";
+    public static final String ACCOUNT_ALL = "account/get-updated-info/{idNhanVien}";
+    public static final String ACCOUNT_CHANGEPASSWORK = "account/changePassword";
+    public static final String ACCOUNT_UPDATE_EMPLOYEE_INFO = "account/update";
+    public static final String ACCOUNT_DOANHTHU = "getDailyRevenue/{ngay}";
+    public static final String ACCOUNT_DOANHTHUMONTH = "getDailyRevenueMonth/{thang}";
+    public static final String ACCOUNT_DOANHTHUYERT = "getDailyRevenueyert/{nam}";
 
     // Contract
     public  static  final String CONTRACTS="contracts";
