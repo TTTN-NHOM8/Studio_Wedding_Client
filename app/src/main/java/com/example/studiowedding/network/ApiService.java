@@ -1,5 +1,6 @@
 package com.example.studiowedding.network;
 
+import com.example.studiowedding.adapter.ProductAdapter;
 import com.example.studiowedding.view.activity.task.ResponseTask;
 import com.example.studiowedding.model.Employee;
 import com.example.studiowedding.view.activity.employee.ResponseEmployee;
@@ -47,6 +48,9 @@ public interface ApiService {
     @DELETE(ManagerUrl.DELETE_TASKS)
     Call<ResponseTask> deleteTaskById(@Path("id") int id);
 
+    @DELETE(ManagerUrl.DELETE_PRODUCT)
+    Call<ResponseTask> deleteProductId(@Path("id") int id);
+  
     // Account
     @FormUrlEncoded
     @POST(ManagerUrl.ACCOUNT)
@@ -82,7 +86,11 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
 
     @POST(ManagerUrl.ADD_CONTRACT)
     Call<Void> insertContract(@Body Contract newContract);
+    @POST(ManagerUrl.ADD_PRODUCT)
+    Call<Void> addProduct(@Body Product newProduct);
 
+    @PUT(ManagerUrl.UPDATE_PRODUCT)
+    Call<Void> updateProduct(@Path("idSanPham") String idSanPham,@Body Product newProduct);
     @POST(ManagerUrl.INCURRENT_ADD)
     Call<Void> insertIncurrent(@Body Incurrent newIncurrent);
 
@@ -95,7 +103,7 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     @PUT(ManagerUrl.INCURRENT_DELETE)
     Call<Void> deleteIncurrent(@Path("idPhatSinh") String idPhatSinh);
 
-  // Detail contract
+    // Detail contract
     @FormUrlEncoded
     @POST(ManagerUrl.INSERT_CONTRACT_DETAIL_PRODUCT)
     Call<ServerResponse> insertContractDetailWithProduct(
@@ -122,6 +130,12 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     @GET(ManagerUrl.CONTRACT_DETAIL_PRODUCTS)
     Call<List<Product>> getProductsByStatusReady();
 
+    @GET(ManagerUrl.GET_PRODUCT)
+    Call<List<Product>> getProducts();
+    @GET(ManagerUrl.GET_PRODUCT_BY_NAME)
+    Call<List<Product>> getProductsByName(@Query("q") String tenSanPham);
+
+    @GET(ManagerUrl.GET_PRODUCT)
     @DELETE(ManagerUrl.DELETE_CONTRACT_DETAIL_BY_CONTRACT_DETAIL_ID)
     Call<ServerResponse> deleteContractDetailByContractDetailID(@Path("contractDetailID") String contractDetailID);
 
