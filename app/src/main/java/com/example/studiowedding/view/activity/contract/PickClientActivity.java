@@ -42,11 +42,7 @@ public class PickClientActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_client);
-        imgBack=findViewById(R.id.imgBackFromPickClient);
-        tvCreate=findViewById(R.id.tvCreateClient);
-        tvNoItem=findViewById(R.id.tvNoItemCustomer);
-        rcv=findViewById(R.id.rcvPickClient);
-        searchView=findViewById(R.id.searcViewPickCustomer);
+        initView();
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         rcv.setLayoutManager(linearLayoutManager);
@@ -69,6 +65,13 @@ public class PickClientActivity extends AppCompatActivity implements View.OnClic
         tvCreate.setOnClickListener(this);
         getAllCustomer();
         setupSearchView();
+    }
+    private void initView(){
+        imgBack=findViewById(R.id.imgBackFromPickClient);
+        tvCreate=findViewById(R.id.tvCreateClient);
+        tvNoItem=findViewById(R.id.tvNoItemCustomer);
+        rcv=findViewById(R.id.rcvPickClient);
+        searchView=findViewById(R.id.searcViewPickCustomer);
     }
 
     @Override
@@ -110,13 +113,14 @@ public class PickClientActivity extends AppCompatActivity implements View.OnClic
             }
             customerList.clear();
             customerList.addAll(filteredList);
-            adapter.notifyDataSetChanged();
             if (filteredList.isEmpty()) {
                 tvNoItem.setVisibility(View.VISIBLE);
             } else {
                 tvNoItem.setVisibility(View.GONE);
             }
         }
+        adapter.notifyDataSetChanged();
+
     }
 
     private void getAllCustomer() {

@@ -90,6 +90,11 @@
 
 
     <string name="icon_description">Role Icon</string>
+
+    <string name="update_oncurrent">Cập nhật phát sinh</string>
+    <string name="title_info_incurrent">Thông tin phát sinh</string>
+    <string name="noitem">Không có mục nào để hiển thị</string>
+
     <string name="title_activity_add_product">AddProductActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
