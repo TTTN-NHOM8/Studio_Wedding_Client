@@ -8,15 +8,18 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.adapter.EmployeeAdapter;
@@ -43,6 +46,10 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     private FloatingActionButton floatingActionButton;
     private ImageView ivFilter;
     private RecyclerView rcvEmployee;
+    private List<Employee> employeeList = new ArrayList<>();
+
+
+    private SearchView searchView;
 
     private EmployeeAdapter employeeAdapter;
     @Override
@@ -55,6 +62,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_employee, container, false);
+
     }
 
     @Override
@@ -69,16 +77,89 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         rcvEmployee = view.findViewById(R.id.rcv_employee_list);
         floatingActionButton = view.findViewById(R.id.fabContract);
         ivFilter = view.findViewById(R.id.imgFilterContract);
+        searchView = view.findViewById(R.id.searchView);
         floatingActionButton.setOnClickListener(view1 -> startActivity(new Intent(getContext(), AddEmployeeActivity.class)));
+        setAdapter();
+        setSearchView();
+        ivFilter.setOnClickListener(v -> showFilterPopupMenu(v));
+        }
+    private void showFilterPopupMenu(View view){
+        PopupMenu popupMenu = new PopupMenu(requireContext(),view);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.filternv, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.makeup:
+                    filterByRole("Make Up");
+                    break;
+                case R.id.laixe:
+                    filterByRole("Lái Xe");
+                    break;
+                case R.id.chuphinh:
+                    filterByRole("Chụp Hình");
+                    break;
+                case R.id.haucan:
+                    filterByRole("Hậu Cần");
+                    break;
+                case R.id.loctatca:
+                    filterByRole("Lọc tất cả trạng thái");
+                    break;
+            }
+            return true;
+        });
+        popupMenu.show();
+    }
+    private void filterByRole (String role){
+        if (employeeAdapter != null){
+            employeeAdapter.filterByRole(role);
+        }
+    }
+
+
+    private void setSearchView() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(query.isEmpty()) {
+                    getEmployeeList();
+                } else {
+                    employeeAdapter.getFilter().filter(query);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText)
+            {
+                if(newText.isEmpty()) {
+                    getEmployeeList();
+                } else {
+                    employeeAdapter.getFilter().filter(newText);
+                }
+                return true;
+            }
+        });
+    }
+
+    public void setAdapter(){
+        List<Employee> list = new ArrayList<>();
+        EmployeeAdapter employeeAdapter = new EmployeeAdapter(list);
+        employeeAdapter.setOnClickItem(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        rcvEmployee.setLayoutManager(linearLayoutManager);
+        rcvEmployee.setAdapter(employeeAdapter);
     }
 
     public void setUpEmployeeRecyclerView(){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         rcvEmployee.setLayoutManager(linearLayoutManager);
         rcvEmployee.setNestedScrollingEnabled(false);
-        employeeAdapter = new EmployeeAdapter();
+        employeeAdapter = new EmployeeAdapter(employeeList);
         employeeAdapter.setOnClickItem(this);
         rcvEmployee.setAdapter(employeeAdapter);
+
+
     }
 
     /**
@@ -136,4 +217,5 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         super.onStart();
         getEmployeeList();
     }
+
 }
