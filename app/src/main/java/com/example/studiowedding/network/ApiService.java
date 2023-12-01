@@ -22,7 +22,6 @@ import com.example.studiowedding.model.ContractDetail;
 import com.example.studiowedding.model.Customer;
 import com.example.studiowedding.model.Incurrent;
 import com.example.studiowedding.view.activity.account.AccountResponse;
-import com.example.studiowedding.view.activity.task.ResponseTask;
 import com.example.studiowedding.model.Product;
 import com.example.studiowedding.model.Service;
 import com.example.studiowedding.view.activity.detail_contract.ServerResponse;
@@ -53,6 +52,11 @@ public interface ApiService {
     @POST(ManagerUrl.ACCOUNT)
     Call<AccountResponse> loginAccount(@Field("idNhanVien") String idNhanVien, @Field("matKhau") String matKhau);
 
+//Customer
+@GET(ManagerUrl.READ_CUSTOMER)
+Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
+    @PUT(ManagerUrl.UPDATE_Customer)
+    Call<Void> updateCustomer(@Path("idKhachHang") int idKhachHang,@Body Customer updateCustomer);
 
     // CONTRACT
     @GET(ManagerUrl.CONTRACTS)
@@ -145,6 +149,9 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAIL_IDCONTRACT)
     Call<List<ContractDetail>>getContractDetailByIdContract(@Path("contractID") String idContract);
+
+    @POST(ManagerUrl.UPDATE_CUSTOMER)
+    Call<Void> updateCustomer(@Path("id") String id,@Body Customer customer);
 
     //Employee
     @GET(ManagerUrl.URL_GET_EMPLOYEE)
