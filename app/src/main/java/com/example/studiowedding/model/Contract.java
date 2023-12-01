@@ -1,23 +1,62 @@
 package com.example.studiowedding.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Contract {
+public class Contract implements Serializable {
+    @SerializedName("idHopDong")
+
     private String idHopDong;
+    @SerializedName("ngayTao")
+
     private Date ngayTao;
-    private Date ngayThanhToan;
+    @SerializedName("ngayThanhToan")
+
+    private String ngayThanhToan;
+    @SerializedName("tienCoc")
+
     private Float tienCoc;
+    @SerializedName("giamGia")
+
     private Float giamGia;
+    @SerializedName("tongTien")
+
     private Float tongTien;
+    @SerializedName("trangThaiThanhToan")
+
     private String trangThaiThanhToan;
+    @SerializedName("trangThaiHopDong")
+
     private String trangThaiHopDong;
+    @SerializedName("trangThaiPhatSinh")
+
     private String trangThaiPhatSinh;
+    @SerializedName("hienThi")
+
     private int hienThi;
-    private int idKhachHang;
+    @SerializedName("idHDTamThoi")
+    private String idHDTT;
 
+
+
+    @SerializedName("idKhachHang")
+
+    private int idKH;
+
+    @SerializedName("tenKhachHang")
     private String tenKH;
+    @SerializedName("dienThoai")
 
-    public Contract(String idHopDong, Date ngayTao, Date ngayThanhToan, Float tienCoc, Float giamGia, Float tongTien, String trangThaiThanhToan, String trangThaiHopDong, String trangThaiPhatSinh, int hienThi, int idKhachHang, String tenKH) {
+    private String dienThoai;
+    @SerializedName("diaChi")
+    private String diaChi;
+
+    private Customer customer;
+
+
+    public Contract(String idHopDong, Date ngayTao, String ngayThanhToan, Float tienCoc, Float giamGia, Float tongTien, String trangThaiThanhToan, String trangThaiHopDong, String trangThaiPhatSinh, int hienThi,String idHDTT, int idKH, String tenKH, String dienThoai, String diaChi) {
         this.idHopDong = idHopDong;
         this.ngayTao = ngayTao;
         this.ngayThanhToan = ngayThanhToan;
@@ -28,8 +67,31 @@ public class Contract {
         this.trangThaiHopDong = trangThaiHopDong;
         this.trangThaiPhatSinh = trangThaiPhatSinh;
         this.hienThi = hienThi;
-        this.idKhachHang = idKhachHang;
+        this.idHDTT=idHDTT;
+        this.idKH = idKH;
         this.tenKH = tenKH;
+        this.dienThoai = dienThoai;
+        this.diaChi = diaChi;
+    }
+
+    public Contract(String idHopDong, Date ngayTao, Float tongTien, String trangThaiThanhToan, String trangThaiHopDong, String tenKH) {
+        this.idHopDong = idHopDong;
+        this.ngayTao = ngayTao;
+        this.tongTien = tongTien;
+        this.trangThaiThanhToan = trangThaiThanhToan;
+        this.trangThaiHopDong = trangThaiHopDong;
+        this.tenKH = tenKH;
+    }
+
+    public Contract(String idHopDong, String ngayThanhToan, Float tienCoc, Float giamGia, Float tongTien, String trangThaiThanhToan, String trangThaiHopDong, int idKH) {
+        this.idHopDong = idHopDong;
+        this.ngayThanhToan = ngayThanhToan;
+        this.tienCoc = tienCoc;
+        this.giamGia = giamGia;
+        this.tongTien = tongTien;
+        this.trangThaiThanhToan = trangThaiThanhToan;
+        this.trangThaiHopDong = trangThaiHopDong;
+        this.idKH = idKH;
     }
 
     public String getIdHopDong() {
@@ -48,11 +110,11 @@ public class Contract {
         this.ngayTao = ngayTao;
     }
 
-    public Date getNgayThanhToan() {
+    public String getNgayThanhToan() {
         return ngayThanhToan;
     }
 
-    public void setNgayThanhToan(Date ngayThanhToan) {
+    public void setNgayThanhToan(String ngayThanhToan) {
         this.ngayThanhToan = ngayThanhToan;
     }
 
@@ -112,12 +174,36 @@ public class Contract {
         this.hienThi = hienThi;
     }
 
-    public int getIdKhachHang() {
-        return idKhachHang;
+    public int getIdKH() {
+        return idKH;
     }
 
-    public void setIdKhachHang(int idKhachHang) {
-        this.idKhachHang = idKhachHang;
+    public void setIdKH(int idKH) {
+        this.idKH = idKH;
+    }
+
+    public String getDienThoai() {
+        return dienThoai;
+    }
+
+    public void setDienThoai(String dienThoai) {
+        this.dienThoai = dienThoai;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getTenKH() {
@@ -126,5 +212,13 @@ public class Contract {
 
     public void setTenKH(String tenKH) {
         this.tenKH = tenKH;
+    }
+
+    public String getIdHDTT() {
+        return idHDTT;
+    }
+
+    public void setIdHDTT(String idHDTT) {
+        this.idHDTT = idHDTT;
     }
 }

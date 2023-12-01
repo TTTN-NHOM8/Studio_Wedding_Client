@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -20,20 +21,21 @@
             android:paddingBottom="14dp">
 
             <LinearLayout
-                android:layout_width="148dp"
+                android:layout_width="130dp"
                 android:layout_height="94dp"
                 android:layout_weight="1"
                 android:background="@drawable/bgr_red"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/tvDowOrDohDetailContractItem"
+                    android:id="@+id/dateOfHireTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:padding="5dp"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="@color/black"
@@ -41,13 +43,41 @@
                     android:textStyle="italic" />
 
                 <TextView
-                    android:id="@+id/tvLocationOrDorDetailContractItem"
+                    android:id="@+id/dateOfReturnTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:ellipsize="end"
-                    android:gravity="center"
                     android:maxLines="3"
+                    android:padding="5dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/locationTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:padding="5dp"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/dateOfPerformTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:padding="5dp"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="@color/black"
@@ -56,37 +86,72 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="94dp"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:orientation="vertical"
-                android:padding="3dp">
+                android:gravity="center|center_horizontal"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvNamePrDetailContractItem"
+                    android:id="@+id/productNameTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_vertical"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:gravity="center"
+                    android:padding="5dp"
+                    android:paddingTop="5dp"
+                    android:singleLine="false"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:layout_gravity="center" />
 
                 <TextView
-                    android:id="@+id/tvPriceDetailContractItem"
+                    android:id="@+id/productPriceTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_vertical"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:gravity="center"
                     android:text="TextView"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="15sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/serviceNameTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:padding="5dp"
+                    android:singleLine="false"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/servicePriceTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_vertical"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:text="TextView"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:layout_gravity="center" />
             </LinearLayout>
 
             <ImageView

@@ -35,7 +35,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <EditText
-            android:id="@+id/contractIdEditText"
+            android:id="@+id/searchEditText"
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_marginHorizontal="16dp"
@@ -43,7 +43,6 @@
             android:background="@drawable/edittext_bgr_white"
             android:drawableStart="@drawable/search_bar_icon"
             android:drawablePadding="14dp"
-            android:focusable="false"
             android:fontFamily="@font/inter_regular"
             android:hint="Tìm kiếm sản phẩm"
             android:paddingHorizontal="13dp"
@@ -54,12 +53,15 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="0dp"
+            android:id="@+id/productSelectRecyclerView"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginHorizontal="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/contractIdEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/searchEditText"
+            tools:itemCount="3"
+            tools:listitem="@layout/item_product_select" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

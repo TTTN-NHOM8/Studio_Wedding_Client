@@ -232,10 +232,10 @@ public class AddEmployeeActivity extends AppCompatActivity {
             return false;
         }
 
-        if (!FormatUtils.isValidDate(employee.getNgaySinh())) {
-            showSnackbar(AppConstants.DATE_OF_BIRTH_INVALID_MESSAGE);
-            return false;
-        }
+//        if (!FormatUtils.isValidDate(employee.getNgaySinh())) {
+//            showSnackbar(AppConstants.DATE_OF_BIRTH_INVALID_MESSAGE);
+//            return false;
+//        }
 
         if (!FormatUtils.isEmailValid(employee.getIdNhanVien())) {
             showSnackbar(AppConstants.EMAIL_INVALID_MESSAGE);

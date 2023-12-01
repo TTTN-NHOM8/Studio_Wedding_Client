@@ -7,7 +7,10 @@
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/layout_task"
+    >
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -23,10 +26,16 @@
 
         <TextView
             android:id="@+id/tv_id_hd_job"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
             android:fontFamily="@font/inter_regular"
+            android:lines="1"
+            android:singleLine="true"
             android:text="@string/fragment_job_id"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -72,10 +81,16 @@
 
         <TextView
             android:id="@+id/tv_name_job"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:gravity="center"
             android:fontFamily="@font/inter_bold"
+            android:lines="1"
+            android:singleLine="true"
             android:text="@string/fragment_job_name"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -85,10 +100,12 @@
 
         <TextView
             android:id="@+id/tv_address_job"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_width="172dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/inter_regular"
+            android:gravity="center"
             android:text="@string/fragment_job_address"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -98,13 +115,17 @@
 
         <TextView
             android:id="@+id/tv_employee_job"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/inter_regular"
             android:text="@string/fragment_job_employee"
             android:textColor="@color/black"
             android:textSize="15sp"
+            android:lines="2"
+            android:gravity="center"
+            android:ellipsize="end"
             app:layout_constraintEnd_toStartOf="@+id/iv_menu_job"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_address_job" />

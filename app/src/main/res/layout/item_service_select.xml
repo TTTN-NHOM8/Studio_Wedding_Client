@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="15sp"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginTop="10dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/serviceNameTextView"
+            android:layout_width="match_parent"
+            android:text="Áo cưới 1"
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_regular"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/servicePriceTextView"
+            android:layout_width="match_parent"
+            android:text="2.000.000đ"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="15sp"
+            android:textColor="@color/red"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

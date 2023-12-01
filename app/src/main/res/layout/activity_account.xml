@@ -54,12 +54,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/edittext_bgr"
             android:padding="5dp">
 
             <EditText
-                android:id="@+id/editTextText1"
+                android:id="@+id/edPasswork"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
@@ -80,24 +81,26 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_margin="16dp"
 
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/edittext_bgr"
             android:padding="5dp">
 
             <EditText
-                android:id="@+id/editTextText2"
+                android:id="@+id/edPassnew"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
                 android:background="@color/line"
                 android:drawableStart="@drawable/changepass_new"
+                android:drawablePadding="10dp"
                 android:ems="10"
+                android:fontFamily="@font/inter_medium"
                 android:hint="Mật khẩu mới"
                 android:inputType="text"
-                android:fontFamily="@font/inter_medium"
                 android:paddingStart="10dp"
-                android:drawablePadding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -108,23 +111,25 @@
             android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_margin="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/edittext_bgr"
             android:padding="5dp">
 
             <EditText
-                android:id="@+id/editTextText0"
+                android:id="@+id/edPassnew1"
                 android:layout_width="300dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
                 android:background="@color/line"
-                android:drawablePadding="10dp"
                 android:drawableStart="@drawable/changepass_old"
+                android:drawablePadding="10dp"
                 android:ems="10"
+                android:fontFamily="@font/inter_medium"
                 android:hint="Nhập lại mật khẩu mới"
                 android:inputType="text"
                 android:paddingStart="10dp"
-                android:fontFamily="@font/inter_medium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -132,7 +137,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnCapnhat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
