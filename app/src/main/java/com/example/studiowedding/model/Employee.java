@@ -2,9 +2,12 @@ package com.example.studiowedding.model;
 
 import com.google.gson.annotations.SerializedName;
 
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Employee {
+public class Employee implements Serializable {
+
     private String idNhanVien;
     @SerializedName("hoVaTen")
     private String hoTen;
@@ -13,13 +16,26 @@ public class Employee {
     private String gioiTinh;
     private String dienThoai;
     private String diaChi;
+    @SerializedName("anhDaiDien")
     private String anh;
     private String vaiTro;
     @SerializedName("idThamGia")
     private int idJoin;
     private int hienThi;
 
-    public Employee(String idNhanVien, String hoTen, String matKhau, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro, int hienThi) {
+
+    public Employee(String idNhanVien, String hoTen, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro) {
+        this.idNhanVien = idNhanVien;
+        this.hoTen = hoTen;
+        this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
+        this.dienThoai = dienThoai;
+        this.diaChi = diaChi;
+        this.anh = anh;
+        this.vaiTro = vaiTro;
+    }
+
+    public Employee(String idNhanVien, String hoTen, String matKhau, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro) {
         this.idNhanVien = idNhanVien;
         this.hoTen = hoTen;
         this.matKhau = matKhau;
@@ -29,7 +45,6 @@ public class Employee {
         this.diaChi = diaChi;
         this.anh = anh;
         this.vaiTro = vaiTro;
-        this.hienThi = hienThi;
     }
 
     public String getIdNhanVien() {
@@ -104,13 +119,6 @@ public class Employee {
         this.vaiTro = vaiTro;
     }
 
-    public int getHienThi() {
-        return hienThi;
-    }
-
-    public void setHienThi(int hienThi) {
-        this.hienThi = hienThi;
-    }
 
     public int getIdJoin() {
         return idJoin;
@@ -132,7 +140,6 @@ public class Employee {
                 ", diaChi='" + diaChi + '\'' +
                 ", anh='" + anh + '\'' +
                 ", vaiTro='" + vaiTro + '\'' +
-                ", hienThi=" + hienThi +
                 '}';
     }
 }

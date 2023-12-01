@@ -29,7 +29,12 @@ public class Product implements Serializable {
         this.status = status;
         this.type = type;
     }
-
+    public Product( String name, float price, String status, String type) {
+        this.name = name;
+        this.price = price;
+        this.status = status;
+        this.type = type;
+    }
     public int getId() {
         return id;
     }
