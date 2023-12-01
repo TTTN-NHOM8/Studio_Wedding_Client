@@ -49,7 +49,7 @@ import retrofit2.Response;
 
 public class UpdateContractActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView imgBack;
-    private TextView tvDeposit,tvIDHD,tvDateCreate,tvName,tvPhone,tvAddress,tvShownOncurrent,tvHidden,tvTitle;
+    private TextView tvDeposit,tvIDHD,tvDateCreate,tvName,tvPhone,tvAddress,tvShownOncurrent,tvHidden,tvTitle,tvShowDetailContracts;
     private EditText edPaymentStatus,edDop,edDiscount,edTotal;
     private RecyclerView rcvDetailContract,rcvIncurrent;
     private RelativeLayout relativeLayout;
@@ -96,6 +96,8 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
             }
 
         });
+
+
 
         setOnClickView();
         getContractDetail();
@@ -159,6 +161,7 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
         tvAddress=findViewById(R.id.tvAddressUpdateContract);
         tvShownOncurrent=findViewById(R.id.tvShowOncurrent);
         tvHidden=findViewById(R.id.tvIsnShowOncurrent);
+        tvShowDetailContracts=findViewById(R.id.tvNotificationShowetailContract);
         edDop=findViewById(R.id.edUpdateDOPContract);
         edDiscount=findViewById(R.id.edUpdateDiscountContract);
         edTotal=findViewById(R.id.edUpdateTotalAmmountContract);

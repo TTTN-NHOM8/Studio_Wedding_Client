@@ -235,10 +235,15 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcvDetailContractInUpdateContract"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcvDetailContractInUpdateContract"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>
 
@@ -267,24 +272,39 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="13dp"
                         android:layout_weight="2"
-                        android:textStyle="bold"
-                        android:textAlignment="textEnd"
                         android:text="Xem"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/black"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/tvIsnShowOncurrent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="13dp"
                         android:layout_weight="2"
-                        android:textStyle="bold"
-                        android:textAlignment="textEnd"
                         android:text="Ẩn"
-                        android:visibility="gone"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/black"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvNotificationShowetailContract"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Không có mục nào để hiển thị"
+                    android:textAlignment="center"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/rcvDetailContractInUpdateContract"
+                    app:layout_constraintEnd_toEndOf="@+id/rcvDetailContractInUpdateContract"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/rcvDetailContractInUpdateContract" />
 
                 <RelativeLayout
                     android:id="@+id/rltOncurrent"
