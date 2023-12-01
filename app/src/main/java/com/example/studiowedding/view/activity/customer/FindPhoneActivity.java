@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.studiowedding.R;
-import com.example.studiowedding.adapter.ListcustomerAdapter;
+import com.example.studiowedding.adapter.CustomerAdapter;
 import com.example.studiowedding.model.Customer;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class FindPhoneActivity extends AppCompatActivity {
         listCustomer.add(new Customer("Cuong", "+ 888888888", "Đà nẵng"));
         listCustomer.add(new Customer("Cuong1", "+ 888888888", "Đà nẵng"));
         listCustomer.add(new Customer("Cuong2", "+ 888888888", "Đà nẵng"));
-        adapter = new ListcustomerAdapter(listCustomer);
+        adapter = new CustomerAdapter(listCustomer);
         recyclerViewCustomersList.setAdapter(adapter);
 
 

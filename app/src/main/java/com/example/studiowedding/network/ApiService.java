@@ -4,7 +4,12 @@ package com.example.studiowedding.network;
 import com.example.studiowedding.view.activity.task.ResponseEmployeeJoin;
 import com.example.studiowedding.view.activity.task.ResponseJoin;
 import com.example.studiowedding.view.activity.services.ServiceResponse;
+import com.example.studiowedding.adapter.ProductAdapter;
 import com.example.studiowedding.view.activity.task.ResponseTask;
+import com.example.studiowedding.model.Employee;
+import com.example.studiowedding.view.activity.employee.ResponseEmployee;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -37,6 +42,11 @@ public interface ApiService {
     @POST(ManagerUrl.ACCOUNT)
     Call<AccountResponse> loginAccount(@Field("idNhanVien") String idNhanVien, @Field("matKhau") String matKhau);
 
+//Customer
+@GET(ManagerUrl.READ_CUSTOMER)
+Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
+    @PUT(ManagerUrl.UPDATE_Customer)
+    Call<Void> updateCustomer(@Path("idKhachHang") int idKhachHang,@Body Customer updateCustomer);
 
     // CONTRACT
     @GET(ManagerUrl.CONTRACTS)
@@ -50,6 +60,8 @@ public interface ApiService {
 
     @POST(ManagerUrl.ADD_CONTRACT)
     Call<Void> insertContract(@Body Contract newContract);
+    @POST(ManagerUrl.ADD_PRODUCT)
+    Call<Void> addProduct(@Body Product newProduct);
 
     @PUT(ManagerUrl.CONTRACT_UPDATE)
     Call<Void> updateContract(@Path("idHopDong") String idHopDong, @Body Contract updatedContract);
@@ -68,7 +80,14 @@ public interface ApiService {
     @PUT(ManagerUrl.INCURREN_UPDATE_NONE)
     Call<Void>updateIncurrentNone(@Path("idPhatSinh")int idPhatSinh,@Body Incurrent incurrent);
 
+  
+  // PRODUCT
 
+    @PUT(ManagerUrl.UPDATE_PRODUCT)
+    Call<Void> updateProduct(@Path("idSanPham") String idSanPham,@Body Product newProduct);
+    @POST(ManagerUrl.INCURRENT_ADD)
+    Call<Void> insertIncurrent(@Body Incurrent newIncurrent);
+  
 
     // Detail contract
     @FormUrlEncoded
@@ -99,6 +118,15 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(ManagerUrl.DELETE_CONTRACT_DETAIL_BY_CONTRACT_DETAIL_ID)
     Call<ServerResponse> deleteContractDetailByContractDetailID(@Path("contractDetailID") String contractDetailID, @Field("productID") int productID);
+
+    @GET(ManagerUrl.GET_PRODUCT)
+    Call<List<Product>> getProducts();
+    @GET(ManagerUrl.GET_PRODUCT_BY_NAME)
+    Call<List<Product>> getProductsByName(@Query("q") String tenSanPham);
+
+    @GET(ManagerUrl.GET_PRODUCT)
+    @DELETE(ManagerUrl.DELETE_CONTRACT_DETAIL_BY_CONTRACT_DETAIL_ID)
+    Call<ServerResponse> deleteContractDetailByContractDetailID(@Path("contractDetailID") String contractDetailID);
 
     @FormUrlEncoded
     @PUT(ManagerUrl.UPDATE_CONTRACT_DETAIL_PRODUCT)
@@ -177,5 +205,38 @@ public interface ApiService {
     @PUT(ManagerUrl.REMOVE_SERVICE_URL)
     Call<ServiceResponse> removeService(@Path("serviceID") int serviceID);
 
-}
 
+    @POST(ManagerUrl.UPDATE_CUSTOMER)
+    Call<Void> updateCustomer(@Path("id") String id,@Body Customer customer);
+
+    //Employee
+    @GET(ManagerUrl.URL_GET_EMPLOYEE)
+        Call<ResponseEmployee> getEmployees();
+
+    @FormUrlEncoded
+    @POST(ManagerUrl.URL_ADD_EMPLOYEE)
+    Call<ResponseEmployee> addEmployee(
+            @Field("idNhanVien") String id,
+            @Field("hoVaTen") String hoTen,
+            @Field("ngaySinh") String ngaySinh,
+            @Field("gioiTinh") String gioiTinh,
+            @Field("dienThoai") String dienThoai,
+            @Field("diaChi") String diaChi,
+            @Field("anhDaiDien") String anh,
+            @Field("vaiTro") String vaiTro
+    );
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.URL_UPDATE_EMPLOYEE)
+    Call<ResponseEmployee> updateEmployee(
+            @Path("idNhanVien") String id,
+            @Field("hoVaTen") String hoTen,
+            @Field("matKhau") String matKhau,
+            @Field("ngaySinh") String ngaySinh,
+            @Field("gioiTinh") String gioiTinh,
+            @Field("dienThoai") String dienThoai,
+            @Field("diaChi") String diaChi,
+            @Field("anhDaiDien") String anh,
+            @Field("vaiTro") String vaiTro
+    );
+}

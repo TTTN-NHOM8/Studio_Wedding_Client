@@ -44,7 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
+public class HomeFragment extends Fragment  {
     private RecyclerView mRCV, mRCVToday;
     private TextView tvSeeTask, tvSeeTaskToday;
     private List<Task> mList;
@@ -87,6 +87,7 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
             startActivity(intent);
         });
     }
+
 
     private void readTasksApi() {
         ApiClient.getClient().create(ApiService.class).readTask().enqueue(new Callback<ResponseTask>() {
@@ -194,4 +195,5 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
         super.onStart();
         readTasksApi();
     }
+
 }
