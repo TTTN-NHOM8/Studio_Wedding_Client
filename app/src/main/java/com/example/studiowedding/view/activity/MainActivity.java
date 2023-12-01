@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 logout();
                 break;
             default:
-                if (!"Quan li".equals(vaitro)) {
+                if (!"Quản Lý".equals(vaitro)) {
                     Toast.makeText(this, "Bạn không đủ thẩm quyền", Toast.LENGTH_SHORT).show();
                     return false;
                 }
@@ -141,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
     private void logout() {
         SharedPreferences preferences = getSharedPreferences("LuuIdNhanvien", MODE_PRIVATE);
         preferences.edit().clear().apply();
-
         Intent intent = new Intent(this, Login.class);
         startActivity(intent);
         finish();

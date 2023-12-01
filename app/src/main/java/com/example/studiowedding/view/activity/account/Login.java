@@ -102,11 +102,8 @@ public class Login extends AppCompatActivity {
                             String vaitro = userAccount.getVaiTro();
                             String idnhanvien = userAccount.getIdNhanVien();
                             String pass = edtMatKhau.getText().toString().trim();
-                            String hoten = userAccount.getHoVaTen();
-                            String sdt = userAccount.getDienThoai();
-                            String diachi = userAccount.getDiaChi();
+
                             String ngaysinh = userAccount.getNgaySinh();
-                            String gioitinhs = userAccount.getGioiTinh();
                             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
                             SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                             try {
@@ -115,20 +112,16 @@ public class Login extends AppCompatActivity {
                                     SharedPreferences preferences = getSharedPreferences("LuuIdNhanvien", MODE_PRIVATE);
                                     SharedPreferences.Editor editor = preferences.edit();
                                     editor.putString("IdNhanvien", idnhanvien);
-                                    editor.putString("Hoten", hoten);
-                                    editor.putString("Vaitro", vaitro);
                                     editor.putString("Matkhau", pass);
-                                    editor.putString("SDT", sdt);
-                                    editor.putString("Diachi", diachi);
-                                    editor.putString("ngay", formattedNgaySinh);
-                                    editor.putString("gioitinh", gioitinhs);
+                                    editor.putString("Vaitro", vaitro);
+
                                     editor.apply();
                             } catch (Exception e) {
                                 e.printStackTrace();
                                 Log.d("err: ",e.getMessage());
                             }
 
-                            if (vaitro.equals("Quan li")) {
+                            if (vaitro.equals("Quản Lý")) {
                                 Toast.makeText(Login.this, "Đăng nhập thành công admin ",Toast.LENGTH_SHORT).show();
                                 navigateToNextScreenAdmin();
 

@@ -98,6 +98,7 @@ public class SettingFragment extends Fragment {
 
                     if (account != null) {
                         tvhoten.setText(account.getHoVaTen());
+                        tvVaitro.setText(account.getVaiTro());
                     } else {
 
                     }

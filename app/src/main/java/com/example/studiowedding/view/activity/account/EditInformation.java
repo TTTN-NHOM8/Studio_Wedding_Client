@@ -5,6 +5,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -61,7 +63,6 @@ public class EditInformation extends AppCompatActivity {
         setContentView(R.layout.activity_edit_information);
 
         apiService = ApiClient.getApiService();
-
         edMaNv = findViewById(R.id.edMaNv);
         edMaNv.setEnabled(false);
         edHoTen = findViewById(R.id.edHoten);
@@ -73,9 +74,16 @@ public class EditInformation extends AppCompatActivity {
         rdNu = findViewById(R.id.radioButtonFemale);
         spinnerRoles = findViewById(R.id.spVaitro);
 
+
+        final int maxLength = 10;
+
+        // Thiết lập InputFilter để giới hạn số lượng ký tự
+        edDienThoai.setFilters(new InputFilter[] {
+                new InputFilter.LengthFilter(maxLength)
+        });
+
         Intent intent = getIntent();
         String idNhanVien1 = intent.getStringExtra("idNhanVien");
-        Log.d("thuid", idNhanVien1);
         getAll(idNhanVien1);
 
         imgBack = findViewById(R.id.imgBack);
@@ -87,7 +95,7 @@ public class EditInformation extends AppCompatActivity {
         });
 
         // Xử lý Spinner Vai tro
-        List<String> rolesList = Arrays.asList("Quan li", "Lai xe", "Chup hinh", "Make up");
+        List<String> rolesList = Arrays.asList("Quản Lý", "Lái Xe", "Hậu Cần", "Make Up", "Chụp Hình");
         String[] rolesArray = rolesList.toArray(new String[0]);
         AccountAdapter adapter = new AccountAdapter(EditInformation.this, R.layout.item_account, rolesArray);
         adapter.setDropDownViewResource(R.layout.item_account);
@@ -122,14 +130,14 @@ public class EditInformation extends AppCompatActivity {
                         Toast.makeText(EditInformation.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                     } else {
                         // Check if the role has changed
-                            // Role hasn't changed, proceed with updating information
-                            updateEmployeeInfo(MaNv, HoTen, formatNgayThanhToan, GioiTinh, DienThoai, DiaChi, selectedRole);
-                            Toast.makeText(EditInformation.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-                            if (!selectedRole.equals(selectedRoleBeforeChange)) {
+                        // Role hasn't changed, proceed with updating information
+                        updateEmployeeInfo(MaNv, HoTen, formatNgayThanhToan, GioiTinh, DienThoai, DiaChi, selectedRole);
+                        Toast.makeText(EditInformation.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                        if (!selectedRole.equals(selectedRoleBeforeChange)) {
                             logout();
 
-                           }
-                            finish();
+                        }
+                        finish();
                     }
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
@@ -187,7 +195,6 @@ public class EditInformation extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<AccountResponse> call, Throwable t) {
-                Log.e("EditInformation", "Lỗi kết nối", t);
                 Toast.makeText(EditInformation.this, "Lỗi kết nối", Toast.LENGTH_SHORT).show();
             }
         });
@@ -227,10 +234,10 @@ public class EditInformation extends AppCompatActivity {
 
                             selectedRoleBeforeChange = account.getVaiTro();
 
-                            List<String> rolesList = Arrays.asList("Quan li", "Lai xe", "Chup hinh", "Make up");
+                            List<String> rolesList = Arrays.asList("Quản Lý", "Lái Xe", "Hậu Cần", "Make Up", "Chụp Hình");
                             String[] rolesArray = rolesList.toArray(new String[0]);
 
-                            if (!"Quan li".equals(account.getVaiTro())) {
+                            if (!"Quản Lý".equals(account.getVaiTro())) {
                                 spinnerRoles.setEnabled(false);
                             } else {
                                 spinnerRoles.setEnabled(true);
