@@ -10,6 +10,8 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.studiowedding.R;
 import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Employee;
@@ -20,7 +22,7 @@ import java.util.List;
 public class TaskJoinAdapter extends RecyclerView.Adapter<TaskJoinAdapter.ViewHolder> {
     private  List<Employee> mList;
     private final OnItemClickListner.TaskJoinI mOnClickItem;
-
+    private boolean isInteractionEnabled = true;
     public TaskJoinAdapter(List<Employee> mList, OnItemClickListner.TaskJoinI mOnClickItem) {
         this.mList = mList;
         this.mOnClickItem = mOnClickItem;
@@ -31,12 +33,19 @@ public class TaskJoinAdapter extends RecyclerView.Adapter<TaskJoinAdapter.ViewHo
         this.mList = mList;
         notifyDataSetChanged();
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setPopupMenu(boolean enabled){
+        this.isInteractionEnabled = enabled;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_employee_join, parent, false);
         return new ViewHolder(view);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -45,7 +54,11 @@ public class TaskJoinAdapter extends RecyclerView.Adapter<TaskJoinAdapter.ViewHo
             return;
         }
         holder.bind(employee);
-        holder.ivMenu.setOnClickListener(view ->  showPopupEdit(holder, employee));
+        if (isInteractionEnabled) {
+            holder.ivMenu.setOnClickListener(view -> showPopupEdit(holder, employee));
+        } else {
+            holder.ivMenu.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -76,16 +89,18 @@ public class TaskJoinAdapter extends RecyclerView.Adapter<TaskJoinAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView name, role;
-        private final ImageView ivMenu;
+        private final ImageView ivMenu, ivAvt;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tv_employee_join_name);
             role = itemView.findViewById(R.id.tv_employee_join_role);
             ivMenu = itemView.findViewById(R.id.iv_employee_join_menu);
+            ivAvt = itemView.findViewById(R.id.iv_employee_join_avt);
         }
 
         @SuppressLint("SetTextI18n")
         public void bind(Employee employee){
+            Glide.with(itemView.getContext()).load(employee.getAnh()).placeholder(R.drawable.avt_demo_employee).into(ivAvt);
            name.setText(employee.getHoTen());
            role.setText(employee.getVaiTro());
         }

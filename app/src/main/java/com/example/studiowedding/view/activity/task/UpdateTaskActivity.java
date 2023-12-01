@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,7 +50,8 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
     private ImageView ivSelect, ivBack;
     private LinearLayout btnSave;
     private Task mTask;
-    private TextView tvAddEmployee, tvShowMessage;
+    private TextView tvAddEmployee, tvSeeDetail;
+    private TextView tvShowMessage;
     private RecyclerView mRCV;
     private ProgressDialog mProgressDialog;
     private List<Employee> mListEmployee;
@@ -76,21 +78,14 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
         });
         tvAddEmployee.setOnClickListener(view -> {
             Intent intent = new Intent(this, SeeEmployeeActivity.class);
-            if (mListEmployee != null){
-                intent.putExtra("role", mTask.getRole());
-                intent.putExtra("task", mTask.getIdTask());
-            }else {
-                intent.putExtra("role", mTask.getRole());
-                intent.putExtra("task", mTask.getIdTask());
-            }
+            intent.putExtra("task", mTask.getIdTask());
             Log.i("TAG",""+mTask.getRole());
             Log.i("TAG",""+mTask.getIdTask());
-
             mLauncher.launch(intent);
         });
     }
 
-    @SuppressLint("WrongViewCast")
+    @SuppressLint({"WrongViewCast", "SetTextI18n"})
     private void initUI() {
         etName = findViewById(R.id.et_name_update_job);
         etDate = findViewById(R.id.et_date_update_job);
@@ -102,6 +97,9 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
         mRCV = findViewById(R.id.rcv_employee_update_job);
         tvAddEmployee = findViewById(R.id.tv_add_update_job);
         tvShowMessage = findViewById(R.id.tv_show_update_job);
+        tvSeeDetail = findViewById(R.id.tv_update_see_deltail);
+
+
     }
 
     private void setValue() {
@@ -109,6 +107,15 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
         etDate.setText(FormatUtils.formatDateToString(mTask.getDateImplement()));
         etAddress.setText(mTask.getAddress());
         etNote.setText(mTask.getStatusTask());
+
+        if (mTask.getStatusTask().equals(AppConstants.STATUS_TASK_DONE)){
+            ivSelect.setEnabled(false);
+            etNote.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_bgr));
+            tvAddEmployee.setVisibility(View.GONE);
+            btnSave.setEnabled(false);
+            btnSave.setBackground(ContextCompat.getDrawable(this, R.drawable.button_bgr_linear));
+            tvSeeDetail.setText("Xem chi tiết công việc");
+        }
     }
 
     private void readEmployeeJoinApi() {
@@ -138,6 +145,9 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
         mRCV.setLayoutManager(layoutManager);
         mRCV.setAdapter(taskJoinAdapter);
         mListEmployee = employeeList;
+        if (mTask.getStatusTask().equals(AppConstants.STATUS_TASK_DONE)){
+            taskJoinAdapter.setPopupMenu(false);
+        }
     }
 
     @SuppressLint("NonConstantResourceId")

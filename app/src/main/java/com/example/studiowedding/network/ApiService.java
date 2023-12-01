@@ -136,9 +136,9 @@ public interface ApiService {
 
     @GET(ManagerUrl.READ_EMPLOYEE)
     Call<ResponseEmployeeJoin> readEmployee(@Path("idHDCT") String idDetailContract);
-    @POST(ManagerUrl.READ_EMPLOYEE_ROLE)
+    @POST(ManagerUrl.READ_EMPLOYEE_ID_TASK)
     @FormUrlEncoded
-    Call<ResponseEmployeeJoin> readEmployeeByRole(@Field("role") String role);
+    Call<ResponseEmployeeJoin> readEmployeeByIdTask(@Field("idTask") int idTask);
     @POST(ManagerUrl.INSERT_EMPLOYEE)
     @FormUrlEncoded
     Call<ResponseJoin> insertEmployee(@Field("idTask") int idTask,

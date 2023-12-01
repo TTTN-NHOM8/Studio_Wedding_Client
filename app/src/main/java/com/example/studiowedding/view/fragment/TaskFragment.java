@@ -202,13 +202,9 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
 
     @Override
     public void nextUpdateScreenTask(Task task) {
-        if (AppConstants.STATUS_TASK_DONE.equals(task.getStatusTask())){
-            Snackbar.make(mRCV, "Cập việc đã xong không thể cập nhật", Snackbar.LENGTH_SHORT).show();
-        }else {
-            Intent intent = new Intent(getActivity(), UpdateTaskActivity.class);
-            intent.putExtra("task", task);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(getActivity(), UpdateTaskActivity.class);
+        intent.putExtra("task", task);
+        startActivity(intent);
     }
 
     @Override

@@ -28,7 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class TaskEmployeeJoinAdapter extends RecyclerView.Adapter<TaskEmployeeJoinAdapter.ViewHolder> implements Filterable {
 
     private List<Employee> mList;
-    private final List<Employee> mListTemp;
+    private List<Employee> mListTemp;
     private OnItemClickListner.TaskEmployeeJoinI itemClickListener;
 
     public TaskEmployeeJoinAdapter(List<Employee> employeeList) {
@@ -38,6 +38,13 @@ public class TaskEmployeeJoinAdapter extends RecyclerView.Adapter<TaskEmployeeJo
 
     public void setOnClickItem(OnItemClickListner.TaskEmployeeJoinI itemClickListener){
         this.itemClickListener = itemClickListener;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setList(List<Employee> mList){
+        this.mList = mList;
+        this.mListTemp = mList;
+        notifyDataSetChanged();
     }
 
     @NonNull
