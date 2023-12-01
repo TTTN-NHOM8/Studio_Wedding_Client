@@ -73,8 +73,7 @@ public class CustomerFragment extends Fragment  {
         searchVieww = view.findViewById(R.id.et_search_customer);
         recyclerViewCustomersList.setLayoutManager(linearLayoutManager);
         customerList = new ArrayList<>();
-        DividerItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-        recyclerViewCustomersList.addItemDecoration(itemDecoration);
+
 
         setupSearchView();
         return view;

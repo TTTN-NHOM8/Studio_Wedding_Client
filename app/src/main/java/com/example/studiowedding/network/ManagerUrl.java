@@ -2,7 +2,7 @@ package com.example.studiowedding.network;
 
 public class ManagerUrl {
 
-    public static final String BASE_URL = "http://192.168.1.4:3000/api/";
+    public static final String BASE_URL = "http://192.168.1.34:3000/api/";
   //Customer
   public static final String READ_CUSTOMER = "customer";
     public static final String UPDATE_Customer = "customer/update/{idKhachHang}";
