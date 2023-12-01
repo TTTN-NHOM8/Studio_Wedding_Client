@@ -27,9 +27,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ExampleV
     public void onBindViewHolder(ExampleViewHolder holder, int position) {
         Product currentItem = dataList.get(position);
 
-        holder.tvvaycuoi.setText(currentItem.getTvvaycuoi());
-        holder.tvtrangthai.setText(currentItem.getTvtrangthai());
-        holder.tvgiavay.setText(String.valueOf(currentItem.getTvgiavay()));
     }
 
     @Override

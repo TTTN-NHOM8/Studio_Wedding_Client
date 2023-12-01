@@ -30,6 +30,17 @@ public class Employee implements Serializable {
         this.vaiTro = vaiTro;
     }
 
+    public Employee(String idNhanVien, String hoTen, String matKhau, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro) {
+        this.idNhanVien = idNhanVien;
+        this.hoTen = hoTen;
+        this.matKhau = matKhau;
+        this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
+        this.dienThoai = dienThoai;
+        this.diaChi = diaChi;
+        this.anh = anh;
+        this.vaiTro = vaiTro;
+    }
 
     public String getIdNhanVien() {
         return idNhanVien;

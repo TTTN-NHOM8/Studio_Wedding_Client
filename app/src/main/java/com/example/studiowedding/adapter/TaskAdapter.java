@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -14,23 +16,36 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studiowedding.R;
+import com.example.studiowedding.constant.AppConstants;
 import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Task;
+import com.example.studiowedding.utils.FormatUtils;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> implements Filterable {
 
-    private final List<Task> mList;
+    private List<Task> mList;
+    private List<Task> filteredTasks;
     private OnItemClickListner.TaskI mOnClickItem;
     public TaskAdapter(List<Task> mList) {
         this.mList = mList;
+        this.filteredTasks = mList;
     }
 
     public void setOnClickItem(OnItemClickListner.TaskI mOnClickItem){
         this.mOnClickItem = mOnClickItem;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    public void setList(List<Task> mList){
+        this.mList = mList;
+        this.filteredTasks = mList;
+        notifyDataSetChanged();
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -41,6 +56,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Task task = mList.get(position);
+        if (task == null){
+            return;
+        }
         holder.bind(task);
         holder.ivBtn.setOnClickListener(view -> showPopupEdit(holder, task));
 
@@ -58,7 +76,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
                     mOnClickItem.nextUpdateScreenTask(task);
                     return true;
                 case R.id.action_delete:
-                    mOnClickItem.showConfirmDelete();
+                    mOnClickItem.showConfirmDelete(task, holder.view);
                     return true;
                 default:
                     return false;
@@ -73,9 +91,46 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         return mList != null ? mList.size() : 0;
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            // loc du lieu theo dk
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String search = charSequence.toString().toLowerCase(Locale.getDefault());
+                ArrayList<Task> listTask = new ArrayList<>();
+
+                if (search.isEmpty()){
+                    listTask.addAll(filteredTasks);
+                }else {
+                    for (Task task : filteredTasks ) {
+                        if (task.getDateImplement() != null && task.getNameService().toLowerCase(Locale.getDefault()).contains(search.toLowerCase())){
+                                listTask.add(task);
+                        }else if(task.getDateImplement() == null && AppConstants.NAME_TASK.toLowerCase(Locale.getDefault()).contains(search.toLowerCase())){
+                                listTask.add(task);
+                        }
+                    }
+                }
+
+                FilterResults  filterResults = new FilterResults();
+                filterResults.values = listTask;
+                return filterResults;
+            }
+
+            // lay ket qua loc
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                mList = (List<Task>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvId, tvDate, tvStatus, tvName, tvAddress, tvEmployee;
         private final ImageView ivBtn;
+        private final View view;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvId = itemView.findViewById(R.id.tv_id_hd_job);
@@ -85,33 +140,35 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             tvAddress = itemView.findViewById(R.id.tv_address_job);
             tvEmployee = itemView.findViewById(R.id.tv_employee_job);
             ivBtn = itemView.findViewById(R.id.iv_menu_job);
+            view = itemView.findViewById(R.id.layout_task);
         }
 
+        @SuppressLint("SetTextI18n")
         public void bind(Task task){
-            tvId.setText(task.getId());
-            tvDate.setText(task.getDate());
+            tvId.setText(task.getIdContract());
+            if (task.getDateImplement() == null){
+                tvDate.setText(FormatUtils.formatDateToString(task.getDataLaundry()));
+                tvName.setText(AppConstants.NAME_TASK);
+                tvAddress.setText(AppConstants.ADDRESS_TASK);
+            }else {
+                tvDate.setText(FormatUtils.formatDateToString(task.getDateImplement()));
+                tvName.setText(task.getNameService());
+                tvAddress.setText(task.getAddress());
+            }
             switch (task.getStatusTask()){
-                case "Đang thực hiện" :
+                case AppConstants.STATUS_TASK_IM   :
                     tvStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.yellow));
                     tvStatus.setText(task.getStatusTask());
                     break;
-                case "Đã xong" :
+                case AppConstants.STATUS_TASK_DONE :
                     tvStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.dark_green));
                     tvStatus.setText(task.getStatusTask());
                     break;
             }
-            tvName.setText(task.getName());
-            tvAddress.setText(task.getAddress());
-            if (task.getEmployee() != null && !task.getEmployee().isEmpty()) {
-                StringBuilder stringBuilder = new StringBuilder();
-                for (String str : task.getEmployee()) {
-                    stringBuilder.append(str).append(", ");
-                }
-                stringBuilder.deleteCharAt(stringBuilder.length() - 2);
-
-                tvEmployee.setText(stringBuilder.toString());
-            } else {
-                tvEmployee.setText("");
+            if (task.getEmployee() != null){
+                tvEmployee.setText(task.getEmployee());
+            }else {
+                tvEmployee.setText(AppConstants.EMPLOYEE_TASK);
             }
         }
     }

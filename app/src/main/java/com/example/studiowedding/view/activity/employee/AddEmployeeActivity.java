@@ -54,9 +54,9 @@ public class AddEmployeeActivity extends AppCompatActivity {
     private RadioGroup radioGender;
     private LinearLayout linearAdd;
     private ProgressDialog loadingDialog;
+    private RadioButton radioMale, radioFemale;
 
     private String photoUrlPiker;
-    private String gender = "";
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -79,6 +79,8 @@ public class AddEmployeeActivity extends AppCompatActivity {
         radioGender = findViewById(R.id.radioGender);
         linearAdd = findViewById(R.id.linearAdd);
         ivSpinnerRole = findViewById(R.id.ivSpinnerRole);
+        radioMale = findViewById(R.id.radioMale);
+        radioFemale = findViewById(R.id.radioFemale);
     }
 
     private void setListener(){
@@ -187,12 +189,12 @@ public class AddEmployeeActivity extends AppCompatActivity {
         String dob = etDob.getText().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String location = etLocation. getText().toString().trim();
-        radioGender.setOnCheckedChangeListener((radioGroup, i) -> {
-            if (i != View.NO_ID) {
-                RadioButton radioButton = findViewById(i);
-                gender = radioButton.getText().toString().trim();
-            }
-        });
+        String gender = "";
+        if (radioMale.isChecked()){
+            gender = radioMale.getText().toString().trim();
+        }else {
+            gender = radioFemale.getText().toString().trim();
+        }
         String role = etRole.getText().toString().trim();
 
         Employee employee = new Employee(id,name,dob,gender,phone,location,photoUrlPiker,role);
@@ -226,10 +228,10 @@ public class AddEmployeeActivity extends AppCompatActivity {
             return false;
         }
 
-        if (!FormatUtils.isValidDate(employee.getNgaySinh())) {
-            showSnackbar(AppConstants.DATE_OF_BIRTH_INVALID_MESSAGE);
-            return false;
-        }
+//        if (!FormatUtils.isValidDate(employee.getNgaySinh())) {
+//            showSnackbar(AppConstants.DATE_OF_BIRTH_INVALID_MESSAGE);
+//            return false;
+//        }
 
         if (!FormatUtils.isEmailValid(employee.getIdNhanVien())) {
             showSnackbar(AppConstants.EMAIL_INVALID_MESSAGE);
@@ -282,7 +284,7 @@ public class AddEmployeeActivity extends AppCompatActivity {
             showSnackbar(AppConstants.ADD_EMPLOYEE_SUCCESS_MESSAGE);
             refreshUI();
         } else {
-            showSnackbar(AppConstants.ADD_EMPLOYEE_FAILED_MESSAGE);
+            showSnackbar(AppConstants.EMPLOYEE_EXIST);
         }
     }
     private void refreshUI() {

@@ -21,29 +21,55 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:padding="5dp">
 
                 <SearchView
                     android:id="@+id/et_search_task"
-                    android:layout_width="281dp"
+                    android:layout_width="0dp"
                     android:layout_height="52dp"
-                    android:layout_weight="1"
                     android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/edittext_bgr_white" />
+                    android:background="@drawable/edittext_bgr_white"
+                    app:layout_constraintEnd_toStartOf="@+id/constraintLayout5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/iv_filter_task"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout5"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:src="@drawable/filter_icon" />
-            </LinearLayout>
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/et_search_task"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/et_search_task">
+
+                    <ImageView
+                        android:id="@+id/iv_filter_task"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/filter_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_cancel_filter_update_job"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_cancel" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcv_task"

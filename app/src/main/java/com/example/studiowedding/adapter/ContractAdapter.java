@@ -16,6 +16,7 @@ import com.example.studiowedding.R;
 import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Contract;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -24,6 +25,8 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
     private Context context;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private OnItemClickListner itemClickListener;
+    private DecimalFormat decimalFormat = new DecimalFormat("###,###");
+
 
     public ContractAdapter(List<Contract> contractList, Context context) {
         this.contractList = contractList;
@@ -45,10 +48,11 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if (contractList != null) {
             Contract contract = contractList.get(position);
+            String tongTienFormat=decimalFormat.format(Float.parseFloat(String.valueOf(contractList.get(position).getTongTien())));
 
             holder.tvIdHD.setText(contract.getIdHopDong());
             holder.tvDateCreate.setText(sdf.format(contract.getNgayTao()));
-            holder.tvAmount.setText(String.valueOf(contract.getTongTien()));
+            holder.tvAmount.setText(tongTienFormat +" đ");
             holder.tvName.setText(contract.getTenKH());
 
             String trangThaiThanhToan = contract.getTrangThaiThanhToan();
@@ -61,6 +65,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
 
             String trangThaiHopDong = contract.getTrangThaiHopDong();
             holder.tvStatusHD.setText(trangThaiHopDong);
+
 
             int statusHDColor;
             switch (trangThaiHopDong) {
@@ -114,4 +119,5 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             });
         }
     }
+
 }

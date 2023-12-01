@@ -67,49 +67,43 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
-                <LinearLayout
+                <RadioGroup
+                    android:id="@+id/typeSelectionGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
                     android:orientation="horizontal">
 
-                    <RelativeLayout
+                    <RadioButton
                         android:id="@+id/productButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/button_bgr_primary"
-                        android:paddingVertical="16dp">
+                        android:button="@null"
+                        android:checked="true"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:paddingVertical="16dp"
+                        android:text="SẢN PHẨM"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:fontFamily="@font/inter_bold"
-                            android:text="SẢN PHẨM"
-                            android:textColor="@color/white"
-                            android:textSize="13sp" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
+                    <RadioButton
                         android:id="@+id/serviceButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/button_bgr_linear"
-                        android:paddingVertical="16dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:fontFamily="@font/inter_bold"
-                            android:text="DỊCH VỤ"
-                            android:textColor="@color/white"
-                            android:textSize="13sp" />
-                    </RelativeLayout>
-                </LinearLayout>
+                        android:button="@null"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:paddingVertical="16dp"
+                        android:text="DỊCH VỤ"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
+                </RadioGroup>
 
                 <EditText
                     android:id="@+id/productSelectEditText"
@@ -144,7 +138,7 @@
                     android:textSize="15sp" />
 
                 <EditText
-                    android:id="@+id/priceEditText"
+                    android:id="@+id/productPriceEditText"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:layout_marginTop="10dp"
@@ -153,7 +147,22 @@
                     android:drawablePadding="14dp"
                     android:focusable="false"
                     android:fontFamily="@font/inter_regular"
-                    android:hint="Giá thuê"
+                    android:hint="Giá thuê sản phẩm"
+                    android:paddingHorizontal="13dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <EditText
+                    android:id="@+id/servicePriceEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_bgr_white"
+                    android:drawableStart="@drawable/detail_contrac_price"
+                    android:drawablePadding="14dp"
+                    android:focusable="false"
+                    android:fontFamily="@font/inter_regular"
+                    android:hint="Giá thuê dịch vụ"
                     android:paddingHorizontal="13dp"
                     android:textColor="@color/black"
                     android:textSize="15sp" />

@@ -49,14 +49,14 @@ import retrofit2.Response;
 
 public class UpdateEmployeeActivity extends AppCompatActivity {
     private ProgressDialog loadingDialog;
-    private ImageView ivBack, ivSpinnerRole;
+    private ImageView ivBack, ivSpinnerRole, ivHidingPass;
     private CircleImageView civEmployee;
     private EditText etEmail, etPass, etName, etDob, etPhone, etLocation, etRole;
     private RadioGroup radioGender;
     private RadioButton radioMale, radioFemale;
     private LinearLayout btnUpdate;
-    private String gender = "";
     private String photoUrlPiker;
+    private Employee mEmployee;
     SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,8 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_update_employee);
         loadingDialog = new ProgressDialog(this);
         setMapping();
-        updateUI( (Employee) getIntent().getSerializableExtra("employee"));
+        mEmployee = (Employee) getIntent().getSerializableExtra("employee");
+        updateUI(mEmployee);
         setListener();
     }
 
@@ -83,6 +84,7 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         btnUpdate = findViewById(R.id.btnUpdateEmployee);
         radioMale = findViewById(R.id.radioButtonUpdateMale);
         radioFemale = findViewById(R.id.radioButtonUpdateFemale);
+        ivHidingPass = findViewById(R.id.iv_hiding_pass);
     }
 
     /**
@@ -110,7 +112,7 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
     private String getCustomDob(Employee employee) {
         String dobOrigin;
         try {
-            dobOrigin = FormatUtils.formatDateToString( sdf.parse(employee.getNgaySinh()));
+            dobOrigin = FormatUtils.formatDateToStringEmployee(sdf.parse(employee.getNgaySinh()));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -133,6 +135,7 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         etDob.setOnClickListener(view -> showDatePicker());
         ivSpinnerRole.setOnClickListener(view -> showRoleOptions());
         btnUpdate.setOnClickListener(view -> startUpdateEmployee());
+        ivHidingPass.setOnClickListener(view -> onPasswordToggleImageClick());
     }
 
     /**
@@ -230,17 +233,22 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         String id = etEmail.getText().toString().trim();
         String name = etName.getText().toString().trim();
         String dob = etDob.getText().toString().trim();
+        String password = etPass.getText().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String location = etLocation. getText().toString().trim();
-        radioGender.setOnCheckedChangeListener((radioGroup, i) -> {
-            if (i != View.NO_ID) {
-                RadioButton radioButton = findViewById(i);
-                gender = radioButton.getText().toString().trim();
-            }
-        });
+        String gender = "";
+        if (radioMale.isChecked()){
+            gender = radioMale.getText().toString().trim();
+        }else {
+            gender = radioFemale.getText().toString().trim();
+        }
         String role = etRole.getText().toString().trim();
-
-        Employee employee = new Employee(id,name,dob,gender,phone,location,photoUrlPiker,role);
+        Employee employee;
+        if (photoUrlPiker != null){
+             employee = new Employee(id,name,password,dob,gender,phone,location,photoUrlPiker,role);
+        }else {
+             employee = new Employee(id,name,password,dob,gender,phone,location,mEmployee.getAnh(),role);
+        }
         if (!isValidDataInput(employee)){
             return;
         }
@@ -271,10 +279,10 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
             return false;
         }
 
-        if (!FormatUtils.isValidDate(employee.getNgaySinh())) {
-            showSnackbar(AppConstants.DATE_OF_BIRTH_INVALID_MESSAGE);
-            return false;
-        }
+//        if (!FormatUtils.isValidDate(employee.getNgaySinh())) {
+//            showSnackbar(AppConstants.DATE_OF_BIRTH_INVALID_MESSAGE);
+//            return false;
+//        }
 
         if (!FormatUtils.isEmailValid(employee.getIdNhanVien())) {
             showSnackbar(AppConstants.EMAIL_INVALID_MESSAGE);
@@ -321,10 +329,14 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
 
     private void handleAddEmployeeResponse(ResponseEmployee updateEmployeeResponse) {
         if (updateEmployeeResponse != null && updateEmployeeResponse.isSuccess()) {
-            showSnackbar(AppConstants.ADD_EMPLOYEE_SUCCESS_MESSAGE);
+            showSnackbar(AppConstants.UPDATE_EMPLOYEE_SUCCESS_MESSAGE);
         } else {
-            showSnackbar(AppConstants.ADD_EMPLOYEE_FAILED_MESSAGE);
+            showSnackbar(AppConstants.UPDATE_EMPLOYEE_FAILED_MESSAGE);
         }
+    }
+
+    public void onPasswordToggleImageClick(){
+        UIutils.togglePasswordVisibleWithImage(etPass, ivHidingPass);
     }
 
     private void showLoadingDialog(boolean show) {

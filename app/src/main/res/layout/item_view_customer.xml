@@ -16,7 +16,7 @@
             android:orientation="vertical"
             android:layout_marginEnd="108dp">
             <TextView
-                android:id="@+id/tvName"
+                android:id="@+id/tvNameCustomer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fpoly Miles"
@@ -26,13 +26,13 @@
                 android:layout_marginTop="16dp"/>
 
             <TextView
-                android:id="@+id/tvPhone"
+                android:id="@+id/tvPhoneCustomer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="+84 689 213 567"/>
 
             <TextView
-                android:id="@+id/tvAddress"
+                android:id="@+id/tvAddressCustomer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="40/7 đường Lâm Văn Bền, phường Tân Thuận Tây, Thành phố HỒ CHÍ MINH"

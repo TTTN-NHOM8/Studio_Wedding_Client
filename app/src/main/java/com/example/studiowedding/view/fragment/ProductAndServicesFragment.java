@@ -1,14 +1,20 @@
 package com.example.studiowedding.view.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.media.Image;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.adapter.TabServiceAdapter;
@@ -17,6 +23,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -26,8 +33,10 @@ import java.util.List;
  */
 public class ProductAndServicesFragment extends Fragment {
 
+    private ImageView iv_product;
+
     private TabLayout tabLayout;
-    private ViewPager2 viewPager2;
+    private ViewPager2 vp_service;
 
     List<Services> list = new ArrayList<>();
 
@@ -65,10 +74,6 @@ public class ProductAndServicesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @SuppressLint("MissingInflatedId")
@@ -78,7 +83,7 @@ public class ProductAndServicesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.fragment_product_and_services, container, false);
         tabLayout = view.findViewById(R.id.tabLayout);
-        viewPager2 = view.findViewById(R.id.vp_service);
+        vp_service = view.findViewById(R.id.vp_service);
 
 
 //        mAdapter = new MyRecyclerViewAdapter(dataSanPham, null); // Ban đầu hiển thị dữ liệu của "Sản Phẩm"
@@ -86,9 +91,9 @@ public class ProductAndServicesFragment extends Fragment {
 //        recyclerView.setAdapter(mAdapter);
 
         TabServiceAdapter adapter = new TabServiceAdapter(getActivity());
-        viewPager2.setAdapter(adapter);
+        vp_service.setAdapter(adapter);
 
-        new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> {
+        new TabLayoutMediator(tabLayout, vp_service, (tab, position) -> {
             switch (position){
                 case 0 :
                     tab.setText("Dịch vụ");
@@ -101,5 +106,54 @@ public class ProductAndServicesFragment extends Fragment {
         }).attach();
 
         return view;
+    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        vp_service = view.findViewById(R.id.vp_service);
+        iv_product = view.findViewById(R.id.iv_product);
+
+        onClick();
+    }
+    public void showConfirmDelete() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Xóa công việc");
+        builder.setMessage("Bạn chắc chắn muốn xóa công việc này ?");
+
+        builder.setPositiveButton("Đồng ý", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        builder.setNegativeButton("Hủy", (dialog, which) -> {
+            dialog.dismiss();
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
+    private void onClick() {
+        iv_product.setOnClickListener(view -> {
+            Calendar calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    getContext(),
+                    R.style.CustomDatePickerDialog,
+                    (DatePickerDialog.OnDateSetListener) (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+
+                    },
+                    year,
+                    month,
+                    dayOfMonth
+            );
+
+            // Hiển thị DatePickerDialog
+            datePickerDialog.show();
+        });
+    }
+    public void onDeleteButtonClick(int position) {
+
     }
 }
