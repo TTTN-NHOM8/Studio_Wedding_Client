@@ -41,4 +41,10 @@ public class ManagerUrl {
     public static final String READ_TASKS_ROLE = "tasks/role";
     public static final String UPDATE_TASKS = "update/task/{id}";
     public static final String DELETE_TASKS = "delete/task/{id}";
+    public static final String BASE_URL = "http://172.16.51.210:4000/api/";
+
+    //API Employee
+    public static final String URL_GET_EMPLOYEE = "employee";
+    public static final String URL_ADD_EMPLOYEE = "employee/add";
+    public static final String URL_UPDATE_EMPLOYEE = "employee/update/{idNhanVien}";
 }
