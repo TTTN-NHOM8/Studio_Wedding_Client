@@ -114,6 +114,15 @@ public class FormatUtils {
         return matcher.matches();
     }
 
+    public static boolean isDataInputNumber(String number) {
+        for (char kyTu : number.toCharArray()) {
+            if (Character.isLetter(kyTu)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Kiểm tra tính hợp lệ của chuỗi ngày tháng theo định dạng yyyy-MM-dd.
      *

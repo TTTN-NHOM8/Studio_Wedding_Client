@@ -17,6 +17,7 @@ public class AppConstants {
     public static final int REQUEST_IMAGE_PICKER = 1;
     public static final String DATA_INPUT_EMPTY_MESSAGE = "Vui lòng nhập đầy đủ thông tin";
     public static final String NAME_INVALID_MESSAGE = "Tên không được chứa ký tự số";
+    public static final String PHONE_INVALID_MESSAGE = "Số điện thoại không được chứa ký tự chữ";
     public static final String DATE_OF_BIRTH_INVALID_MESSAGE = "Ngày sinh sai định dạng VD: (yyyy-MM-dd)";
     public static final String EMAIL_INVALID_MESSAGE = "Email sai định dạng";
     public static final String LOADING_MESSAGE = "Vui lòng chờ...";
