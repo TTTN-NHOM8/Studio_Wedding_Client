@@ -38,8 +38,10 @@ import com.google.firebase.storage.StorageReference;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -158,8 +160,10 @@ public class AddEmployeeActivity extends AppCompatActivity {
                 this,
                 R.style.CustomDatePickerDialog,
                 (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                     calendar.set(selectedYear, selectedMonth, selectedDay);
-                    etDob.setText(String.valueOf(selectedYear + "-" + selectedMonth + "-" + selectedDay));
+                    String formattedDate = sdf.format(calendar.getTime());
+                    etDob.setText(formattedDate);
                 },
                 year,
                 month,
@@ -235,6 +239,11 @@ public class AddEmployeeActivity extends AppCompatActivity {
 
         if (!FormatUtils.isEmailValid(employee.getIdNhanVien())) {
             showSnackbar(AppConstants.EMAIL_INVALID_MESSAGE);
+            return false;
+        }
+
+        if (!FormatUtils.isDataInputNumber(employee.getDienThoai())){
+            showSnackbar(AppConstants.PHONE_INVALID_MESSAGE);
             return false;
         }
 
