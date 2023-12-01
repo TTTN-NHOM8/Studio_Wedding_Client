@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
-    <item android:id="@+id/quanly"
-        android:title="Quản Lý" />
     <item android:id="@+id/makeup"
         android:title="Make Up"/>
     <item android:id="@+id/laixe"

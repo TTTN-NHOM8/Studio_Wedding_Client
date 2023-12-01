@@ -9,7 +9,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.adapter.EmployeeAdapter;
@@ -90,9 +90,6 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
 
         popupMenu.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
-                case R.id.quanly:
-                    filterByRole("Quản Lý");
-                    break;
                 case R.id.makeup:
                     filterByRole("Make Up");
                     break;
@@ -124,13 +121,22 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                employeeAdapter.getFilter().filter(query);
+                if(query.isEmpty()) {
+                    getEmployeeList();
+                } else {
+                    employeeAdapter.getFilter().filter(query);
+                }
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                employeeAdapter.getFilter().filter(newText);
+            public boolean onQueryTextChange(String newText)
+            {
+                if(newText.isEmpty()) {
+                    getEmployeeList();
+                } else {
+                    employeeAdapter.getFilter().filter(newText);
+                }
                 return true;
             }
         });
