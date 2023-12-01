@@ -1,6 +1,10 @@
 package com.example.studiowedding.network;
 
 import com.example.studiowedding.view.activity.task.ResponseTask;
+import com.example.studiowedding.model.Employee;
+import com.example.studiowedding.view.activity.employee.ResponseEmployee;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -28,7 +32,7 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAILS_URL)
     Call<List<ContractDetail>> getContractDetails();
-  
+
     // task
     @GET(ManagerUrl.READ_TASKS)
     Call<ResponseTask> readTask();
@@ -43,7 +47,7 @@ public interface ApiService {
 
     @DELETE(ManagerUrl.DELETE_TASKS)
     Call<ResponseTask> deleteTaskById(@Path("id") int id);
-  
+
     // Account
     @FormUrlEncoded
     @POST(ManagerUrl.ACCOUNT)
@@ -141,5 +145,35 @@ public interface ApiService {
 
     @GET(ManagerUrl.CONTRACT_DETAIL_IDCONTRACT)
     Call<List<ContractDetail>>getContractDetailByIdContract(@Path("contractID") String idContract);
-}
 
+    //Employee
+    @GET(ManagerUrl.URL_GET_EMPLOYEE)
+        Call<ResponseEmployee> getEmployees();
+
+    @FormUrlEncoded
+    @POST(ManagerUrl.URL_ADD_EMPLOYEE)
+    Call<ResponseEmployee> addEmployee(
+            @Field("idNhanVien") String id,
+            @Field("hoVaTen") String hoTen,
+            @Field("ngaySinh") String ngaySinh,
+            @Field("gioiTinh") String gioiTinh,
+            @Field("dienThoai") String dienThoai,
+            @Field("diaChi") String diaChi,
+            @Field("anhDaiDien") String anh,
+            @Field("vaiTro") String vaiTro
+    );
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.URL_UPDATE_EMPLOYEE)
+    Call<ResponseEmployee> updateEmployee(
+            @Path("idNhanVien") String id,
+            @Field("hoVaTen") String hoTen,
+            @Field("matKhau") String matKhau,
+            @Field("ngaySinh") String ngaySinh,
+            @Field("gioiTinh") String gioiTinh,
+            @Field("dienThoai") String dienThoai,
+            @Field("diaChi") String diaChi,
+            @Field("anhDaiDien") String anh,
+            @Field("vaiTro") String vaiTro
+    );
+}
