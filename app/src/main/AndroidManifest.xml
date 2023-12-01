@@ -16,11 +16,33 @@
         android:theme="@style/Theme.StudioWedding"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name=".view.activity.task.SeeEmployeeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.services.UpdateServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.services.AddServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.contract.UpdateOncurrentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.activity.contract.DialogDatePicker"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.account.EditInformation"
+            android:exported="false" />
+
         <activity
             android:name=".view.activity.product.AddProductActivity"
             android:exported="false"
             android:label="@string/title_activity_add_product"
             android:theme="@style/Theme.StudioWedding" />
+
         <activity
             android:name=".view.activity.account.EditInformation"
             android:exported="false" />
