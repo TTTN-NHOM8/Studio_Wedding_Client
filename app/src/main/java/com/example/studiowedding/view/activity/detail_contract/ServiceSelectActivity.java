@@ -102,7 +102,7 @@ public class ServiceSelectActivity extends AppCompatActivity implements ServiceS
     // Thực hiện gọi API lấy danh sách dịch vụ
     private void performCallApiGetServices() {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Call<List<Service>> call = apiService.getServices();
+        Call<List<Service>> call = apiService.getSelectServices();
         call.enqueue(new Callback<List<Service>>() {
             @Override
             public void onResponse(Call<List<Service>> call, Response<List<Service>> response) {

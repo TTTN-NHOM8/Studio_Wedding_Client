@@ -138,31 +138,10 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcvDetailContractInAddContract"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/tvNotificationDetailContract"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Không có gì để hiển thị"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rcvDetailContractInAddContract"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:minHeight="150dp"
-                            tools:itemCount="1"
-                            tools:layout_editor_absoluteX="0dp"
-                            tools:layout_editor_absoluteY="0dp"
-                            tools:listitem="@layout/layout_item_detail_contract" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_height="match_parent" />
 
                 </LinearLayout>
 

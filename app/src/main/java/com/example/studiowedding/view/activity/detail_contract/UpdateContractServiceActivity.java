@@ -1,11 +1,9 @@
 package com.example.studiowedding.view.activity.detail_contract;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,7 +16,6 @@ import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
 import com.example.studiowedding.view.activity.contract.AddContractActivity;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -39,7 +36,6 @@ public class UpdateContractServiceActivity extends AppCompatActivity {
     private RelativeLayout updateButton;
     private ImageView backImageView;
     private Calendar calendar;
-    private ConstraintLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +65,6 @@ public class UpdateContractServiceActivity extends AppCompatActivity {
         updateButton = findViewById(R.id.updateButton);
         backImageView = findViewById(R.id.backImageView);
         updateButton = findViewById(R.id.updateButton);
-        container = findViewById(R.id.container);
     }
 
     private void setListeners() {
@@ -140,13 +135,11 @@ public class UpdateContractServiceActivity extends AppCompatActivity {
                             ServerResponse serverResponse = response.body();
                             if (serverResponse == null) return;
                             if (serverResponse.isSuccess()) {
-                                showSnackbar("Cập nhật thành công");
-                                new Handler().postDelayed(() -> finish(), 1000);
+                                Toast.makeText(UpdateContractServiceActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
                             } else if (serverResponse.isFailure()) {
-                                showSnackbar("Không có cập nhật nào");
-                                new Handler().postDelayed(() -> finish(), 1000);
+                                Toast.makeText(UpdateContractServiceActivity.this, "Không có cập nhật nào", Toast.LENGTH_SHORT).show();
                             } else {
-                                showSnackbar("Xảy ra lỗi khi cập nhật");
+                                Toast.makeText(UpdateContractServiceActivity.this, "Xảy ra lỗi khi cập nhật", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -166,17 +159,17 @@ public class UpdateContractServiceActivity extends AppCompatActivity {
     // Kiểm tra tính hợp lệ của dữ liệu đầu vào với dịch vụ
     public boolean isValidDataInputService(String location, String dateOfPerform) {
         if (location.isEmpty()) {
-            showSnackbar("Vui lòng nhập địa điểm");
+            Toast.makeText(this, "Vui lòng nhập địa điểm", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (!isValidLocation(location)) {
-            showSnackbar("Địa điểm không hợp lệ");
+            Toast.makeText(this, "Địa điểm không hợp lệ", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (dateOfPerform.isEmpty()) {
-            showSnackbar("Vui lòng chọn thực hiện");
+            Toast.makeText(this, "Vui lòng chọn thực hiện", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -193,9 +186,5 @@ public class UpdateContractServiceActivity extends AppCompatActivity {
         // Định dạng cho phép chứa ký tự chữ hoặc số
         final Pattern VALID_LOCATION_PATTERN = Pattern.compile("^[\\w\\s\\u0100-\\u1FFF,.-]+$");
         return VALID_LOCATION_PATTERN.matcher(location).matches();
-    }
-
-    private void showSnackbar(String message) {
-        Snackbar.make(container,message, Snackbar.LENGTH_SHORT).show();
     }
 }

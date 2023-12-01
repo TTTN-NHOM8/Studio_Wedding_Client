@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/line"
-    android:id="@+id/container"
     tools:context=".view.activity.detail_contract.UpdateContractProductActivity">
 
     <ScrollView
@@ -58,7 +57,7 @@
                     android:id="@+id/contractIdEditText"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:background="@drawable/bgr_edt_disable"
+                    android:background="@drawable/edittext_bgr_white"
                     android:drawableStart="@drawable/detail_contract_id"
                     android:drawablePadding="14dp"
                     android:focusable="false"
@@ -73,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:layout_marginTop="14dp"
-                    android:background="@drawable/bgr_edt_disable"
+                    android:background="@drawable/edittext_bgr_white"
                     android:drawableStart="@drawable/spinner_select"
                     android:drawablePadding="14dp"
                     android:focusable="false"
@@ -88,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:layout_marginTop="14dp"
-                    android:background="@drawable/bgr_edt_disable"
+                    android:background="@drawable/edittext_bgr_white"
                     android:drawableStart="@drawable/detail_contrac_price"
                     android:drawablePadding="14dp"
                     android:focusable="false"

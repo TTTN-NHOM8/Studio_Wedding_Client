@@ -5,12 +5,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,8 +37,6 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
         this.itemClickListener = itemClickListener;
     }
 
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -68,30 +64,25 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             holder.tvPaymentStatus.setTextColor(paymentStatusColor);
 
             String trangThaiHopDong = contract.getTrangThaiHopDong();
-            String trangThaiPhatSinh = contract.getTrangThaiPhatSinh();
+            holder.tvStatusHD.setText(trangThaiHopDong);
 
 
             int statusHDColor;
-            if ("Có phát sinh".equals(trangThaiPhatSinh)) {
-                holder.tvStatusHD.setText(trangThaiPhatSinh);
-                statusHDColor = ContextCompat.getColor(context, R.color.red_light);
-            } else {
-                holder.tvStatusHD.setText(trangThaiHopDong);
-
-                switch (trangThaiHopDong) {
-                    case "Đã hoàn thành":
-                        statusHDColor = ContextCompat.getColor(context, R.color.blue_g);
-                        break;
-                    case "Đang thực hiện":
-                        statusHDColor = ContextCompat.getColor(context, R.color.earthy);
-                        break;
-                    default:
-                        statusHDColor = ContextCompat.getColor(context, android.R.color.black);
-                }
+            switch (trangThaiHopDong) {
+                case "Hoàn thành":
+                    statusHDColor = ContextCompat.getColor(context, R.color.dark_green);
+                    break;
+                case "Đang thực hiện":
+                    statusHDColor = ContextCompat.getColor(context, R.color.earthy);
+                    break;
+                case "Có phát sinh":
+                    statusHDColor = ContextCompat.getColor(context, R.color.red_light);
+                    break;
+                default:
+                    statusHDColor = ContextCompat.getColor(context, android.R.color.black);
             }
-
             holder.tvStatusHD.setTextColor(statusHDColor);
-            
+
             holder.position = position;
         }
     }
@@ -104,13 +95,11 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvIdHD, tvDateCreate, tvAmount, tvName, tvPaymentStatus, tvStatusHD;
         public ImageView imgMenu;
-        private CardView cardView;
         public int position;
 
         public ViewHolder(View view) {
             super(view);
 
-            cardView=view.findViewById(R.id.cardViewItemContract);
             tvIdHD = view.findViewById(R.id.tvIdHDItem);
             tvDateCreate = view.findViewById(R.id.tvDateCreateHDItem);
             tvAmount = view.findViewById(R.id.tvTotalAmountHDItem);
@@ -128,7 +117,6 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
                     }
                 }
             });
-
         }
     }
 

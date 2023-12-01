@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -21,20 +19,14 @@ import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Task;
 import com.example.studiowedding.utils.FormatUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.ViewHolder> implements Filterable {
+public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.ViewHolder> {
 
     private  List<Task> mList;
-    private List<Task> filteredTasks;
-    private final int selectScreen;
     private OnItemClickListner.TaskI mOnClickItem;
-    public TaskTodayAdapter(List<Task> mList, int selectScreen) {
+    public TaskTodayAdapter(List<Task> mList) {
         this.mList = mList;
-        this.selectScreen = selectScreen;
-        this.filteredTasks = mList;
     }
 
     public void setOnClickItem(OnItemClickListner.TaskI mOnClickItem){
@@ -44,7 +36,6 @@ public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.View
     @SuppressLint("NotifyDataSetChanged")
     public void setList(List<Task> mList){
         this.mList = mList;
-        this.filteredTasks = mList;
         notifyDataSetChanged();
     }
 
@@ -90,41 +81,7 @@ public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.View
 
     @Override
     public int getItemCount() {
-        return (mList != null && selectScreen == 0) ? Math.min(mList.size(), 3) : (mList != null ? mList.size() : 0);
-    }
-
-    @Override
-    public Filter getFilter() {
-        return new Filter() {
-            // loc du lieu theo dk
-            @Override
-            protected FilterResults performFiltering(CharSequence charSequence) {
-                String search = charSequence.toString().toLowerCase(Locale.getDefault());
-                ArrayList<Task> listTask = new ArrayList<>();
-
-                if (search.isEmpty()){
-                    listTask.addAll(filteredTasks);
-                }else {
-                    for (Task task : filteredTasks ) {
-                        if (task.getNameService().toLowerCase(Locale.getDefault()).contains(search.toLowerCase())){
-                            listTask.add(task);
-                        }
-                    }
-                }
-
-                FilterResults  filterResults = new FilterResults();
-                filterResults.values = listTask;
-                return filterResults;
-            }
-
-            // lay ket qua loc
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                mList = (List<Task>) filterResults.values;
-                notifyDataSetChanged();
-            }
-        };
+        return mList != null ? mList.size() : 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -146,9 +103,15 @@ public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.View
         @SuppressLint("SetTextI18n")
         public void bind(Task task){
             tvId.setText(task.getIdContract());
-            tvDate.setText(FormatUtils.formatDateToString(task.getDateImplement()));
-            tvName.setText(task.getNameService());
-            tvAddress.setText(task.getAddress());
+            if (task.getDateImplement() == null){
+                tvDate.setText(FormatUtils.formatDateToString(task.getDataLaundry()));
+                tvName.setText(AppConstants.NAME_TASK);
+                tvAddress.setText(AppConstants.ADDRESS_TASK);
+            }else {
+                tvDate.setText(FormatUtils.formatDateToString(task.getDateImplement()));
+                tvName.setText(task.getNameService());
+                tvAddress.setText(task.getAddress());
+            }
             switch (task.getStatusTask()){
                 case AppConstants.STATUS_TASK_IM   :
                     tvStatus.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.yellow));
