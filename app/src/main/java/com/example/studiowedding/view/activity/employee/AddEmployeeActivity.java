@@ -169,7 +169,6 @@ public class AddEmployeeActivity extends AppCompatActivity {
                 month,
                 dayOfMonth
         );
-
         // Hiển thị DatePickerDialog
         datePickerDialog.show();
     }
@@ -232,15 +231,18 @@ public class AddEmployeeActivity extends AppCompatActivity {
             return false;
         }
 
-//        if (!FormatUtils.isValidDate(employee.getNgaySinh())) {
-//            showSnackbar(AppConstants.DATE_OF_BIRTH_INVALID_MESSAGE);
-//            return false;
-//        }
 
-        if (!FormatUtils.isEmailValid(employee.getIdNhanVien())) {
-            showSnackbar(AppConstants.EMAIL_INVALID_MESSAGE);
+        if (!FormatUtils.isValidDate(employee.getNgaySinh())) {
+            showSnackbar(AppConstants.DATE_OF_BIRTH_INVALID_MESSAGE);
             return false;
         }
+
+
+
+//        if (!FormatUtils.isEmailValid(employee.getIdNhanVien())) {
+//            showSnackbar(AppConstants.EMAIL_INVALID_MESSAGE);
+//            return false;
+//        }
 
         if (!FormatUtils.isDataInputNumber(employee.getDienThoai())){
             showSnackbar(AppConstants.PHONE_INVALID_MESSAGE);

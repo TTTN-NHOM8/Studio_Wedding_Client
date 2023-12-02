@@ -2,6 +2,7 @@ package com.example.studiowedding.network;
 
 
 
+import com.example.studiowedding.model.PickCustomer;
 import com.example.studiowedding.view.activity.task.ResponseEmployeeJoin;
 import com.example.studiowedding.view.activity.task.ResponseJoin;
 import com.example.studiowedding.view.activity.services.ServiceResponse;
@@ -57,7 +58,7 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     @GET(ManagerUrl.CONTRACTS)
     Call<List<Contract>>getContracts();
     @GET(ManagerUrl.CONTRACT_CLIENTS)
-    Call<List<Customer>>getCustomers();
+    Call<List<PickCustomer>>getCustomers();
     @GET(ManagerUrl.CONTRACT_DETAIL_CONTRACT)
     Call<List<ContractDetail>>getAllDetailContractByIdHDTT(@Path("idHDTamThoi") String idHDTamThoi);
     @GET(ManagerUrl.CONTRACTS_ID)
@@ -71,9 +72,6 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
 
     @PUT(ManagerUrl.UPDATE_PRODUCT)
     Call<Void> updateProduct(@Path("idSanPham") String idSanPham,@Body Product newProduct);
-    @POST(ManagerUrl.INCURRENT_ADD)
-    Call<Void> insertIncurrent(@Body Incurrent newIncurrent);
-
 
     @PUT(ManagerUrl.CONTRACT_UPDATE)
     Call<Void> updateContract(@Path("idHopDong") String idHopDong, @Body Contract updatedContract);

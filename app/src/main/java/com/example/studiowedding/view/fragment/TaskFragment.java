@@ -119,7 +119,6 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
                 return true;
             }
         });
-
         ivCancelFilter.setOnClickListener(view -> {
             ivCancelFilter.setVisibility(View.GONE);
             ivFilter.setVisibility(View.VISIBLE);
@@ -135,7 +134,7 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
         mRCV.setAdapter(adapterTask);
         mList = taskList;
     }
-
+//
     // Hàm lọc danh sách theo ngày
     private List<Task> filterTasksByDate(List<Task> taskList, Date selectedDate) {
         return taskList.stream()

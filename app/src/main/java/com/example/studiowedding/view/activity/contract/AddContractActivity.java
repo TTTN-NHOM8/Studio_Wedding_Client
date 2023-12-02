@@ -40,6 +40,7 @@ import com.example.studiowedding.adapter.ContractDetailAdapter;
 import com.example.studiowedding.model.Contract;
 import com.example.studiowedding.model.ContractDetail;
 import com.example.studiowedding.model.Customer;
+import com.example.studiowedding.model.PickCustomer;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
@@ -507,7 +508,7 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     Intent data = result.getData();
                     if (data != null) {
-                        Customer selectedCustomer = data.getParcelableExtra("customer");
+                        PickCustomer selectedCustomer = data.getParcelableExtra("customer");
 
                         if (selectedCustomer != null) {
                             edPickClient.setText(selectedCustomer.getName() + " - " + selectedCustomer.getPhone());

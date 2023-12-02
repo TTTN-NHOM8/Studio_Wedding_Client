@@ -35,6 +35,7 @@ import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
 import com.example.studiowedding.view.activity.MainActivity;
+import com.example.studiowedding.view.activity.employee.UpdateEmployeeActivity;
 import com.example.studiowedding.view.fragment.EmployeeFragment;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -208,8 +209,11 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
 
     @Override
     public void nextScreen(Employee employee) {
-
+        Intent intent = new Intent(UpdateTaskActivity.this, UpdateEmployeeActivity.class);
+        intent.putExtra("employee", employee);
+        startActivity(intent);
     }
+
 
     @Override
     public void showConfirmDelete(Employee employee, View view) {
@@ -272,6 +276,7 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
             }
         });
     }
+
 
     @Override
     protected void onStart() {
