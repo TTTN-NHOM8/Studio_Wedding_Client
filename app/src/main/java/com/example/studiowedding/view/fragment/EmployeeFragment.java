@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.adapter.EmployeeAdapter;
@@ -50,6 +51,8 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     private RecyclerView rcvEmployee;
     private List<Employee> employeeList = new ArrayList<>();
 
+    private TextView tvNotification;
+
 
     private SearchView searchView;
 
@@ -63,6 +66,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_employee, container, false);
 
     }
@@ -76,6 +80,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     }
 
     private void setListener(@NonNull View view) {
+        tvNotification = view.findViewById(R.id.tvNotifiicationEmployee);
         rcvEmployee = view.findViewById(R.id.rcv_employee_list);
         floatingActionButton = view.findViewById(R.id.fabContract);
         ivFilter = view.findViewById(R.id.imgFilterContract);
@@ -134,10 +139,10 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
             public boolean onQueryTextChange(String newText)
             {
                 if(newText.isEmpty()) {
-                    Log.d(TAG, " Tìm thành công ");
+                    tvNotification.setVisibility(View.VISIBLE);
                     getEmployeeList();
                 } else {
-                    Log.d(TAG, " Không có nhân viên này");
+                    tvNotification.setVisibility(View.GONE);
                     employeeAdapter.getFilter().filter(newText);
                 }
                 return true;

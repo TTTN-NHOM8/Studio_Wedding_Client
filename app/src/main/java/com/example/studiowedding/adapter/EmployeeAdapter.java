@@ -132,7 +132,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
                             list.add(employee);
                         }
                     }
-//                    employeeList = list;
+                    employeeList = list;
                 }
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = employeeList;
