@@ -1,0 +1,269 @@
+[33mcommit dc3b00943f5a703e3cb2e234f253ac9609ae360b[m[33m ([m[1;36mHEAD -> [m[1;32mstaff_anh[m[33m, [m[1;31morigin/staff_anh[m[33m)[m
+Author: anhntq <quocanh4567890@gmail.com>
+Date:   Thu Nov 30 14:40:24 2023 +0700
+
+    update FilterRole
+
+[33mcommit eacf8611998553b0e289583f4e06097d4b0ffaf9[m
+Author: anhntq <quocanh4567890@gmail.com>
+Date:   Thu Nov 30 13:45:56 2023 +0700
+
+    update SearchView
+
+[33mcommit 6c9a69ceb4c32c0aa16157f333f585568754ff4f[m
+Author: anhntq <quocanh4567890@gmail.com>
+Date:   Wed Nov 29 22:44:41 2023 +0700
+
+    search employee 29/11
+
+[33mcommit 5a85fc09eebd1f73f79710d8e143fa5c7fc38e55[m
+Merge: ac2a4dd 7af26d6
+Author: anhntq <quocanh4567890@gmail.com>
+Date:   Tue Nov 21 08:49:49 2023 +0700
+
+    Merge remote-tracking branch 'origin/staff_anh' into staff_anh
+    
+    # Conflicts:
+    #       app/build.gradle
+    #       app/src/main/res/values/strings.xml
+
+[33mcommit ac2a4dddbcefdf244b29a51cb908991187538715[m
+Author: anhntq <quocanh4567890@gmail.com>
+Date:   Tue Nov 21 08:47:49 2023 +0700
+
+    AnhNTQ 21/11 update
+
+[33mcommit 0402ed765e0d6567b8f7e56a4b15dd7d9931bd27[m
+Author: anhntq <quocanh4567890@gmail.com>
+Date:   Tue Nov 21 08:46:40 2023 +0700
+
+    AnhNTQ 21/11 update string
+
+[33mcommit 7af26d616bdc1c34530265459e59816e1b875126[m
+Merge: 018d2d4 099feb7
+Author: qanh0311 <141033608+qanh0311@users.noreply.github.com>
+Date:   Tue Nov 21 08:44:45 2023 +0700
+
+    Merge pull request #29 from TTTN-NHOM8/master
+    
+    merge master into staff_anh
+
+[33mcommit 099feb7af754d6543d950ea9702c8b478c070fae[m[33m ([m[1;31morigin/Service_Viet[m[33m)[m
+Merge: bbaa9d6 2bf2fe2
+Author: Đạt <datlowashere@gmail.com>
+Date:   Sat Nov 18 21:24:43 2023 +0700
+
+    Merge pull request #23 from TTTN-NHOM8/contract
+    
+    Contract
+
+[33mcommit 2bf2fe200d26b74f7b3423fe6215c67f83492af7[m
+Author: Đạt <datlowashere@gmail.com>
+Date:   Sat Nov 18 21:23:02 2023 +0700
+
+    DatLT Update config tablayout services and product 18/11/2023
+
+[33mcommit ff4d25db0457ed9a4b1eac9b199808a6bc029135[m
+Author: Đạt <datlowashere@gmail.com>
+Date:   Sat Nov 18 21:22:07 2023 +0700
+
+    DatLT Update fragment_invoice.xml 18/11/2023
+
+[33mcommit bbaa9d63f7446a0f430c826c586918ed77b3eef7[m
+Merge: d69ae5b 7a02e7e
+Author: Hồ Minh Phú <108424905+phuhm2092003@users.noreply.github.com>
+Date:   Sat Nov 18 11:09:52 2023 +0700
+
+    Merge pull request #20 from TTTN-NHOM8/staff_tu
+    
+     TuHNT - update code employee-recyclerview - 18/11/2023
+
+[33mcommit 7a02e7ef2db7f04dfd134e100052c94b7d14db8f[m
+Author: ADMIN <xuanboy0911>
+Date:   Sat Nov 18 11:04:15 2023 +0700
+
+     TuHNT - update code employee-recyclerview - 18/11/2023
+
+[33mcommit d69ae5b62eeb5ca13dcd7dc553904e94b13a99c2[m
+Author: DELL <hominphuzxc@gmail.com>
+Date:   Fri Nov 17 22:56:08 2023 +0700
+
+    PhuHM Navigation Screen SplashActivity.java 17/11/2023
+
+[33mcommit bda8f3422205d5928fc96f15eeb443de5e079040[m
+Author: Tys7603 <long.vlgt@gmail.com>
+Date:   Fri Nov 17 22:23:50 2023 +0700
+
+    LongNX - update code - 17/11/2023
+
+[33mcommit 6152981bc044e5f2d777ecd87eb27821faf23b73[m
+Merge: 0036f3c 82e481c
+Author: Xuân Long <117022797+Tys7603@users.noreply.github.com>
+Date:   Fri Nov 17 21:47:35 2023 +0700
+
+    Merge pull request #19 from TTTN-NHOM8/product_duy
+    
+    Product duy
+
+[33mcommit 82e481c73566a1452d88574386ffd87b4b3f67a9[m
+Merge: 76366c1 0036f3c
+Author: Xuân Long <117022797+Tys7603@users.noreply.github.com>
+Date:   Fri Nov 17 21:47:23 2023 +0700
+
+    Merge branch 'master' into product_duy
+
+[33mcommit 0036f3c212a97476d98c4c5bd7f9ed2c4ef173bb[m
+Author: DELL <hominphuzxc@gmail.com>
+Date:   Fri Nov 17 21:38:58 2023 +0700
+
+    PhuHM Update code UI 17/11/2023
+
+[33mcommit 76366c1d9266b9badfad33b08155b8f3ed21d8e1[m
+Author: dyubudci <duykap123@gmail,com>
+Date:   Fri Nov 17 20:33:45 2023 +0700
+
+    upcode
+
+[33mcommit d65fb1d32d46f38991686ca9bc5602b32734990c[m
+Merge: 0229e6e 2a812ea
+Author: Xuân Long <117022797+Tys7603@users.noreply.github.com>
+Date:   Fri Nov 17 15:41:49 2023 +0700
+
+    Merge pull request #18 from TTTN-NHOM8/account
+    
+    Account
+
+[33mcommit 2a812eab4bf27e35754f69090a28506b30984070[m
+Merge: b36ea62 0229e6e
+Author: Xuân Long <117022797+Tys7603@users.noreply.github.com>
+Date:   Fri Nov 17 15:41:36 2023 +0700
+
+    Merge branch 'master' into account
+
+[33mcommit 0229e6eaa8a37204f92c104f48397399ab815694[m
+Merge: cf539de 018d2d4
+Author: Xuân Long <117022797+Tys7603@users.noreply.github.com>
+Date:   Fri Nov 17 15:40:14 2023 +0700
+
+    Merge pull request #11 from TTTN-NHOM8/staff_anh
+    
+    Staff anh
+
+[33mcommit 018d2d4e9e42529243f300398d1715af98b7d82b[m
+Merge: 59f2d5e cf539de
+Author: Xuân Long <117022797+Tys7603@users.noreply.github.com>
+Date:   Fri Nov 17 15:40:00 2023 +0700
+
+    Merge branch 'master' into staff_anh
+
+[33mcommit cf539de2c36d968dc128142cd70993575f43d91c[m
+Author: Tys7603 <long.vlgt@gmail.com>
+Date:   Fri Nov 17 15:38:43 2023 +0700
+
+    LongNX - fix bug - 17/11/2023
+
+[33mcommit 59f2d5ebe42b4a855797b14f485c307f735156e5[m
+Merge: e1b86ce a3be8e0
+Author: Xuân Long <117022797+Tys7603@users.noreply.github.com>
+Date:   Fri Nov 17 15:28:11 2023 +0700
+
+    Merge branch 'master' into staff_anh
+
+[33mcommit b36ea62fcfc16c8c1558c0ecf06cce31af3d51e2[m
+Merge: 410b7ab a3be8e0
+Author: Đạt <datlowashere@gmail.com>
+Date:   Fri Nov 17 15:26:21 2023 +0700
+
+    Merge branch 'master' into account
+
+[33mcommit 410b7abb9fd87f8868e56dfa908b9df04995552a[m
+Author: 2023thong <thongpdpd06029@fpt.edu.vn>
+Date:   Fri Nov 17 15:18:13 2023 +0700
+
+    ThongPD-Create layout Login, change password, change information 17/11/2023
+
+[33mcommit a3be8e0b51728a5ba7862bbd7d8ae02a2bbc4457[m
+Merge: 0d89c3e 651ad5c
+Author: Xuân Long <117022797+Tys7603@users.noreply.github.com>
+Date:   Fri Nov 17 15:13:30 2023 +0700
+
+    Merge pull request #16 from TTTN-NHOM8/job
+    
+    Job
+
+[33mcommit 651ad5c86025d06a61be7d8d3a7d6ceaa4b4cc32[m
+Merge: c613794 0d89c3e
+Author: Xuân Long <117022797+Tys7603@users.noreply.github.com>
+Date:   Fri Nov 17 15:13:15 2023 +0700
+
+    Merge branch 'master' into job
+
+[33mcommit 0d89c3ef9abb986f53dab8945ba69a23c035b7f6[m
+Merge: 1810614 db6e37d
+Author: Đạt <datlowashere@gmail.com>
+Date:   Fri Nov 17 15:08:30 2023 +0700
+
+    Merge pull request #15 from TTTN-NHOM8/customer_cuong
+    
+    Customer cuong
+
+[33mcommit db6e37d5314a328cadda58ce038f7665e6c1bdbb[m[33m ([m[1;31morigin/customer_cuong[m[33m)[m
+Merge: a08d2e9 1810614
+Author: Đạt <datlowashere@gmail.com>
+Date:   Fri Nov 17 15:08:00 2023 +0700
+
+    Merge branch 'master' into customer_cuong
+
+[33mcommit a08d2e95bff12d29b20221e0af6f945895d80b82[m
+Author: CuongNeban <142796790+CuongNeban@users.noreply.github.com>
+Date:   Fri Nov 17 15:00:27 2023 +0700
+
+    UI 17/11
+
+[33mcommit 0989bdaba5b7ca9422f38fcdffd57fbbc59a9914[m
+Author: CuongNeban <142796790+CuongNeban@users.noreply.github.com>
+Date:   Fri Nov 17 14:55:34 2023 +0700
+
+    UI 17/11
+
+[33mcommit 181061481c11234c163437fb44ac793fcdb84926[m
+Merge: 5994de9 dffc03b
+Author: Xuân Long <117022797+Tys7603@users.noreply.github.com>
+Date:   Fri Nov 17 14:44:58 2023 +0700
+
+    Merge pull request #14 from TTTN-NHOM8/customer_an
+    
+    Customer an
+
+[33mcommit dffc03b8884ce0462eadb239350e9a4bc0546164[m[33m ([m[1;31morigin/customer_an[m[33m)[m
+Merge: b04bcb4 5994de9
+Author: Xuân Long <117022797+Tys7603@users.noreply.github.com>
+Date:   Fri Nov 17 14:44:35 2023 +0700
+
+    Merge branch 'master' into customer_an
+
+[33mcommit 5994de99a6a659eb11668b47439bd849ba6f7449[m
+Merge: c4e4518 19e8e33
+Author: Tys7603 <long.vlgt@gmail.com>
+Date:   Fri Nov 17 14:42:53 2023 +0700
+
+    Merge branch 'staff_tu' of https://github.com/Tys7603/Studio_Wedding
+    
+     Conflicts:
+    	app/src/main/res/drawable/icon_gender_employ.xml
+
+[33mcommit 19e8e33ce3aaaad3b26c7b1a7dac27be9eb17ba9[m
+Author: ADMIN <xuanboy0911>
+Date:   Fri Nov 17 14:38:09 2023 +0700
+
+     TuHNT - update icon third - 17/11/2023
+
+[33mcommit 8e6a02432dad702e8270c3291cd9492bf510b777[m
+Author: ADMIN <xuanboy0911>
+Date:   Fri Nov 17 14:34:31 2023 +0700
+
+     TuHNT - update icon second - 17/11/2023
+
+[33mcommit c4e451812f9b6ca42f79a674909cd07f4c11e5e8[m
+Merge: 279f585 bad4f59
+Aut

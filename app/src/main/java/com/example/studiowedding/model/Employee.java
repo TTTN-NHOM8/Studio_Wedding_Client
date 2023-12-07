@@ -1,20 +1,34 @@
 package com.example.studiowedding.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Employee {
+public class Employee implements Serializable {
+
     private String idNhanVien;
+    @SerializedName("hoVaTen")
     private String hoTen;
     private String matKhau;
     private String ngaySinh;
     private String gioiTinh;
     private String dienThoai;
     private String diaChi;
+    @SerializedName("anhDaiDien")
     private String anh;
     private String vaiTro;
-    private int hienThi;
-
-    public Employee(String idNhanVien, String hoTen, String matKhau, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro, int hienThi) {
+    public Employee(String idNhanVien, String hoTen, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro) {
+        this.idNhanVien = idNhanVien;
+        this.hoTen = hoTen;
+        this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
+        this.dienThoai = dienThoai;
+        this.diaChi = diaChi;
+        this.anh = anh;
+        this.vaiTro = vaiTro;
+    }
+    public Employee(String idNhanVien, String hoTen, String matKhau, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro) {
         this.idNhanVien = idNhanVien;
         this.hoTen = hoTen;
         this.matKhau = matKhau;
@@ -24,9 +38,7 @@ public class Employee {
         this.diaChi = diaChi;
         this.anh = anh;
         this.vaiTro = vaiTro;
-        this.hienThi = hienThi;
     }
-
     public String getIdNhanVien() {
         return idNhanVien;
     }
@@ -34,15 +46,12 @@ public class Employee {
     public void setIdNhanVien(String idNhanVien) {
         this.idNhanVien = idNhanVien;
     }
-
     public String getHoTen() {
         return hoTen;
     }
-
     public void setHoTen(String hoTen) {
         this.hoTen = hoTen;
     }
-
     public String getMatKhau() {
         return matKhau;
     }
@@ -99,13 +108,6 @@ public class Employee {
         this.vaiTro = vaiTro;
     }
 
-    public int getHienThi() {
-        return hienThi;
-    }
-
-    public void setHienThi(int hienThi) {
-        this.hienThi = hienThi;
-    }
 
     @Override
     public String toString() {
@@ -119,7 +121,6 @@ public class Employee {
                 ", diaChi='" + diaChi + '\'' +
                 ", anh='" + anh + '\'' +
                 ", vaiTro='" + vaiTro + '\'' +
-                ", hienThi=" + hienThi +
                 '}';
     }
 }

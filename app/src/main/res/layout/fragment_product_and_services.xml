@@ -5,29 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".view.fragment.ProductAndServicesFragment">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dp">
 
-        <SearchView
-            android:id="@+id/et_search_task"
-            android:layout_width="281dp"
-            android:layout_height="52dp"
-            android:layout_weight="1"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/edittext_bgr_white" />
-
-        <ImageView
-            android:id="@+id/iv_product"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:src="@drawable/filter_icon" />
-    </LinearLayout>
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"

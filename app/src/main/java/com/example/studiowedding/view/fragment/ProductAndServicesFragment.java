@@ -112,7 +112,7 @@ public class ProductAndServicesFragment extends Fragment {
         vp_service = view.findViewById(R.id.vp_service);
         iv_product = view.findViewById(R.id.iv_product);
 
-        onClick();
+//        onClick();
     }
     public void showConfirmDelete() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -131,28 +131,28 @@ public class ProductAndServicesFragment extends Fragment {
         alertDialog.show();
 
     }
-    private void onClick() {
-        iv_product.setOnClickListener(view -> {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    getContext(),
-                    R.style.CustomDatePickerDialog,
-                    (DatePickerDialog.OnDateSetListener) (datePicker, selectedYear, selectedMonth, selectedDay) -> {
-
-                    },
-                    year,
-                    month,
-                    dayOfMonth
-            );
-
-            // Hiển thị DatePickerDialog
-            datePickerDialog.show();
-        });
-    }
+//    private void onClick() {
+//        iv_product.setOnClickListener(view -> {
+//            Calendar calendar = Calendar.getInstance();
+//            int year = calendar.get(Calendar.YEAR);
+//            int month = calendar.get(Calendar.MONTH);
+//            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+//
+//            DatePickerDialog datePickerDialog = new DatePickerDialog(
+//                    getContext(),
+//                    R.style.CustomDatePickerDialog,
+//                    (DatePickerDialog.OnDateSetListener) (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+//
+//                    },
+//                    year,
+//                    month,
+//                    dayOfMonth
+//            );
+//
+//            // Hiển thị DatePickerDialog
+//            datePickerDialog.show();
+//        });
+//    }
     public void onDeleteButtonClick(int position) {
 
     }
