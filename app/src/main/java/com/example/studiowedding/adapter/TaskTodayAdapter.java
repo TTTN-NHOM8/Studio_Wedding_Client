@@ -106,7 +106,8 @@ public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.View
                     listTask.addAll(filteredTasks);
                 }else {
                     for (Task task : filteredTasks ) {
-                        if (task.getNameService().toLowerCase(Locale.getDefault()).contains(search.toLowerCase())){
+                        if (task.getNameService().toLowerCase(Locale.getDefault()).contains(search.toLowerCase())
+                                || task.getIdContract().toLowerCase(Locale.getDefault()).contains(search.toLowerCase()) ){
                             listTask.add(task);
                         }
                     }

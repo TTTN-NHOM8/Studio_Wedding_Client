@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studiowedding.R;
@@ -33,6 +34,7 @@ import com.example.studiowedding.view.activity.task.UpdateTaskActivity;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,6 +45,7 @@ import retrofit2.Response;
 
 public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
     private SearchView searchView;
+    private TextView  tvShowMessage;
     private RecyclerView mRCV;
     private ImageView ivFilter, ivCancelFilter;
     private ProgressDialog mProgressDialog;
@@ -69,6 +72,7 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
     }
 
     private void initUI(View view) {
+        tvShowMessage = view.findViewById(R.id.tv_show_task_fragment);
         mRCV = view.findViewById(R.id.rcv_task);
         ivFilter = view.findViewById(R.id.iv_filter_task);
         searchView = view.findViewById(R.id.et_search_task);
@@ -119,7 +123,6 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
                 return true;
             }
         });
-
         ivCancelFilter.setOnClickListener(view -> {
             ivCancelFilter.setVisibility(View.GONE);
             ivFilter.setVisibility(View.VISIBLE);
@@ -128,14 +131,16 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
     }
 
     private void setAdapter(List<Task> taskList) {
+        Collections.reverse(taskList);
         adapterTask = new TaskAdapter(taskList, 1);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCV.setLayoutManager(layoutManager);
         mRCV.setAdapter(adapterTask);
         mList = taskList;
+        tvShowMessage.setVisibility(View.GONE);
     }
-
+//
     // Hàm lọc danh sách theo ngày
     private List<Task> filterTasksByDate(List<Task> taskList, Date selectedDate) {
         return taskList.stream()

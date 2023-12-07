@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_yellow"
+        android:title="Chưa sẵn sàng " />
+    <item
+        android:id="@+id/menu_green"
+        android:title="Sẵn sàng " />
+    <item
+        android:id="@+id/menu_red"
+        android:title="Có phát sinh " />
+</menu>
