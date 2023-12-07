@@ -36,6 +36,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -46,7 +47,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     private RecyclerView mRCV, mRCVToday;
-    private TextView tvSeeTask, tvSeeTaskToday;
+    private TextView tvSeeTask, tvSeeTaskToday, tvShowToday, tvShow;
     private List<Task> mList;
     private List<Task> mListToday;
     private TaskAdapter adapterTask;
@@ -67,12 +68,18 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initUI(view);
+        onClick();
+        readTasksApi();
+    }
+
+    private void initUI(View view) {
+        tvShow = view.findViewById(R.id.tv_show_home_fragment);
+        tvShowToday = view.findViewById(R.id.tv_show_today_home_fragment);
         mRCV = view.findViewById(R.id.rcv_job_home);
         mRCVToday = view.findViewById(R.id.rcv_today_job_home);
         tvSeeTask = view.findViewById(R.id.tv_see_all_job);
         tvSeeTaskToday = view.findViewById(R.id.tv_see_all_job_today);
-        onClick();
-        readTasksApi();
     }
 
     private void onClick() {
@@ -111,25 +118,30 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     }
 
     private void setAdapter(List<Task> taskList) {
-
+        Collections.reverse(taskList);
         adapterTask = new TaskAdapter(taskList, 0);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCV.setLayoutManager(layoutManager);
         mRCV.setAdapter(adapterTask);
         mList= taskList;
+        tvShow.setVisibility(View.GONE);
     }
 
     private void setAdapterToday(List<Task> taskList) {
         List<Task> list = new ArrayList<>();
+        int check = 0;
         for(int i = 0 ; i < taskList.size() ; i ++){
             if (taskList.get(i).getDateImplement() != null){
                 if (FormatUtils.checkData(taskList.get(i).getDateImplement())){
                     list.add(taskList.get(i));
+                    check++;
                 }
             }
         }
-
+        if (check > 0){
+            tvShowToday.setVisibility(View.GONE);
+        }
         taskTodayAdapter = new TaskTodayAdapter(list, 0);
         taskTodayAdapter.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());

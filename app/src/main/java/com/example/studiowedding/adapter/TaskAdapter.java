@@ -103,7 +103,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                     listTask.addAll(filteredTasks);
                 }else {
                     for (Task task : filteredTasks ) {
-                        if (task.getNameService().toLowerCase(Locale.getDefault()).contains(search.toLowerCase())){
+                        if (task.getNameService().toLowerCase(Locale.getDefault()).contains(search.toLowerCase())
+                                || task.getIdContract().toLowerCase(Locale.getDefault()).contains(search.toLowerCase()) ){
                                 listTask.add(task);
                         }
                     }

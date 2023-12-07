@@ -39,7 +39,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SeeTaskActivity extends AppCompatActivity implements OnItemClickListner.TaskI {
-    private TextView tvTitle;
+    private TextView tvTitle, tvShowMessage;
     private ImageView ivBack, ivFilter, ivCancelFilter;
     private RecyclerView mRCV;
     private ProgressDialog mProgressDialog;
@@ -58,6 +58,7 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
     }
 
     private void initUI() {
+        tvShowMessage = findViewById(R.id.tv_show_see_task);
         tvTitle = findViewById(R.id.tv_title_see_job);
         mRCV = findViewById(R.id.rcv_see_job);
         ivBack = findViewById(R.id.iv_back_see_job);
@@ -72,32 +73,34 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
         ivBack.setOnClickListener(view -> onBackPressed());
 
         ivFilter.setOnClickListener(view -> {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    this,
-                    R.style.CustomDatePickerDialog,
-                    (datePicker, selectedYear, selectedMonth, selectedDay) -> {
-                        ivCancelFilter.setVisibility(View.VISIBLE);
-                        ivFilter.setVisibility(View.GONE);
+            if (mList != null){
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        this,
+                        R.style.CustomDatePickerDialog,
+                        (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+                            ivCancelFilter.setVisibility(View.VISIBLE);
+                            ivFilter.setVisibility(View.GONE);
 
-                        // Tạo một Calendar object từ ngày được chọn
-                        Calendar selectedCalendar = Calendar.getInstance();
-                        selectedCalendar.set(selectedYear, selectedMonth, selectedDay);
+                            // Tạo một Calendar object từ ngày được chọn
+                            Calendar selectedCalendar = Calendar.getInstance();
+                            selectedCalendar.set(selectedYear, selectedMonth, selectedDay);
 
-                        List<Task> list = mList;
-                        List<Task> filteredTasks = filterTasksByDate(list, selectedCalendar.getTime());
-                        adapterTask.setList(filteredTasks);
+                            List<Task> list = mList;
+                            List<Task> filteredTasks = filterTasksByDate(list, selectedCalendar.getTime());
+                            adapterTask.setList(filteredTasks);
 
-                    },
-                    year,
-                    month,
-                    dayOfMonth
-            );
+                        },
+                        year,
+                        month,
+                        dayOfMonth
+                );
 
-            datePickerDialog.show();
+                datePickerDialog.show();
+            }
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -155,7 +158,6 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
             setAdapterToday(taskList);
             tvTitle.setText("Danh sách công việc hôm nay");
             ivFilter.setVisibility(View.GONE);
-            ivFilter.setVisibility(View.GONE);
         }
     }
 
@@ -187,18 +189,23 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
         mRCV.setLayoutManager(layoutManager);
         mRCV.setAdapter(adapterTask);
         mList= taskList;
+        tvShowMessage.setVisibility(View.GONE);
     }
 
     private void setAdapterToday(List<Task> taskList) {
         List<Task> list = new ArrayList<>();
+        int check = 0;
         for(int i = 0 ; i < taskList.size() ; i ++){
             if (taskList.get(i).getDateImplement() != null){
                 if (FormatUtils.checkData(taskList.get(i).getDateImplement())){
                     list.add(taskList.get(i));
+                    check++;
                 }
             }
         }
-
+        if (check > 0){
+            tvShowMessage.setVisibility(View.GONE);
+        }
         taskTodayAdapter = new TaskTodayAdapter(list, 1);
         taskTodayAdapter.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
