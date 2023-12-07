@@ -1,5 +1,7 @@
 package com.example.studiowedding.view.fragment;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -86,23 +88,20 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     private void showFilterPopupMenu(View view){
         PopupMenu popupMenu = new PopupMenu(requireContext(),view);
         MenuInflater inflater = popupMenu.getMenuInflater();
-        inflater.inflate(R.menu.filternv, popupMenu.getMenu());
+        inflater.inflate(R.menu.filter_employee_task, popupMenu.getMenu());
 
         popupMenu.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
-                case R.id.makeup:
+                case R.id.make_up:
                     filterByRole("Make Up");
                     break;
-                case R.id.laixe:
+                case R.id.lai_xe:
                     filterByRole("Lái Xe");
                     break;
-                case R.id.chuphinh:
+                case R.id.chup_hinh:
                     filterByRole("Chụp Hình");
                     break;
-                case R.id.haucan:
-                    filterByRole("Hậu Cần");
-                    break;
-                case R.id.loctatca:
+                case R.id.loc_tat_ca:
                     filterByRole("Lọc tất cả trạng thái");
                     break;
             }
@@ -122,8 +121,10 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if(query.isEmpty()) {
+                    Log.d(TAG, " Tìm thành công ");
                     getEmployeeList();
                 } else {
+                    Log.d(TAG, " Không có nhân viên này");
                     employeeAdapter.getFilter().filter(query);
                 }
                 return false;
@@ -133,8 +134,10 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
             public boolean onQueryTextChange(String newText)
             {
                 if(newText.isEmpty()) {
+                    Log.d(TAG, " Tìm thành công ");
                     getEmployeeList();
                 } else {
+                    Log.d(TAG, " Không có nhân viên này");
                     employeeAdapter.getFilter().filter(newText);
                 }
                 return true;

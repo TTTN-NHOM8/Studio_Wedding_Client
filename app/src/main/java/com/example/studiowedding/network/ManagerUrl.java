@@ -4,7 +4,7 @@ public class ManagerUrl {
 
 
 
-    public static final String BASE_URL = "http://192.168.1.3:3000/api/";
+    public static final String BASE_URL = "http://192.168.1.220:3000/api/";
 
     //Customer
     public static final String READ_CUSTOMER = "customer";
