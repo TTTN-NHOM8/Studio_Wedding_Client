@@ -44,9 +44,6 @@
             android:label="@string/title_activity_add_product"
             android:theme="@style/Theme.StudioWedding" />
 
-        <activity
-            android:name=".view.activity.account.EditInformation"
-            android:exported="false" />
 
         <activity
             android:name=".view.activity.account.ChangePassword"
