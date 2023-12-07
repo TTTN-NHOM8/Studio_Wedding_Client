@@ -47,12 +47,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClickListner.TaskJoinI {
-    private EditText etName, etDate, etAddress, etNote;
+    private EditText etName, etDate, etAddress, etNote, etId;
     private ImageView ivSelect, ivBack;
     private LinearLayout btnSave;
     private Task mTask;
-    private TextView tvAddEmployee, tvSeeDetail;
-    private TextView tvShowMessage;
+    private TextView tvAddEmployee, tvSeeDetail, tvShowMessage;
     private RecyclerView mRCV;
     private ProgressDialog mProgressDialog;
     private List<Employee> mListEmployee;
@@ -88,6 +87,7 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
 
     @SuppressLint({"WrongViewCast", "SetTextI18n"})
     private void initUI() {
+        etId = findViewById(R.id.et_id_update_job);
         etName = findViewById(R.id.et_name_update_job);
         etDate = findViewById(R.id.et_date_update_job);
         etAddress = findViewById(R.id.et_address_update_job);
@@ -104,6 +104,7 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
     }
 
     private void setValue() {
+        etId.setText(mTask.getIdContract());
         etName.setText(mTask.getNameService());
         etDate.setText(FormatUtils.formatDateToString(mTask.getDateImplement()));
         etAddress.setText(mTask.getAddress());
