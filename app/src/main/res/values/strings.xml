@@ -142,4 +142,9 @@
         <item>Chú rể</item>
         <item>Cô dâu</item>
     </string-array>
+    <string-array name="product_type_array">
+        <item>Sẵn sàng</item>
+        <item>Chưa sẵn sàng</item>
+        <item>Có phát sinh</item>
+    </string-array>
 </resources>
