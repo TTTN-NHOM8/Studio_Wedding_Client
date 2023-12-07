@@ -20,7 +20,9 @@ import com.example.studiowedding.utils.FormatUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class IncurrentAdapter extends RecyclerView.Adapter<IncurrentAdapter.IncurrentViewHolder> {
 
@@ -29,6 +31,8 @@ public class IncurrentAdapter extends RecyclerView.Adapter<IncurrentAdapter.Incu
      static OnItemClickListner itemClickListener;
     FormatUtils formatUtils;
     SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd");
+    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     public IncurrentAdapter(List<Incurrent> incurrentList, Context context) {
         this.incurrentList = incurrentList;
@@ -56,12 +60,26 @@ public class IncurrentAdapter extends RecyclerView.Adapter<IncurrentAdapter.Incu
                 .into(holder.img);
 
         String noiDung = currentItem.getNoiDung();
-        if (noiDung != null) {
+
+
+        if(currentItem.getHienThi()==0){
             holder.tvNote.setText(noiDung);
             holder.tvNote.setTextColor(ContextCompat.getColor(context, R.color.red_light));
-        } else {
-            holder.tvNote.setText("Không có phát sinh");
-            holder.tvNote.setTextColor(ContextCompat.getColor(context, R.color.dark_green));
+            holder.tvStatus.setText("Hoàn thành");
+            holder.tvStatus.setTextColor(ContextCompat.getColor(context, R.color.dark_green));
+        }else{
+            if (noiDung != null) {
+                holder.tvNote.setText(noiDung);
+                holder.tvNote.setTextColor(ContextCompat.getColor(context, R.color.red_light));
+            } else {
+                holder.tvNote.setText("Không có phát sinh");
+                holder.tvNote.setTextColor(ContextCompat.getColor(context, R.color.dark_green));
+            }
+        }
+        if(currentItem.getNgayHoanThanh()!=null){
+            String docValues = sdf3.format(currentItem.getNgayHoanThanh());
+
+            holder.tvDoc.setText(docValues);
         }
 
         Float phiPhatSinh = currentItem.getPhiPhatSinh();
@@ -89,6 +107,8 @@ public class IncurrentAdapter extends RecyclerView.Adapter<IncurrentAdapter.Incu
         public TextView tvFine;
         public TextView tvReturn;
         public TextView tvNote;
+        public TextView tvStatus;
+        public TextView tvDoc;
         public ImageView img, imgMenu;
         public int position;
 
@@ -99,6 +119,8 @@ public class IncurrentAdapter extends RecyclerView.Adapter<IncurrentAdapter.Incu
             tvNote = itemView.findViewById(R.id.tvNoteIncurrentItem);
             tvFine = itemView.findViewById(R.id.tvFineIncurrentItem);
             tvReturn = itemView.findViewById(R.id.tvDorIncurrentItem);
+            tvStatus=itemView.findViewById(R.id.tvStatusOncurrent);
+            tvDoc=itemView.findViewById(R.id.tvDateCompeletedOncurrentDate);
             img = itemView.findViewById(R.id.imgProductIncurrentItem);
             imgMenu = itemView.findViewById(R.id.imgMenuOptionIncurrent);
 

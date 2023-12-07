@@ -33,6 +33,8 @@ public class Incurrent implements Serializable {
     private String anh;
     @SerializedName("giaThue")
     private Float giaThue;
+    @SerializedName("ngayHoanThanh")
+    private Date ngayHoanThanh;
 
 
     public Incurrent(int idPhatSinh, String noiDung, String hanTra, Float phiPhatSinh) {
@@ -164,5 +166,13 @@ public class Incurrent implements Serializable {
 
     public void setNgayTra(Date ngayTra) {
         this.ngayTra = ngayTra;
+    }
+
+    public Date getNgayHoanThanh() {
+        return ngayHoanThanh;
+    }
+
+    public void setNgayHoanThanh(Date ngayHoanThanh) {
+        this.ngayHoanThanh = ngayHoanThanh;
     }
 }

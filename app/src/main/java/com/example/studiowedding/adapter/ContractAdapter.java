@@ -25,7 +25,8 @@ import java.util.List;
 public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHolder> {
     private List<Contract> contractList;
     private Context context;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy ");
+
     private OnItemClickListner itemClickListener;
     private DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
