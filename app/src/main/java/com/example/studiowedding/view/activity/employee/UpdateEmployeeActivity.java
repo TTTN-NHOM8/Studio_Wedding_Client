@@ -249,9 +249,9 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         String role = etRole.getText().toString().trim();
         Employee employee;
         if (photoUrlPiker != null){
-             employee = new Employee(id,name,password,dob,gender,phone,location,photoUrlPiker,role);
+            employee = new Employee(id,name,password,dob,gender,phone,location,photoUrlPiker,role);
         }else {
-             employee = new Employee(id,name,password,dob,gender,phone,location,mEmployee.getAnh(),role);
+            employee = new Employee(id,name,password,dob,gender,phone,location,mEmployee.getAnh(),role);
         }
         if (!isValidDataInput(employee)){
             return;

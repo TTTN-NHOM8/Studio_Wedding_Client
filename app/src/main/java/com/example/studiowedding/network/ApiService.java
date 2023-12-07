@@ -2,16 +2,19 @@ package com.example.studiowedding.network;
 
 
 
+import com.example.studiowedding.model.Account;
+
+
+
 import com.example.studiowedding.model.PickCustomer;
 import com.example.studiowedding.view.activity.task.ResponseEmployeeJoin;
 import com.example.studiowedding.view.activity.task.ResponseJoin;
 import com.example.studiowedding.view.activity.services.ServiceResponse;
-import com.example.studiowedding.adapter.ProductAdapter;
-import com.example.studiowedding.view.activity.task.ResponseTask;
-import com.example.studiowedding.model.Employee;
-import com.example.studiowedding.view.activity.employee.ResponseEmployee;
 
-import java.util.List;
+import com.example.studiowedding.adapter.ProductAdapter;
+
+import com.example.studiowedding.view.activity.employee.ResponseEmployee;
+import com.example.studiowedding.view.activity.task.ResponseTask;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -40,19 +43,52 @@ public interface ApiService {
     Call<List<ContractDetail>> getContractDetails();
 
 
+
     @DELETE(ManagerUrl.DELETE_PRODUCT)
     Call<ResponseTask> deleteProductId(@Path("id") int id);
+
   
     // Account
     @FormUrlEncoded
     @POST(ManagerUrl.ACCOUNT)
     Call<AccountResponse> loginAccount(@Field("idNhanVien") String idNhanVien, @Field("matKhau") String matKhau);
 
+
+    @GET(ManagerUrl.ACCOUNT_ALL)
+    Call<AccountResponse> getEmployeeInfo(@Path("idNhanVien") String idNhanVien);
+    @FormUrlEncoded
+    @POST(ManagerUrl.ACCOUNT_CHANGEPASSWORK)
+    Call<AccountResponse> changePassword(@Field("idNhanVien") String idNhanVien,
+                                                @Field("matKhauCu") String matKhauCu,
+                                                @Field("matKhauMoi") String matKhauMoi);
+
+    @FormUrlEncoded
+    @POST(ManagerUrl.ACCOUNT_UPDATE_EMPLOYEE_INFO)
+    Call<AccountResponse> updateEmployeeInfo(
+            @Field("idNhanVien") String idNhanVien,
+            @Field("hoVaTen") String hoVaTen,
+            @Field("ngaySinh") String ngaySinh,
+            @Field("gioiTinh") String gioiTinh,
+            @Field("dienThoai") String dienThoai,
+            @Field("diaChi") String diaChi,
+            @Field("vaiTro") String vaiTro
+
+    );
+    @GET(ManagerUrl.ACCOUNT_DOANHTHU)
+    Call<AccountResponse> getDailyRevenue(@Path("ngay") String ngay);
+    @GET(ManagerUrl.ACCOUNT_DOANHTHUMONTH)
+    Call<AccountResponse> getDailyRevenuemonth(@Path("thang") String thang);
+
+    @GET(ManagerUrl.ACCOUNT_DOANHTHUYERT)
+    Call<AccountResponse> getDailyRevenueyert(@Path("nam") String nam);
+
+
 //Customer
 @GET(ManagerUrl.READ_CUSTOMER)
 Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     @PUT(ManagerUrl.UPDATE_Customer)
     Call<Void> updateCustomer(@Path("idKhachHang") int idKhachHang,@Body Customer updateCustomer);
+
 
     // CONTRACT
     @GET(ManagerUrl.CONTRACTS)
@@ -246,4 +282,6 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
             @Field("anhDaiDien") String anh,
             @Field("vaiTro") String vaiTro
     );
+
 }
+

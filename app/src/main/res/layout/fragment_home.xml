@@ -95,6 +95,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/rcv_job_home" />
 
                 <TextView
+
                     android:id="@+id/tv_see_all_job_today"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -82,7 +82,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         setAdapter();
         setSearchView();
         ivFilter.setOnClickListener(v -> showFilterPopupMenu(v));
-        }
+    }
     private void showFilterPopupMenu(View view){
         PopupMenu popupMenu = new PopupMenu(requireContext(),view);
         MenuInflater inflater = popupMenu.getMenuInflater();
