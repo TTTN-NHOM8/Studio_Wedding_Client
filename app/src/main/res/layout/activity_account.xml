@@ -61,7 +61,7 @@
 
             <EditText
                 android:id="@+id/edPasswork"
-                android:layout_width="330dp"
+                android:layout_width="310dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
                 android:background="@color/line"
@@ -99,7 +99,7 @@
 
             <EditText
                 android:id="@+id/edPassnew"
-                android:layout_width="330dp"
+                android:layout_width="310dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
                 android:background="@color/line"
