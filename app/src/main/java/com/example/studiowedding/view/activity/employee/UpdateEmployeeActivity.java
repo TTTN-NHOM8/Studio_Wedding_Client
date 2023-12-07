@@ -106,6 +106,7 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
             etLocation.setText(employee.getDiaChi());
             etPhone.setText(employee.getDienThoai());
             etRole.setText(employee.getVaiTro());
+// test gì nữa long
         }
     }
 
@@ -287,10 +288,10 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
             return false;
         }
 
-        if (!FormatUtils.isEmailValid(employee.getIdNhanVien())) {
-            showSnackbar(AppConstants.EMAIL_INVALID_MESSAGE);
-            return false;
-        }
+//        if (!FormatUtils.isEmailValid(employee.getIdNhanVien())) {
+//            showSnackbar(AppConstants.EMAIL_INVALID_MESSAGE);
+//            return false;
+//        }
 
         if (!FormatUtils.isDataInputNumber(employee.getDienThoai())){
             showSnackbar(AppConstants.PHONE_INVALID_MESSAGE);
@@ -299,7 +300,7 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
 
         return true;
     }
-
+// văng app r
     /**
      * Chỉnh sửa nhân viên thông qua gọi API
      */

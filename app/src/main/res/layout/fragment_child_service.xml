@@ -22,6 +22,7 @@
                 android:id="@+id/et_search_task"
                 android:layout_width="281dp"
                 android:minHeight="52dp"
+                android:drawableLeft="@drawable/search_bar_icon"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="16dp"
@@ -38,7 +39,7 @@
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvProduct"
-            android:padding="20dp"
+            android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

@@ -12,16 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.studiowedding.R;
 import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Customer;
+import com.example.studiowedding.model.PickCustomer;
 
 import java.util.List;
 
 public class PickCustomerAdapter extends RecyclerView.Adapter<PickCustomerAdapter.CustomerViewHolder> {
 
-    private List<Customer> customerList;
+    private List<PickCustomer> customerList;
     private Context context;
     private OnItemClickListner listener;
 
-    public PickCustomerAdapter(List<Customer> customerList, Context context) {
+    public PickCustomerAdapter(List<PickCustomer> customerList, Context context) {
         this.customerList = customerList;
         this.context = context;
     }
@@ -38,7 +39,7 @@ public class PickCustomerAdapter extends RecyclerView.Adapter<PickCustomerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull CustomerViewHolder holder, int position) {
-        Customer currentCustomer = customerList.get(position);
+        PickCustomer currentCustomer = customerList.get(position);
 
         holder.tvName.setText(currentCustomer.getName());
         holder.tvPhone.setText(currentCustomer.getPhone());
