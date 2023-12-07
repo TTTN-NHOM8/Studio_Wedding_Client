@@ -13,9 +13,23 @@ public interface OnItemClickListner {
       void showConfirmDelete(Task task, View view);
     }
 
+    interface TaskEmployeeJoinI{
+        void nextScreen(Employee employee);
+    }
+    interface TaskJoinI{
+        void nextScreen(Employee employee);
+        void showConfirmDelete(Employee employee, View view);
+    }
+
     interface EmployeeI{
         void nextUpdateScreenEmployee(Employee employee);
         void showConfirmDeleteEmployee();
     }
+  
+    interface Child {
+        void showConfirmDelete();
 
-}
+        void onDeleteButtonClick(int position);
+    }
+    }
+

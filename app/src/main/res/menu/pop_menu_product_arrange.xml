@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_yellow"
+        android:title="Đang giặt " />
+    <item
+        android:id="@+id/menu_green"
+        android:title="Sẵn sàng " />
+    <item
+        android:id="@+id/menu_red"
+        android:title="Đang thuê " />
+</menu>

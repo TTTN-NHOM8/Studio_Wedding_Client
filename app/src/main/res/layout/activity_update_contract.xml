@@ -33,6 +33,7 @@
                     android:src="@drawable/arrow_back" />
 
                 <TextView
+                    android:id="@+id/tvTitleUpdateContract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -56,7 +57,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="113dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -234,12 +235,90 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rcvDetailContractInUpdateContract"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcvDetailContractInUpdateContract"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="13dp"
+                        android:layout_weight="1"
+                        android:text="Chi tiết phát sinh sản phẩm"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvShowOncurrent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="13dp"
+                        android:layout_weight="2"
+                        android:text="Xem"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvIsnShowOncurrent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="13dp"
+                        android:layout_weight="2"
+                        android:text="Ẩn"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvNotificationShowetailContract"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Không có mục nào để hiển thị"
+                    android:textAlignment="center"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/rcvDetailContractInUpdateContract"
+                    app:layout_constraintEnd_toEndOf="@+id/rcvDetailContractInUpdateContract"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/rcvDetailContractInUpdateContract" />
+
+                <RelativeLayout
+                    android:id="@+id/rltOncurrent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:listitem="@layout/layout_item_detail_contract"
-                    tools:itemCount="3"/>
+                    android:visibility="gone">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcvIncurrentsInUpdateContract"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:itemCount="2"
+                        tools:listitem="@layout/layout_item_incurrent" />
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -247,6 +326,7 @@
                 android:id="@+id/edUpdateDOPContract"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/edittext_bgr_white"
                 android:clickable="true"
@@ -270,7 +350,7 @@
                 android:drawablePadding="14dp"
                 android:ems="10"
                 android:hint="Giảm giá"
-                android:inputType="text"
+                android:inputType="number"
                 android:padding="13dp"
                 android:textSize="14sp" />
 
@@ -308,74 +388,8 @@
                 android:textColor="#000000"
                 android:textSize="14sp" />
 
-            <EditText
-                android:id="@+id/edUpdateIncurrentStatusContract"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/edittext_bgr_white"
-                android:clickable="true"
-                android:drawableLeft="@drawable/spinner_select"
-                android:drawableRight="@drawable/spinner_arrow_down"
-                android:drawablePadding="14dp"
-                android:ems="10"
-                android:focusable="false"
-                android:inputType="text"
-                android:padding="13dp"
-                android:text="Trạng thái phát sinh"
-                android:textColor="#000000"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/edUpdateIncurrentNoteContract"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/edittext_bgr_white"
-                android:clickable="true"
-                android:drawableLeft="@drawable/spinner_select"
-                android:drawableRight="@drawable/spinner_arrow_down"
-                android:drawablePadding="8dp"
-                android:ems="10"
-                android:focusable="false"
-                android:inputType="text"
-                android:padding="13dp"
-                android:text="Nội dung"
-                android:textSize="14dp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/edUpdateIncurrentFineContract"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/edittext_bgr_white"
-                android:drawableLeft="@drawable/contract_total_amount"
-                android:drawablePadding="8dp"
-                android:ems="10"
-                android:hint="Phí phát sinh "
-                android:inputType="text"
-                android:padding="13dp"
-                android:textSize="14dp"
-                android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/edUpdateIncurrentDorContract"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/edittext_bgr_white"
-                android:drawableLeft="@drawable/contract_total_amount"
-                android:drawablePadding="8dp"
-                android:ems="10"
-                android:hint="Ngày trả lần 2 "
-                android:inputType="date"
-                android:padding="13dp"
-                android:textSize="14dp"
-                android:visibility="gone" />
-
             <Button
-                android:id="@+id/btnUpdateContract"
+                android:id="@+id/btnUpdateOncurrent"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="16dp"

@@ -2,6 +2,7 @@ package com.example.studiowedding.model;
 
 import com.google.gson.annotations.SerializedName;
 
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,6 +19,10 @@ public class Employee implements Serializable {
     @SerializedName("anhDaiDien")
     private String anh;
     private String vaiTro;
+    @SerializedName("idThamGia")
+    private int idJoin;
+    private int hienThi;
+
 
     public Employee(String idNhanVien, String hoTen, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro) {
         this.idNhanVien = idNhanVien;
@@ -30,6 +35,17 @@ public class Employee implements Serializable {
         this.vaiTro = vaiTro;
     }
 
+    public Employee(String idNhanVien, String hoTen, String matKhau, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro) {
+        this.idNhanVien = idNhanVien;
+        this.hoTen = hoTen;
+        this.matKhau = matKhau;
+        this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
+        this.dienThoai = dienThoai;
+        this.diaChi = diaChi;
+        this.anh = anh;
+        this.vaiTro = vaiTro;
+    }
 
     public String getIdNhanVien() {
         return idNhanVien;
@@ -103,6 +119,14 @@ public class Employee implements Serializable {
         this.vaiTro = vaiTro;
     }
 
+
+    public int getIdJoin() {
+        return idJoin;
+    }
+
+    public void setIdJoin(int idJoin) {
+        this.idJoin = idJoin;
+    }
 
     @Override
     public String toString() {

@@ -88,7 +88,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/edittext_bgr_white"
+                android:background="@drawable/edittext_bgr_pass"
                 android:drawableStart="@drawable/login_password"
                 android:drawablePadding="23dp"
                 android:enabled="false"

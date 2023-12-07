@@ -38,8 +38,10 @@ import com.google.firebase.storage.StorageReference;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,9 +56,9 @@ public class AddEmployeeActivity extends AppCompatActivity {
     private RadioGroup radioGender;
     private LinearLayout linearAdd;
     private ProgressDialog loadingDialog;
+    private RadioButton radioMale, radioFemale;
 
     private String photoUrlPiker;
-    private String gender = "";
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -79,6 +81,8 @@ public class AddEmployeeActivity extends AppCompatActivity {
         radioGender = findViewById(R.id.radioGender);
         linearAdd = findViewById(R.id.linearAdd);
         ivSpinnerRole = findViewById(R.id.ivSpinnerRole);
+        radioMale = findViewById(R.id.radioMale);
+        radioFemale = findViewById(R.id.radioFemale);
     }
 
     private void setListener(){
@@ -156,14 +160,15 @@ public class AddEmployeeActivity extends AppCompatActivity {
                 this,
                 R.style.CustomDatePickerDialog,
                 (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
                     calendar.set(selectedYear, selectedMonth, selectedDay);
-                    etDob.setText(String.valueOf(selectedYear + "-" + selectedMonth + "-" + selectedDay));
+                    String formattedDate = sdf.format(calendar.getTime());
+                    etDob.setText(formattedDate);
                 },
                 year,
                 month,
                 dayOfMonth
         );
-
         // Hiển thị DatePickerDialog
         datePickerDialog.show();
     }
@@ -187,12 +192,12 @@ public class AddEmployeeActivity extends AppCompatActivity {
         String dob = etDob.getText().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String location = etLocation. getText().toString().trim();
-        radioGender.setOnCheckedChangeListener((radioGroup, i) -> {
-            if (i != View.NO_ID) {
-                RadioButton radioButton = findViewById(i);
-                gender = radioButton.getText().toString().trim();
-            }
-        });
+        String gender = "";
+        if (radioMale.isChecked()){
+            gender = radioMale.getText().toString().trim();
+        }else {
+            gender = radioFemale.getText().toString().trim();
+        }
         String role = etRole.getText().toString().trim();
 
         Employee employee = new Employee(id,name,dob,gender,phone,location,photoUrlPiker,role);
@@ -226,13 +231,21 @@ public class AddEmployeeActivity extends AppCompatActivity {
             return false;
         }
 
+
         if (!FormatUtils.isValidDate(employee.getNgaySinh())) {
             showSnackbar(AppConstants.DATE_OF_BIRTH_INVALID_MESSAGE);
             return false;
         }
 
-        if (!FormatUtils.isEmailValid(employee.getIdNhanVien())) {
-            showSnackbar(AppConstants.EMAIL_INVALID_MESSAGE);
+
+
+//        if (!FormatUtils.isEmailValid(employee.getIdNhanVien())) {
+//            showSnackbar(AppConstants.EMAIL_INVALID_MESSAGE);
+//            return false;
+//        }
+
+        if (!FormatUtils.isDataInputNumber(employee.getDienThoai())){
+            showSnackbar(AppConstants.PHONE_INVALID_MESSAGE);
             return false;
         }
 
@@ -282,7 +295,7 @@ public class AddEmployeeActivity extends AppCompatActivity {
             showSnackbar(AppConstants.ADD_EMPLOYEE_SUCCESS_MESSAGE);
             refreshUI();
         } else {
-            showSnackbar(AppConstants.ADD_EMPLOYEE_FAILED_MESSAGE);
+            showSnackbar(AppConstants.EMPLOYEE_EXIST);
         }
     }
     private void refreshUI() {

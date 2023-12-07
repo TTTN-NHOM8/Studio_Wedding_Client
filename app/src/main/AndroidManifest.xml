@@ -18,11 +18,35 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".view.activity.account.EditInformation"
+            android:name=".view.activity.task.SeeEmployeeActivity"
             android:exported="false" />
         <activity
-            android:name=".view.activity.account.Login"
+            android:name=".view.activity.services.UpdateServiceActivity"
             android:exported="false" />
+        <activity
+            android:name=".view.activity.services.AddServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.contract.UpdateOncurrentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.activity.contract.DialogDatePicker"
+            android:exported="false" />
+        <activity
+            android:name=".view.activity.account.EditInformation"
+            android:exported="false" />
+
+        <activity
+            android:name=".view.activity.product.AddProductActivity"
+            android:exported="false"
+            android:label="@string/title_activity_add_product"
+            android:theme="@style/Theme.StudioWedding" />
+
+        <activity
+            android:name=".view.activity.account.EditInformation"
+            android:exported="false" />
+
         <activity
             android:name=".view.activity.account.ChangePassword"
             android:exported="false" />
@@ -63,8 +87,7 @@
             android:name=".view.activity.contract.FilterContractActivity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".view.activity.contract.PickClientActivity"
             android:exported="false" />
@@ -84,14 +107,21 @@
             android:name=".view.activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.StudioWedding">
+            android:name=".view.activity.account.Login"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.StudioWedding">
+
         </activity>
     </application>
 

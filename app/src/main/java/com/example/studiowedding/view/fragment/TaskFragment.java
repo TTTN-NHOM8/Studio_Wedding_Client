@@ -119,7 +119,6 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
                 return true;
             }
         });
-
         ivCancelFilter.setOnClickListener(view -> {
             ivCancelFilter.setVisibility(View.GONE);
             ivFilter.setVisibility(View.VISIBLE);
@@ -128,25 +127,18 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
     }
 
     private void setAdapter(List<Task> taskList) {
-        adapterTask = new TaskAdapter(taskList);
+        adapterTask = new TaskAdapter(taskList, 1);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCV.setLayoutManager(layoutManager);
         mRCV.setAdapter(adapterTask);
         mList = taskList;
     }
-
+//
     // Hàm lọc danh sách theo ngày
     private List<Task> filterTasksByDate(List<Task> taskList, Date selectedDate) {
         return taskList.stream()
-                .filter(task -> {
-                    if (task.getDateImplement() != null && isSameDay(task.getDateImplement(), selectedDate)) {
-                        return true; // Lọc theo dateImplement nếu không null và là ngày được chọn
-                    } else if (task.getDataLaundry() != null && isSameDay(task.getDataLaundry(), selectedDate)) {
-                        return true; // Lọc theo dateLaundry nếu không null và là ngày được chọn
-                    }
-                    return false; // Không thỏa mãn bất kỳ điều kiện nào
-                })
+                .filter(task -> task.getDateImplement() != null && isSameDay(task.getDateImplement(), selectedDate))
                 .collect(Collectors.toList());
     }
 

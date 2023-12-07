@@ -1,5 +1,6 @@
 package com.example.studiowedding.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.Menu;
@@ -49,12 +50,25 @@ public class MainActivity extends AppCompatActivity {
         binding.navigationView.setNavigationItemSelectedListener(item -> handleNavigationItemClick(item));
         loadFragment(new HomeFragment());
         initToolbar();
+        getSelectIntent();
 
     }
 
     private void initToolbar() {
         setSupportActionBar(binding.toolbar2);
         binding.toolbar2.setNavigationOnClickListener(view -> binding.drawerLayout.openDrawer(GravityCompat.START));
+    }
+
+    public void getSelectIntent(){
+        Intent intent = getIntent();
+        if (intent != null){
+            boolean selectFragment = intent.getBooleanExtra("saveTask", false);
+            if (selectFragment){
+                loadFragment(new TaskFragment());
+                binding.drawerLayout.closeDrawer(GravityCompat.START);
+            }
+
+        }
     }
 
     private boolean handleNavigationItemClick(MenuItem item) {

@@ -4,13 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.fragment.ServicesFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:id="@+id/llsanpham"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+
         android:orientation="horizontal">
     <LinearLayout
         android:layout_width="0dp"
@@ -24,7 +28,6 @@
 
             android:gravity="center"
             />
-
     </LinearLayout>
     <LinearLayout
         android:layout_width="0dp"
@@ -51,10 +54,11 @@
     </LinearLayout>
     <ListView
         android:id="@+id/lvdichvu"
-        android:layout_marginTop="60dp"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
+        android:layout_marginTop="20dp"
         />
-
+    </LinearLayout>
 </FrameLayout>

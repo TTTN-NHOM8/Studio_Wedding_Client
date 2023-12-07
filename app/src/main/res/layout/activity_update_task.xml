@@ -27,7 +27,7 @@
             app:srcCompat="@drawable/arrow_back" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tv_update_see_deltail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_bold"
@@ -52,6 +52,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -79,7 +80,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/edittext_bgr_white"
+                    android:background="@drawable/edittext_bgr"
                     android:drawableStart="@drawable/spinner_select"
                     android:drawablePadding="20dp"
                     android:enabled="false"
@@ -102,7 +103,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/edittext_bgr_white"
+                    android:background="@drawable/edittext_bgr"
                     android:drawableStart="@drawable/task_ld"
                     android:drawablePadding="20dp"
                     android:enabled="false"
@@ -124,7 +125,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/edittext_bgr_white"
+                    android:background="@drawable/edittext_bgr"
                     android:drawableStart="@drawable/locaion"
                     android:drawablePadding="20dp"
                     android:fontFamily="@font/inter_regular"
