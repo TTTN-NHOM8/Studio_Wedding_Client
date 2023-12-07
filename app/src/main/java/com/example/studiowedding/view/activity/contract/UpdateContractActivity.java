@@ -1,6 +1,7 @@
 package com.example.studiowedding.view.activity.contract;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -89,10 +90,15 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
         incurrentAdapter.setOnItemClickListener(position -> {
             Incurrent incurrent=incurrentList.get(position);
             String noiDung=incurrent.getNoiDung();
+            int hienThi=incurrent.getHienThi();
             if(noiDung!=null){
-                showAlertDialog(position,true);
+                if(hienThi==1){
+                    showAlertDialog(position,1);
+                }else{
+                    showAlertDialog(position,2);
+                }
             }else{
-                showAlertDialog(position,false);
+                showAlertDialog(position,0);
             }
 
         });
@@ -118,10 +124,17 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
         tvPhone.setText(getContractInformation().getDienThoai());
         tvAddress.setText(getContractInformation().getDiaChi());
         edPaymentStatus.setText(getContractInformation().getTrangThaiThanhToan());
+        edTotal.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
+        edDop.setTextColor(ContextCompat.getColor(this,R.color.black));
+
         if(getContractInformation().getTrangThaiThanhToan().equalsIgnoreCase("Đã thanh toán")){
             edDop.setEnabled(false);
             edDiscount.setEnabled(false);
             edPaymentStatus.setEnabled(false);
+            edDiscount.setTextColor(ContextCompat.getColor(this,R.color.black));
+            edDop.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
+            edDiscount.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
+            edPaymentStatus.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
             btnUpdate.setVisibility(View.GONE);
             tvTitle.setText("Chi tiết hợp đồng");
         }
@@ -302,13 +315,16 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
     }
 
     // Alert dialog phát sinh
-    private void showAlertDialog(int position, boolean isPhatSinh) {
+    private void showAlertDialog(int position, int isPhatSinh) {
         AlertDialog.Builder builder = new AlertDialog.Builder(UpdateContractActivity.this);
         CharSequence[] options;
-        if (isPhatSinh) {
+        if (isPhatSinh==1) {
             options = new CharSequence[]{"Chi tiết phát sinh","Xác nhận hết phát sinh"};
-        } else {
+        } else if(isPhatSinh==0){
             options = new CharSequence[]{"Thêm phát sinh"};
+        }else{
+            options = new CharSequence[]{"Chi tiết phát sinh"};
+
         }
         builder.setTitle("Menu")
                 .setItems(options, new DialogInterface.OnClickListener() {
