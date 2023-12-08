@@ -57,11 +57,13 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
     private List<Employee> mListEmployee;
     private List<Integer> responseJoinList;
     private TaskJoinAdapter taskJoinAdapter;
+    private String role;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_task);
         mTask = (Task) getIntent().getSerializableExtra("task");
+        role = getIntent().getStringExtra("role");
         responseJoinList = new ArrayList<>();
         initUI();
         setValue();
@@ -79,8 +81,6 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
         tvAddEmployee.setOnClickListener(view -> {
             Intent intent = new Intent(this, SeeEmployeeActivity.class);
             intent.putExtra("task", mTask.getIdTask());
-            Log.i("TAG",""+mTask.getRole());
-            Log.i("TAG",""+mTask.getIdTask());
             mLauncher.launch(intent);
         });
     }
@@ -110,7 +110,7 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
         etAddress.setText(mTask.getAddress());
         etNote.setText(mTask.getStatusTask());
 
-        if (mTask.getStatusTask().equals(AppConstants.STATUS_TASK_DONE)){
+        if (mTask.getStatusTask().equals(AppConstants.STATUS_TASK_DONE) || !AppConstants.ROLE.equals(role)){
             ivSelect.setEnabled(false);
             etNote.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_bgr));
             tvAddEmployee.setVisibility(View.GONE);

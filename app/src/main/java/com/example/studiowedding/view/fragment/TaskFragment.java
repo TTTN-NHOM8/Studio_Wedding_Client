@@ -1,10 +1,13 @@
 package com.example.studiowedding.view.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,6 +32,7 @@ import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Task;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
+import com.example.studiowedding.utils.UIutils;
 import com.example.studiowedding.view.activity.task.ResponseTask;
 import com.example.studiowedding.view.activity.task.UpdateTaskActivity;
 import com.google.android.material.snackbar.Snackbar;
@@ -51,6 +55,7 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
     private ProgressDialog mProgressDialog;
     private List<Task> mList;
     private TaskAdapter adapterTask;
+    private  String idEmployee, role;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +73,18 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
         onClick();
-        readTasksApi();
+    }
+
+    private void checkRoleCallApi() {
+        SharedPreferences preferences = getActivity().getSharedPreferences("LuuIdNhanvien", MODE_PRIVATE);
+         role = preferences.getString("Vaitro", "");
+         idEmployee = preferences.getString("IdNhanvien", "");
+
+        if (AppConstants.ROLE.equals(role)){
+            readTasksApi();
+        }else {
+            readTasksByIdEmployeeApi(idEmployee);
+        }
     }
 
     private void initUI(View view) {
@@ -82,44 +98,56 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
 
     private void onClick() {
         ivFilter.setOnClickListener(view -> {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+            if (mList != null) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    getContext(),
-                    R.style.CustomDatePickerDialog,
-                    (datePicker, selectedYear, selectedMonth, selectedDay) -> {
-                        ivCancelFilter.setVisibility(View.VISIBLE);
-                        ivFilter.setVisibility(View.GONE);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        getContext(),
+                        R.style.CustomDatePickerDialog,
+                        (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+                            ivCancelFilter.setVisibility(View.VISIBLE);
+                            ivFilter.setVisibility(View.GONE);
 
-                        // Tạo một Calendar object từ ngày được chọn
-                        Calendar selectedCalendar = Calendar.getInstance();
-                        selectedCalendar.set(selectedYear, selectedMonth, selectedDay);
+                            // Tạo một Calendar object từ ngày được chọn
+                            Calendar selectedCalendar = Calendar.getInstance();
+                            selectedCalendar.set(selectedYear, selectedMonth, selectedDay);
 
-                        // Lọc danh sách theo ngày được chọn
-                        List<Task> list = mList;
-                        List<Task> filteredTasks = filterTasksByDate(list, selectedCalendar.getTime());
-                        adapterTask.setList(filteredTasks);
-                    },
-                    year,
-                    month,
-                    dayOfMonth
-            );
+                            // Lọc danh sách theo ngày được chọn
+                            List<Task> list = mList;
+                            List<Task> filteredTasks = filterTasksByDate(list, selectedCalendar.getTime());
+                            adapterTask.setList(filteredTasks);
+                        },
+                        year,
+                        month,
+                        dayOfMonth
+                );
 
-            datePickerDialog.show();
+                datePickerDialog.show();
+            }else {
+                UIutils.showSnackbar(mRCV ,"Không có nhân viên để lọc");
+            }
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                adapterTask.getFilter().filter(s);
+                if (mList != null) {
+                    adapterTask.getFilter().filter(s);
+                }else {
+                    UIutils.showSnackbar(mRCV, "Không có nhân viên để tìm kiếm");
+                }
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                adapterTask.getFilter().filter(s);
+                if (mList != null) {
+                    adapterTask.getFilter().filter(s);
+                }else {
+                    UIutils.showSnackbar(mRCV, "Không có nhân viên để tìm kiếm");
+                }
                 return true;
             }
         });
@@ -132,7 +160,7 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
 
     private void setAdapter(List<Task> taskList) {
         Collections.reverse(taskList);
-        adapterTask = new TaskAdapter(taskList, 1);
+        adapterTask = new TaskAdapter(taskList, 1, role);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCV.setLayoutManager(layoutManager);
@@ -167,8 +195,6 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
                     assert response.body() != null;
                     if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
                         setAdapter(response.body().getTaskList());
-                    }else {
-                        Toast.makeText(getContext(), "Call Api Failure", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -179,6 +205,26 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
             }
         });
     }
+
+    private void readTasksByIdEmployeeApi(String idEmployee) {
+        ApiClient.getClient().create(ApiService.class).readTaskByIdEmployee(idEmployee).enqueue(new Callback<ResponseTask>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
+                        setAdapter(response.body().getTaskList());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseTask> call, @NonNull Throwable t) {
+                Log.e("Error", t.toString());
+            }
+        });
+    }
+
     public void deleteTaskApi(Task task, View view){
         ApiClient.getClient().create(ApiService.class).deleteTaskById(task.getIdTask()).enqueue(new Callback<ResponseTask>() {
             @Override
@@ -206,9 +252,10 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
     }
 
     @Override
-    public void nextUpdateScreenTask(Task task) {
+    public void nextUpdateScreenTask(Task task, String role) {
         Intent intent = new Intent(getActivity(), UpdateTaskActivity.class);
         intent.putExtra("task", task);
+        intent.putExtra("role", role);
         startActivity(intent);
     }
 
@@ -231,6 +278,6 @@ public class TaskFragment extends Fragment implements OnItemClickListner.TaskI {
     @Override
     public void onStart() {
         super.onStart();
-        readTasksApi();
+        checkRoleCallApi();
     }
 }

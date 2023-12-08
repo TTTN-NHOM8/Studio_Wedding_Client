@@ -1,9 +1,12 @@
 package com.example.studiowedding.view.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -53,6 +56,7 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     private TaskAdapter adapterTask;
     private TaskTodayAdapter taskTodayAdapter;
     private ProgressDialog mProgressDialog;
+    private String role, idEmployee;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +74,18 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
         super.onViewCreated(view, savedInstanceState);
         initUI(view);
         onClick();
-        readTasksApi();
+    }
+
+    private void checkRoleCallApi() {
+        SharedPreferences preferences = getActivity().getSharedPreferences("LuuIdNhanvien", MODE_PRIVATE);
+         role = preferences.getString("Vaitro", "");
+         idEmployee = preferences.getString("IdNhanvien", "");
+
+        if (AppConstants.ROLE.equals(role)){
+            readTasksApi();
+        }else {
+            readTasksByIdEmployeeApi(idEmployee);
+        }
     }
 
     private void initUI(View view) {
@@ -104,8 +119,26 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
                     if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
                         setAdapter(response.body().getTaskList());
                         setAdapterToday(response.body().getTaskList());
-                    }else {
-                        Toast.makeText(getContext(), "Call Api Failure", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseTask> call, @NonNull Throwable t) {
+                Log.e("Error", t.toString());
+            }
+        });
+    }
+
+    private void readTasksByIdEmployeeApi(String idEmployee) {
+        ApiClient.getClient().create(ApiService.class).readTaskByIdEmployee(idEmployee).enqueue(new Callback<ResponseTask>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
+                        setAdapter(response.body().getTaskList());
+                        setAdapterToday(response.body().getTaskList());
                     }
                 }
             }
@@ -119,7 +152,7 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
 
     private void setAdapter(List<Task> taskList) {
         Collections.reverse(taskList);
-        adapterTask = new TaskAdapter(taskList, 0);
+        adapterTask = new TaskAdapter(taskList, 0, role);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCV.setLayoutManager(layoutManager);
@@ -142,7 +175,7 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
         if (check > 0){
             tvShowToday.setVisibility(View.GONE);
         }
-        taskTodayAdapter = new TaskTodayAdapter(list, 0);
+        taskTodayAdapter = new TaskTodayAdapter(list, 0, role);
         taskTodayAdapter.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCVToday.setLayoutManager(layoutManager);
@@ -180,9 +213,10 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
         });
     }
     @Override
-    public void nextUpdateScreenTask(Task task) {
+    public void nextUpdateScreenTask(Task task, String role) {
         Intent intent = new Intent(getActivity(), UpdateTaskActivity.class);
         intent.putExtra("task", task);
+        intent.putExtra("role", role);
         startActivity(intent);
     }
     @Override
@@ -204,6 +238,6 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     @Override
     public void onStart() {
         super.onStart();
-        readTasksApi();
+        checkRoleCallApi();
     }
 }
