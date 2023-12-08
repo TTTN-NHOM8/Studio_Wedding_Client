@@ -1,6 +1,6 @@
 # FALL23/PR0118/LTMT-TEAM 8
 # Studio Wedding
-Dự án thực tập kỳ FALL23 của nhóm 8 ngành lập trình mobile - FPT Polytechnic Đà Nẵng tại xưởng thực hành CNTT sử dụng Java (Phía Android app) + Node.JS (Phía server) + MySQL (database)
+Công nghệ sử dụng Java (Android) + Node.JS (API server) + MySQL (database)
 
 ## Thành viên
 
