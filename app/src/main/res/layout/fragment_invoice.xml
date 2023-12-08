@@ -2,6 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cdlContract"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/line"
@@ -21,22 +22,29 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
                 android:orientation="horizontal"
-                android:layout_marginLeft="16dp"
                 android:padding="5dp">
 
-                <SearchView
+                <EditText
+                    android:id="@+id/edSearchContract"
                     android:layout_width="281dp"
                     android:layout_height="52dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_bgr_white" />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/edittext_bgr_white"
+                    android:drawableStart="@drawable/search_bar_icon"
+                    android:drawablePadding="14dp"
+                    android:hint="Tìm kiếm hợp đồng"
+                    android:paddingHorizontal="13dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:id="@+id/imgFilterContract"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:src="@drawable/filter_icon" />
             </LinearLayout>
@@ -52,21 +60,29 @@
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:minHeight="500dp">
 
+
+                <TextView
+                    android:id="@+id/tvNotifiicationContract"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/noitem"
+                    android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcvContract"
-                    tools:listitem="@layout/layout_item_contract"
-                    android:layout_marginHorizontal="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center" />
+                    android:layout_marginHorizontal="10dp"
+                    tools:listitem="@layout/layout_item_contract" />
 
 
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            </RelativeLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -75,8 +91,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="69dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="75dp"
         android:clickable="true"
         android:src="@drawable/floating_button_icon" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

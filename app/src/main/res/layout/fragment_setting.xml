@@ -37,24 +37,25 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/tvVaitro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/inter_medium"
             android:text="Admin"
             android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/tvaccounthoten"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/inter_medium"
             android:text="Phạm Đình Thông"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout

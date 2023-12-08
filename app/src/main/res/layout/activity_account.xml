@@ -61,7 +61,7 @@
 
             <EditText
                 android:id="@+id/edPasswork"
-                android:layout_width="300dp"
+                android:layout_width="310dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
                 android:background="@color/line"
@@ -72,8 +72,18 @@
                 android:hint="Mật khẩu cũ"
                 android:inputType="text"
                 android:paddingStart="10dp"
+                android:maxLength="16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgXem"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/baseline_visibility_off_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edPasswork"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -90,7 +100,7 @@
 
             <EditText
                 android:id="@+id/edPassnew"
-                android:layout_width="300dp"
+                android:layout_width="310dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
                 android:background="@color/line"
@@ -101,8 +111,19 @@
                 android:hint="Mật khẩu mới"
                 android:inputType="text"
                 android:paddingStart="10dp"
+                android:maxLength="16"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/ImgXem1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/baseline_visibility_off_24"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edPassnew"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -119,7 +140,7 @@
 
             <EditText
                 android:id="@+id/edPassnew1"
-                android:layout_width="300dp"
+                android:layout_width="310dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="5dp"
                 android:background="@color/line"
@@ -130,9 +151,20 @@
                 android:hint="Nhập lại mật khẩu mới"
                 android:inputType="text"
                 android:paddingStart="10dp"
+                android:maxLength="16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imgXem2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/baseline_visibility_off_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edPassnew1"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

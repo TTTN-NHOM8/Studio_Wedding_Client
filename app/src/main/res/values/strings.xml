@@ -63,11 +63,13 @@
     <string name="text_gender_staff_female">Nữ</string>
     <string name="text_btn_add">THÊM MỚI</string>
     <string name="content_update_staff">Thông tin nhân viên</string>
+
     <string name="text_menu_manager">Quản Lý</string>
     <string name="text_menu_driver">Lái Xe</string>
     <string name="text_menu_photographer">Chụp Hình</string>
     <string name="text_menu_makeup">Makeup</string>
     <string name="text_menu_logistics">Hậu Cần</string>
+
 
     <string name="text_email_update_staff">nv1@gmail.com</string>
     <string name="text_dob_update_staff">12/21/2001</string>
@@ -90,6 +92,11 @@
 
 
     <string name="icon_description">Role Icon</string>
+
+    <string name="update_oncurrent">Cập nhật phát sinh</string>
+    <string name="title_info_incurrent">Thông tin phát sinh</string>
+    <string name="noitem">Không có mục nào để hiển thị</string>
+
     <string name="title_activity_add_product">AddProductActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

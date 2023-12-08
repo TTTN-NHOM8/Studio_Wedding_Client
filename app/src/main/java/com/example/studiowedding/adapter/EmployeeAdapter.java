@@ -82,7 +82,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
                     itemClickListner.nextUpdateScreenEmployee(employee);
                     return true;
                 case R.id.action_delete:
-                    itemClickListner.showConfirmDeleteEmployee();
+                    itemClickListner.showConfirmDeleteEmployee(employee, holder.view);
                     return true;
                 default:
                     return false;
@@ -97,11 +97,12 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     }
 
     public class EmployeeViewHolder extends RecyclerView.ViewHolder {
-        public CircleImageView circleImageView;
-        public TextView tvNameEmployee, tvRoleEmployee;
-        public ImageView ivMenu;
+        private CircleImageView circleImageView;
+        private TextView tvNameEmployee, tvRoleEmployee;
+        private ImageView ivMenu;
 
-        public ImageView ivFiler;
+        private ImageView ivFiler;
+        private View view;
 
         public EmployeeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -110,6 +111,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             tvRoleEmployee = itemView.findViewById(R.id.tv_role_employee);
             ivMenu = itemView.findViewById(R.id.iv_menu_employee);
             ivFiler = itemView.findViewById(R.id.imgFilterContract);
+            view = itemView.findViewById(R.id.layout_employee);
         }
 
         public void setListener(Employee employee) {
@@ -124,7 +126,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String strSearch = charSequence.toString();
                 if (strSearch.isEmpty()) {
-                    employeeList = new ArrayList<>();
+                    employeeList.addAll(employeeList);
                 } else {
                     List<Employee> list = new ArrayList<>();
                     for (Employee employee : employeeList) {

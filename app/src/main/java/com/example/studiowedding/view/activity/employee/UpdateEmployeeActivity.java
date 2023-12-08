@@ -50,9 +50,9 @@ import retrofit2.Response;
 
 public class UpdateEmployeeActivity extends AppCompatActivity {
     private ProgressDialog loadingDialog;
-    private ImageView ivBack, ivSpinnerRole, ivHidingPass;
+    private ImageView ivBack, ivSpinnerRole;
     private CircleImageView civEmployee;
-    private EditText etEmail, etPass, etName, etDob, etPhone, etLocation, etRole;
+    private EditText etEmail, etName, etDob, etPhone, etLocation, etRole;
     private RadioGroup radioGender;
     private RadioButton radioMale, radioFemale;
     private LinearLayout btnUpdate;
@@ -74,7 +74,6 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         ivBack = findViewById(R.id.iv_back_update_employee);
         civEmployee = findViewById(R.id.civ_update_img_employee);
         etEmail = findViewById(R.id.et_update_email_employee);
-        etPass = findViewById(R.id.et_update_pass_employee);
         etName = findViewById(R.id.et_update_name_employee);
         etDob = findViewById(R.id.et_update_dob_employee);
         etPhone = findViewById(R.id.et_update_phone_employee);
@@ -85,7 +84,6 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         btnUpdate = findViewById(R.id.btnUpdateEmployee);
         radioMale = findViewById(R.id.radioButtonUpdateMale);
         radioFemale = findViewById(R.id.radioButtonUpdateFemale);
-        ivHidingPass = findViewById(R.id.iv_hiding_pass);
     }
 
     /**
@@ -100,12 +98,12 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
                     .into(civEmployee);
             etEmail.setText(employee.getIdNhanVien());
             etName.setText(employee.getHoTen());
-            etPass.setText(employee.getMatKhau());
             String dobOrigin = getCustomDob(employee);
             etDob.setText(dobOrigin);
             etLocation.setText(employee.getDiaChi());
             etPhone.setText(employee.getDienThoai());
             etRole.setText(employee.getVaiTro());
+// test gì nữa long
         }
     }
 
@@ -136,7 +134,6 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         etDob.setOnClickListener(view -> showDatePicker());
         ivSpinnerRole.setOnClickListener(view -> showRoleOptions());
         btnUpdate.setOnClickListener(view -> startUpdateEmployee());
-        ivHidingPass.setOnClickListener(view -> onPasswordToggleImageClick());
     }
 
     /**
@@ -205,10 +202,20 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
                 this,
                 R.style.CustomDatePickerDialog,
                 (datePicker, selectedYear, selectedMonth, selectedDay) -> {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                    calendar.set(selectedYear, selectedMonth, selectedDay);
-                    String formattedDate = sdf.format(calendar.getTime());
-                    etDob.setText(formattedDate);
+                    // Kiểm tra nếu ngày sinh được chọn là trong tương lai
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.set(selectedYear, selectedMonth, selectedDay);
+
+                    if (selectedDate.after(Calendar.getInstance())) {
+                        // Ngày sinh là trong tương lai, thông báo lỗi
+                        showSnackbar(AppConstants.DATE_ILLEGAL);
+                    } else {
+                        // Ngày sinh hợp lệ, tiếp tục xử lý như bình thường
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                        calendar.set(selectedYear, selectedMonth, selectedDay);
+                        String formattedDate = sdf.format(calendar.getTime());
+                        etDob.setText(formattedDate);
+                    }
                 },
                 year,
                 month,
@@ -218,6 +225,7 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         // Hiển thị DatePickerDialog
         datePickerDialog.show();
     }
+
 
     private void showRoleOptions(){
         PopupMenu popupMenu = new PopupMenu(this, ivSpinnerRole);
@@ -236,7 +244,6 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         String id = etEmail.getText().toString().trim();
         String name = etName.getText().toString().trim();
         String dob = etDob.getText().toString().trim();
-        String password = etPass.getText().toString().trim();
         String phone = etPhone.getText().toString().trim();
         String location = etLocation. getText().toString().trim();
         String gender = "";
@@ -248,9 +255,11 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         String role = etRole.getText().toString().trim();
         Employee employee;
         if (photoUrlPiker != null){
-             employee = new Employee(id,name,password,dob,gender,phone,location,photoUrlPiker,role);
+
+             employee = new Employee(id,name,dob,gender,phone,location,photoUrlPiker,role);
         }else {
-             employee = new Employee(id,name,password,dob,gender,phone,location,mEmployee.getAnh(),role);
+             employee = new Employee(id,name,dob,gender,phone,location,mEmployee.getAnh(),role);
+
         }
         if (!isValidDataInput(employee)){
             return;
@@ -299,7 +308,7 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
 
         return true;
     }
-
+// văng app r
     /**
      * Chỉnh sửa nhân viên thông qua gọi API
      */
@@ -308,7 +317,6 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         ApiClient.getClient().create(ApiService.class).updateEmployee(
                 employee.getIdNhanVien(),
                 employee.getHoTen(),
-                employee.getMatKhau(),
                 employee.getNgaySinh(),
                 employee.getGioiTinh(),
                 employee.getDienThoai(),
@@ -343,9 +351,6 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         }
     }
 
-    public void onPasswordToggleImageClick(){
-        UIutils.togglePasswordVisibleWithImage(etPass, ivHidingPass);
-    }
 
     private void showLoadingDialog(boolean show) {
         if (loadingDialog == null) {
