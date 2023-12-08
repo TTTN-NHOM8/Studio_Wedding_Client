@@ -1,9 +1,12 @@
 package com.example.studiowedding.view.fragment;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -36,6 +39,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -46,12 +50,13 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     private RecyclerView mRCV, mRCVToday;
-    private TextView tvSeeTask, tvSeeTaskToday;
+    private TextView tvSeeTask, tvSeeTaskToday, tvShowToday, tvShow;
     private List<Task> mList;
     private List<Task> mListToday;
     private TaskAdapter adapterTask;
     private TaskTodayAdapter taskTodayAdapter;
     private ProgressDialog mProgressDialog;
+    private String role, idEmployee;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,12 +72,29 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initUI(view);
+        onClick();
+    }
+
+    private void checkRoleCallApi() {
+        SharedPreferences preferences = getActivity().getSharedPreferences("LuuIdNhanvien", MODE_PRIVATE);
+         role = preferences.getString("Vaitro", "");
+         idEmployee = preferences.getString("IdNhanvien", "");
+
+        if (AppConstants.ROLE.equals(role)){
+            readTasksApi();
+        }else {
+            readTasksByIdEmployeeApi(idEmployee);
+        }
+    }
+
+    private void initUI(View view) {
+        tvShow = view.findViewById(R.id.tv_show_home_fragment);
+        tvShowToday = view.findViewById(R.id.tv_show_today_home_fragment);
         mRCV = view.findViewById(R.id.rcv_job_home);
         mRCVToday = view.findViewById(R.id.rcv_today_job_home);
         tvSeeTask = view.findViewById(R.id.tv_see_all_job);
         tvSeeTaskToday = view.findViewById(R.id.tv_see_all_job_today);
-        onClick();
-        readTasksApi();
     }
 
     private void onClick() {
@@ -97,8 +119,26 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
                     if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
                         setAdapter(response.body().getTaskList());
                         setAdapterToday(response.body().getTaskList());
-                    }else {
-                        Toast.makeText(getContext(), "Call Api Failure", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseTask> call, @NonNull Throwable t) {
+                Log.e("Error", t.toString());
+            }
+        });
+    }
+
+    private void readTasksByIdEmployeeApi(String idEmployee) {
+        ApiClient.getClient().create(ApiService.class).readTaskByIdEmployee(idEmployee).enqueue(new Callback<ResponseTask>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
+                        setAdapter(response.body().getTaskList());
+                        setAdapterToday(response.body().getTaskList());
                     }
                 }
             }
@@ -111,26 +151,31 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     }
 
     private void setAdapter(List<Task> taskList) {
-
-        adapterTask = new TaskAdapter(taskList, 0);
+//        Collections.reverse(taskList);
+        adapterTask = new TaskAdapter(taskList, 0, role);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCV.setLayoutManager(layoutManager);
         mRCV.setAdapter(adapterTask);
         mList= taskList;
+        tvShow.setVisibility(View.GONE);
     }
 
     private void setAdapterToday(List<Task> taskList) {
         List<Task> list = new ArrayList<>();
+        int check = 0;
         for(int i = 0 ; i < taskList.size() ; i ++){
             if (taskList.get(i).getDateImplement() != null){
                 if (FormatUtils.checkData(taskList.get(i).getDateImplement())){
                     list.add(taskList.get(i));
+                    check++;
                 }
             }
         }
-
-        taskTodayAdapter = new TaskTodayAdapter(list, 0);
+        if (check > 0){
+            tvShowToday.setVisibility(View.GONE);
+        }
+        taskTodayAdapter = new TaskTodayAdapter(list, 0, role);
         taskTodayAdapter.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRCVToday.setLayoutManager(layoutManager);
@@ -168,9 +213,10 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
         });
     }
     @Override
-    public void nextUpdateScreenTask(Task task) {
+    public void nextUpdateScreenTask(Task task, String role) {
         Intent intent = new Intent(getActivity(), UpdateTaskActivity.class);
         intent.putExtra("task", task);
+        intent.putExtra("role", role);
         startActivity(intent);
     }
     @Override
@@ -192,6 +238,6 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     @Override
     public void onStart() {
         super.onStart();
-        readTasksApi();
+        checkRoleCallApi();
     }
 }

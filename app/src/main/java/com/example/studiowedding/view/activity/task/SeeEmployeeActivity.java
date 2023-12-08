@@ -72,27 +72,29 @@ public class SeeEmployeeActivity extends AppCompatActivity implements OnItemClic
         });
 
         ivFilter.setOnClickListener(view -> {
-            PopupMenu popupMenu = new PopupMenu(this, ivFilter);
-            MenuInflater menuInflater = popupMenu.getMenuInflater();
-            menuInflater.inflate(R.menu.filter_employee_task, popupMenu.getMenu());
+            if (mList != null){
+                PopupMenu popupMenu = new PopupMenu(this, ivFilter);
+                MenuInflater menuInflater = popupMenu.getMenuInflater();
+                menuInflater.inflate(R.menu.filter_employee_task, popupMenu.getMenu());
 
-            popupMenu.setOnMenuItemClickListener(menuItem -> {
-                switch (menuItem.getItemId()){
-                    case R.id.make_up:
-                    case R.id.lai_xe:
-                    case R.id.chup_hinh:
-                        ivCancelFilter.setVisibility(View.VISIBLE);
-                        ivFilter.setVisibility(View.GONE);
-                        adapter.setList(filterByRole((String) menuItem.getTitle()));
-                        return true;
-                    case R.id.loctatca:
-                        adapter.setList(mList);
-                        return true;
-                    default:
-                        return false;
-                }
-            });
-            popupMenu.show();
+                popupMenu.setOnMenuItemClickListener(menuItem -> {
+                    switch (menuItem.getItemId()){
+                        case R.id.make_up:
+                        case R.id.lai_xe:
+                        case R.id.chup_hinh:
+                            ivCancelFilter.setVisibility(View.VISIBLE);
+                            ivFilter.setVisibility(View.GONE);
+                            adapter.setList(filterByRole((String) menuItem.getTitle()));
+                            return true;
+                        case R.id.loctatca:
+                            adapter.setList(mList);
+                            return true;
+                        default:
+                            return false;
+                    }
+                });
+                popupMenu.show();
+            }
         });
         ivCancelFilter.setOnClickListener(view -> {
             ivCancelFilter.setVisibility(View.GONE);

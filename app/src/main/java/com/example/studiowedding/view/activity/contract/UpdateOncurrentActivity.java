@@ -1,6 +1,7 @@
 package com.example.studiowedding.view.activity.contract;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 
 import android.annotation.SuppressLint;
@@ -95,6 +96,12 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
             edNote.setEnabled(false);
             edFine.setEnabled(false);
             edDor.setEnabled(false);
+            edNote.setTextColor(ContextCompat.getColor(this,R.color.black));
+            edFine.setTextColor(ContextCompat.getColor(this,R.color.black));
+            edDor.setTextColor(ContextCompat.getColor(this,R.color.black));
+            edNote.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
+            edFine.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
+            edDor.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
             btnUpdate.setVisibility(View.GONE);
 
             if(dor!=null){

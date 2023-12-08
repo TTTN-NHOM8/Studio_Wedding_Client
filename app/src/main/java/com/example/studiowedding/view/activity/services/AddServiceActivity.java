@@ -69,7 +69,8 @@ public class AddServiceActivity extends AppCompatActivity {
                                 showSnackbar("Thêm dịch vụ thành công");
                                 new Handler().postDelayed(() -> finish(), 1000);
 
-//                                refreshUI();
+                            } else if (serviceResponse.getStatus().equals("exists")) {
+                                showSnackbar("Tên dịch vụ đã tồn tại");
                             } else {
                                 showSnackbar("Xảy ra lỗi khi thêm dịch vụ.");
                             }

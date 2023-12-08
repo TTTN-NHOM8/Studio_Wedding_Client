@@ -41,8 +41,6 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Viewho
         View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewhodel_listcustomer,parent,false);
 
         return new Viewhodel(inflate);
-
-
     }
 
 
@@ -67,9 +65,6 @@ public class CustomerAdapter extends RecyclerView.Adapter<CustomerAdapter.Viewho
             });
             popupMenu.show();
         });
-
-
-
 
     }
 

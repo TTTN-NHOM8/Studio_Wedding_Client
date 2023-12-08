@@ -141,7 +141,6 @@ public class ContractDetailAdapter extends RecyclerView.Adapter<ContractDetailAd
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
     public interface ItemListener {
         void startUpdateContractDetailActivity(ContractDetail contractDetail);
         void showConfirmDeleteContractDetail(ContractDetail contractDetail);
