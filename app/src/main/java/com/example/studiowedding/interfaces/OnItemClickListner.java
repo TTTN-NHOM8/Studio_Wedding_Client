@@ -9,13 +9,21 @@ public interface OnItemClickListner {
     void onItemClick(int position);
 
     interface TaskI{
-      void nextUpdateScreenTask(Task task);
+      void nextUpdateScreenTask(Task task, String role);
       void showConfirmDelete(Task task, View view);
+    }
+
+    interface TaskEmployeeJoinI{
+        void nextScreen(Employee employee);
+    }
+    interface TaskJoinI{
+        void nextScreen(Employee employee);
+        void showConfirmDelete(Employee employee, View view);
     }
 
     interface EmployeeI{
         void nextUpdateScreenEmployee(Employee employee);
-        void showConfirmDeleteEmployee();
+        void showConfirmDeleteEmployee(Employee employee, View view);
     }
   
     interface Child {

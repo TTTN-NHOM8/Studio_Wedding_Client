@@ -39,7 +39,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/tv_see_all_job"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -51,16 +51,33 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:id="@+id/tv_show_home_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp"
+                    android:fontFamily="@font/inter_regular"
+                    android:gravity="center"
+                    android:text="Không có công việc nào"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rcv_job_home"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/rcv_job_home" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_job_home"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:minHeight="100dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView4"
                     tools:itemCount="2"
-                    tools:listitem="@layout/item_task">
+                    tools:listitem="@layout/item_task"
+                  >
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -78,7 +95,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/rcv_job_home" />
 
                 <TextView
-                    android:id="@+id/textView8"
+
+                    android:id="@+id/tv_see_all_job_today"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -89,6 +107,21 @@
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rcv_job_home" />
+
+                <TextView
+                    android:id="@+id/tv_show_today_home_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginEnd="18dp"
+                    android:fontFamily="@font/inter_regular"
+                    android:gravity="center"
+                    android:text="Không có công việc nào"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rcv_today_job_home"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/rcv_today_job_home" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rcv_today_job_home"

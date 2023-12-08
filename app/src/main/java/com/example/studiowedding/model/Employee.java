@@ -2,6 +2,7 @@ package com.example.studiowedding.model;
 
 import com.google.gson.annotations.SerializedName;
 
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,6 +20,11 @@ public class Employee implements Serializable {
     private String anh;
     private String vaiTro;
 
+    @SerializedName("idThamGia")
+    private int idJoin;
+    private int hienThi;
+
+
     public Employee(String idNhanVien, String hoTen, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro) {
         this.idNhanVien = idNhanVien;
         this.hoTen = hoTen;
@@ -29,7 +35,6 @@ public class Employee implements Serializable {
         this.anh = anh;
         this.vaiTro = vaiTro;
     }
-
     public Employee(String idNhanVien, String hoTen, String matKhau, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String anh, String vaiTro) {
         this.idNhanVien = idNhanVien;
         this.hoTen = hoTen;
@@ -41,7 +46,6 @@ public class Employee implements Serializable {
         this.anh = anh;
         this.vaiTro = vaiTro;
     }
-
     public String getIdNhanVien() {
         return idNhanVien;
     }
@@ -49,15 +53,12 @@ public class Employee implements Serializable {
     public void setIdNhanVien(String idNhanVien) {
         this.idNhanVien = idNhanVien;
     }
-
     public String getHoTen() {
         return hoTen;
     }
-
     public void setHoTen(String hoTen) {
         this.hoTen = hoTen;
     }
-
     public String getMatKhau() {
         return matKhau;
     }
@@ -114,6 +115,14 @@ public class Employee implements Serializable {
         this.vaiTro = vaiTro;
     }
 
+
+    public int getIdJoin() {
+        return idJoin;
+    }
+
+    public void setIdJoin(int idJoin) {
+        this.idJoin = idJoin;
+    }
 
     @Override
     public String toString() {
