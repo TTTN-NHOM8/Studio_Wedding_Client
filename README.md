@@ -18,11 +18,6 @@ Công nghệ sử dụng Java (Android) + Node.JS (API server) + MySQL (database
 | 10 | Hồ Nguyễn Thái Tú | TuHNT |Nhân viên
 | 11 | Ngô Xuân Long | LongNX |Công việc
 
-## Phân tích, thiết kế
-#ERD
-#Figma
-
-
 ## Chức năng chính
 1. Đăng nhập, phân quyền
 2. Thêm, xem, cập nhật, xoá, lọc theo trạng thái, tìm kiếm theo tên sản phẩm
