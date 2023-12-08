@@ -9,7 +9,7 @@ Công nghệ sử dụng Java (Android) + Node.JS (API server) + MySQL (database
 | 1 | Trần Tuấn Việt | VietTT |Dịch vụ (Bỏ task)
 | 2 | Ngô Trung Kiên | KienNT |Sản phẩm
 | 3 | Phạm Đình Thông | ThongPD |Đăng nhập,tài khoản, thống kê
-| 4 | Lô Tiến Đạt | DatLT |Hợp đồng
+| 4 | Lô Tiến Đạt | DatLT |Hợp đồng, phát sinh
 | 6 | Bùi Đức Duy | DuyBD |Sản phẩm
 | 6 | Nguyễn Tấn Quốc Anh | AnhNTQ |Nhân viên
 | 7 | Nguyễn Việt Cường | CuongNV |Khách hàng
