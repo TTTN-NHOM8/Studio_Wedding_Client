@@ -89,6 +89,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         floatingActionButton = view.findViewById(R.id.fabContract);
         ivFilter = view.findViewById(R.id.imgFilterContract);
         searchView = view.findViewById(R.id.searchView);
+        tvNotification.setVisibility(View.GONE);
         floatingActionButton.setOnClickListener(view1 -> startActivity(new Intent(getContext(), AddEmployeeActivity.class)));
         setAdapter();
         setSearchView();
@@ -130,10 +131,8 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if(query.isEmpty()) {
-                    Log.d(TAG, " Tìm thành công ");
                     getEmployeeList();
                 } else {
-                    Log.d(TAG, " Không có nhân viên này");
                     employeeAdapter.getFilter().filter(query);
                 }
                 return false;
@@ -143,15 +142,22 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
             public boolean onQueryTextChange(String newText)
             {
                 if(newText.isEmpty()) {
-                    tvNotification.setVisibility(View.VISIBLE);
                     getEmployeeList();
                 } else {
-                    tvNotification.setVisibility(View.GONE);
                     employeeAdapter.getFilter().filter(newText);
                 }
+                updateVisible();
                 return true;
             }
         });
+    }
+
+    private void updateVisible(){
+        if(employeeList.isEmpty()){
+            tvNotification.setVisibility(View.VISIBLE);
+        }else{
+            tvNotification.setVisibility(View.GONE);
+        }
     }
 
     public void setAdapter(){
@@ -184,6 +190,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
                 if (response.isSuccessful()){
                     if (AppConstants.RESPONSE_SUCCESS.equals(response.body().getStatus())){
                         employeeAdapter.setEmployeeList(response.body().getEmployees());
+
                     }
                 }else {
                     Log.e("ERROR", AppConstants.CALL_API_ERROR_MESSAGE);
@@ -207,6 +214,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
                 if (response.isSuccessful()){
                     if (response.body() != null && AppConstants.STATUS_EMPLOYEE.equals(response.body().getStatus())){
                         Snackbar.make(view, AppConstants.DELETE_EMPLOYEE_SUCCESS_MESSAGE, Snackbar.LENGTH_SHORT).show();
+                        getEmployeeList();
                     }else {
                         Snackbar.make(view, AppConstants.DELETE_EMPLOYEE_FAILED_MESSAGE, Snackbar.LENGTH_SHORT).show();
                     }

@@ -260,10 +260,6 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
         }else {
              employee = new Employee(id,name,dob,gender,phone,location,mEmployee.getAnh(),role);
 
-            employee = new Employee(id,name,password,dob,gender,phone,location,photoUrlPiker,role);
-        }else {
-            employee = new Employee(id,name,password,dob,gender,phone,location,mEmployee.getAnh(),role);
-
         }
         if (!isValidDataInput(employee)){
             return;

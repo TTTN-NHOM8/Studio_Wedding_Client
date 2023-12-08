@@ -143,7 +143,6 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                employeeList.clear();
                 employeeList = (List<Employee>) filterResults.values;
                 notifyDataSetChanged();
 
