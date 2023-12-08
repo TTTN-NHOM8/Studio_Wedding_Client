@@ -23,7 +23,7 @@ public interface OnItemClickListner {
 
     interface EmployeeI{
         void nextUpdateScreenEmployee(Employee employee);
-        void showConfirmDeleteEmployee();
+        void showConfirmDeleteEmployee(Employee employee, View view);
     }
   
     interface Child {
