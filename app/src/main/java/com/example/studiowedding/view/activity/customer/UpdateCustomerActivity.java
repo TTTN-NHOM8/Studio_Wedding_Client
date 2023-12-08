@@ -87,7 +87,7 @@ public class UpdateCustomerActivity extends AppCompatActivity {
 
     private boolean isNameValid(String name) {
         // Add your name validation logic here
-        return name.matches("[a-zA-Z]+");
+        return name.matches("[a-zA-Z ]+");
     }
 
     private boolean isPhoneValid(String phone) {

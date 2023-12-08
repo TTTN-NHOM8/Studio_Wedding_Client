@@ -151,7 +151,7 @@ public class HomeFragment extends Fragment implements OnItemClickListner.TaskI {
     }
 
     private void setAdapter(List<Task> taskList) {
-//        Collections.reverse(taskList);
+        Collections.reverse(taskList);
         adapterTask = new TaskAdapter(taskList, 0, role);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
