@@ -172,10 +172,8 @@ public class ProductServiceFragment extends Fragment implements OnItemClickListn
 
     @Override
     public void onResume() {
-
         super.onResume();
         getProducts();
-
     }
 
     @Override
@@ -202,10 +200,10 @@ public class ProductServiceFragment extends Fragment implements OnItemClickListn
 
     }
     private void getProducts() {
-        ApiClient.getClient().create(ApiService.class).getProducts().enqueue(new Callback<List<Product>>() {
+        ApiClient.getClient().create(ApiService.class).getProductsByName("").enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if(response.body().size()>0){
+                if(response.body()!=null){
                     dataList = response.body();
                     fillData(response.body());
                 }

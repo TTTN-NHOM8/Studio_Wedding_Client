@@ -59,6 +59,12 @@ public class AddProductActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+       try{
+           FirebaseApp.initializeApp(this);
+           Log.d("123", "c22");
+       }catch (Exception e){
+           Log.d("123", "onStart: "+e.getMessage());
+       }
         pickMedia =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
                     if (uri != null) {
@@ -94,10 +100,8 @@ public class AddProductActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         pd = new ProgressDialog(AddProductActivity.this);
         pd.setMessage("loading");
-        FirebaseApp.initializeApp(this);
         viewBinding = ActivityAddProductBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
         product = (Product) getIntent().getSerializableExtra("product");

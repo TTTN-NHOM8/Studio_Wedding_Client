@@ -72,7 +72,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ExampleV
         holder.tvtrangthai.setText(currentItem.getStatus());
         Log.d("123", "1 "+ currentItem.getImgUrl());
         if(currentItem.getImgUrl()!=null){
-            Glide.with( holder.itemView.getContext())
+             Glide.with( holder.itemView.getContext())
                     .load(currentItem.getImgUrl())
                     .into(holder.imgProduct);
         }
