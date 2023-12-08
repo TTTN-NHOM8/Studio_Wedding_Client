@@ -1,7 +1,6 @@
 package com.example.studiowedding.adapter;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -124,7 +123,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String strSearch = charSequence.toString();
                 if (strSearch.isEmpty()) {
-                    employeeList.addAll(employeeList);
+                    employeeList = new ArrayList<>();
                 } else {
                     List<Employee> list = new ArrayList<>();
                     for (Employee employee : employeeList) {
@@ -141,14 +140,13 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                employeeList.clear();
                 employeeList = (List<Employee>) filterResults.values;
                 notifyDataSetChanged();
 
             }
         };
     }
-    public void filterByRole (String role) {
+    public List<Employee> filterByRole (String role) {
         List<Employee> filterList = new ArrayList<>();
         for (Employee employee : employeeList) {
             if (employee.getVaiTro().equals(role)) {
@@ -158,5 +156,6 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
         employeeList.clear();
         employeeList = filterList;
         notifyDataSetChanged();
+        return filterList;
     }
 }
