@@ -141,5 +141,6 @@
         <item>Sẵn sàng</item>
         <item>Chưa sẵn sàng</item>
         <item>Có phát sinh</item>
+        <item>Đang thuê</item>
     </string-array>
 </resources>
