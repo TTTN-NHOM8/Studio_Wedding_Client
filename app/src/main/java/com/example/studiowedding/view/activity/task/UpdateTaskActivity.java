@@ -172,7 +172,13 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
     }
 
     private void saveTask() {
-        ApiClient.getClient().create(ApiService.class).updateTaskById(mTask.getIdTask(), etNote.getText().toString()).enqueue(new Callback<ResponseTask>() {
+        ApiClient.getClient().create(ApiService.class).
+                updateTaskById(
+                        mTask.getIdTask(),
+                        etNote.getText().toString(),
+                        mTask.getIdDetailContract(),
+                        mTask.getIdContract())
+                .enqueue(new Callback<ResponseTask>() {
             @Override
             public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
                 mProgressDialog.dismiss();

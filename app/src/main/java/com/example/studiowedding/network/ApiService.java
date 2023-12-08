@@ -224,7 +224,9 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     @PUT(ManagerUrl.UPDATE_TASKS)
     @FormUrlEncoded
     Call<ResponseTask> updateTaskById(@Path("id") int id,
-                                      @Field("statusTask") String statusTask);
+                                      @Field("statusTask") String statusTask,
+                                      @Field("idHDCT") String idHDCT,
+                                      @Field("idHD") String idHD);
 
     @DELETE(ManagerUrl.DELETE_TASKS)
     Call<ResponseTask> deleteTaskById(@Path("id") int id);
