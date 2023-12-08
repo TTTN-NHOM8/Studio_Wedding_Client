@@ -217,13 +217,16 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     @DELETE(ManagerUrl.DELETE_EMPLOYEE)
     Call<ResponseTask> deleteEmployeeJoin(@Path("idJoin") int idJoin);
 
-    @GET(ManagerUrl.READ_TASKS_ROLE)
-    Call<ResponseTask> readTaskByRole(@Query("vaiTro") String role);
+    @POST(ManagerUrl.READ_TASKS_ID_EMPLOYEE)
+    @FormUrlEncoded
+    Call<ResponseTask> readTaskByIdEmployee(@Field("idEmployee") String idEmployee);
 
     @PUT(ManagerUrl.UPDATE_TASKS)
     @FormUrlEncoded
     Call<ResponseTask> updateTaskById(@Path("id") int id,
-                                      @Field("statusTask") String statusTask);
+                                      @Field("statusTask") String statusTask,
+                                      @Field("idHDCT") String idHDCT,
+                                      @Field("idHD") String idHD);
 
     @DELETE(ManagerUrl.DELETE_TASKS)
     Call<ResponseTask> deleteTaskById(@Path("id") int id);
