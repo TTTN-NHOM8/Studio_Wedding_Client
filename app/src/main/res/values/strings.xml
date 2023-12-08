@@ -51,7 +51,7 @@
     <string name="name_staff">Floyd Miles</string>
     <string name="role_staff">Thợ ảnh</string>
     <string name="content_add_staff">Thêm nhân viên</string>
-    <string name="hint_email_staff">Email</string>
+    <string name="hint_email_staff">Tên đăng nhập</string>
     <string name="edt_pass_staff">abc</string>
     <string name="hint_name_staff">Họ tên</string>
     <string name="hint_dateofbirth_staff">Ngày sinh</string>
@@ -63,6 +63,11 @@
     <string name="text_gender_staff_female">Nữ</string>
     <string name="text_btn_add">THÊM MỚI</string>
     <string name="content_update_staff">Thông tin nhân viên</string>
+    <string name="text_menu_manager">Quản Lý</string>
+    <string name="text_menu_driver">Lái Xe</string>
+    <string name="text_menu_photographer">Chụp Hình</string>
+    <string name="text_menu_makeup">Makeup</string>
+    <string name="text_menu_logistics">Hậu Cần</string>
 
     <string name="text_email_update_staff">nv1@gmail.com</string>
     <string name="text_dob_update_staff">12/21/2001</string>
