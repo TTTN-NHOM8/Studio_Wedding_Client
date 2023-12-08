@@ -40,39 +40,70 @@ public class UpdateCustomerActivity extends AppCompatActivity {
         if(customer!=null){
             fillData(customer);
         }
-        viewBinding.btnSave.setOnClickListener(v->{
-            ApiService apiService = ApiClient.getClient().create(ApiService.class);
-            Call<Void> call = apiService.updateCustomer(customer.getId(),new Customer(
-                  viewBinding.edNameCustomer.getText().toString(),
-                    viewBinding.edPhoneCustomer.getText().toString(),
-                    viewBinding.edAddressCustomer.getText().toString()
-            ));
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    finish();
-                }
+        viewBinding.btnSave.setOnClickListener(v -> {
+            if (isValidData()) {
+                ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                Call<Void> call = apiService.updateCustomer(customer.getId(), new Customer(
+                        viewBinding.edNameCustomer.getText().toString(),
+                        viewBinding.edPhoneCustomer.getText().toString(),
+                        viewBinding.edAddressCustomer.getText().toString()
+                ));
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        finish();
+                    }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
 
-                }
-            });
+                    }
+                });
+            }
         });
+
     }
     void fillData(Customer customer){
         viewBinding.edNameCustomer.setText(customer.getName());
         viewBinding.edAddressCustomer.setText(customer.getAddress());
         viewBinding.edPhoneCustomer.setText(customer.getPhone());
     }
+    private boolean isValidData() {
+        String name = viewBinding.edNameCustomer.getText().toString().trim();
+        String phone = viewBinding.edPhoneCustomer.getText().toString().trim();
 
+        if (name.isEmpty() || !isNameValid(name)) {
+            Toast.makeText(this, "Tên không hợp lệ. Xin vui lòng nhập lại", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
+        if (phone.isEmpty() || !isPhoneValid(phone)) {
+            Toast.makeText(this, "Số điện thoại không hợp lệ. Xin vui lòng nhập lại.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
+        return true;
+    }
 
+    private boolean isNameValid(String name) {
+        // Add your name validation logic here
+        return name.matches("[a-zA-Z]+");
+    }
 
-
-
-
-
+    private boolean isPhoneValid(String phone) {
+        // Add your phone number validation logic here
+        // Check if it starts with "0", is a number, and has a length of at most 10
+        return phone.matches("^0[0-9]{9}$");
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
