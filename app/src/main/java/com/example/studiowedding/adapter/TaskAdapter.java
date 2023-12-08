@@ -28,11 +28,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
     private List<Task> filteredTasks;
     private final int selectFragment;
     private OnItemClickListner.TaskI mOnClickItem;
-    public TaskAdapter(List<Task> mList, int selectFragment) {
+    private String role;
+    public TaskAdapter(List<Task> mList, int selectFragment, String role) {
         this.mList = mList;
         this.selectFragment = selectFragment;
         this.filteredTasks = mList;
+        this.role = role;
     }
+
+
 
     public void setOnClickItem(OnItemClickListner.TaskI mOnClickItem){
         this.mOnClickItem = mOnClickItem;
@@ -59,7 +63,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             return;
         }
         holder.bind(task);
-        holder.ivBtn.setOnClickListener(view -> showPopupEdit(holder, task));
+        holder.ivBtn.setOnClickListener(view -> {
+            if (AppConstants.ROLE.equals(role) ){
+                showPopupEdit(holder, task);
+            }else {
+               showPopupEditRole(holder, task);
+            }
+        });
 
     }
 
@@ -72,7 +82,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         popupMenu.setOnMenuItemClickListener(menuItem -> {
             switch (menuItem.getItemId()){
                 case R.id.action_update:
-                    mOnClickItem.nextUpdateScreenTask(task);
+                    mOnClickItem.nextUpdateScreenTask(task, role);
                     return true;
                 case R.id.action_delete:
                     mOnClickItem.showConfirmDelete(task, holder.view);
@@ -84,6 +94,21 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         popupMenu.show();
     }
 
+    @SuppressLint("NonConstantResourceId")
+    private void showPopupEditRole(@NonNull ViewHolder holder, Task task){
+        PopupMenu popupMenu = new PopupMenu(holder.itemView.getContext(), holder.ivBtn);
+        MenuInflater menuInflater = popupMenu.getMenuInflater();
+        menuInflater.inflate(R.menu.popup_menu_role_task, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            if (menuItem.getItemId() == R.id.see_detail_task) {
+                mOnClickItem.nextUpdateScreenTask(task, role);
+                return true;
+            }
+            return false;
+        });
+        popupMenu.show();
+    }
 
     @Override
     public int getItemCount() {

@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,10 +27,12 @@ import com.example.studiowedding.model.Task;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
+import com.example.studiowedding.utils.UIutils;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,14 +51,27 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
     private List<Task> mListToday;
     private TaskAdapter adapterTask;
     private TaskTodayAdapter taskTodayAdapter;
+    private String role, idEmployee;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_task);
         initUI();
         onClick();
-        readTasksApi();
     }
+
+    private void checkRoleCallApi() {
+        SharedPreferences preferences = getSharedPreferences("LuuIdNhanvien", MODE_PRIVATE);
+         role = preferences.getString("Vaitro", "");
+         idEmployee = preferences.getString("IdNhanvien", "");
+
+        if (AppConstants.ROLE.equals(role)){
+            readTasksApi();
+        }else {
+            readTasksByIdEmployeeApi(idEmployee);
+        }
+    }
+
 
     private void initUI() {
         tvShowMessage = findViewById(R.id.tv_show_see_task);
@@ -100,30 +116,42 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
                 );
 
                 datePickerDialog.show();
+            }else {
+                UIutils.showSnackbar(findViewById(R.id.constraintLayout6), "Không có nhân viên để lọc");
             }
         });
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
 
-                if (getIntent().getIntExtra("seeJob", 2) == 0){
-                    adapterTask.getFilter().filter(s);
-                }else {
-                    taskTodayAdapter.getFilter().filter(s);
-                }
-                return true;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                if (getIntent().getIntExtra("seeJob", 2) == 0){
-                    adapterTask.getFilter().filter(s);
-                }else {
-                    taskTodayAdapter.getFilter().filter(s);
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    if (mList != null) {
+                        if (getIntent().getIntExtra("seeJob", 2) == 0) {
+                            adapterTask.getFilter().filter(s);
+                        } else {
+                            taskTodayAdapter.getFilter().filter(s);
+                        }
+                    }else {
+                        UIutils.showSnackbar(findViewById(R.id.constraintLayout6), "Không có nhân viên để tìm kiếm");
+                    }
+                    return true;
                 }
-                return true;
-            }
-        });
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    if (mList != null) {
+                        if (getIntent().getIntExtra("seeJob", 2) == 0) {
+                            adapterTask.getFilter().filter(s);
+                        } else {
+                            taskTodayAdapter.getFilter().filter(s);
+                        }
+                    } else {
+                        UIutils.showSnackbar(findViewById(R.id.constraintLayout6), "Không có nhân viên để tìm kiếm");
+                        }
+                    return true;
+                }
+            });
+
 
         ivCancelFilter.setOnClickListener(view -> {
             ivCancelFilter.setVisibility(View.GONE);
@@ -169,8 +197,25 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
                     assert response.body() != null;
                     if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
                         checkIntent(response.body().getTaskList());
-                    }else {
-                        Toast.makeText(getApplicationContext(), "Call Api Failure", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseTask> call, @NonNull Throwable t) {
+                Log.e("Error", t.toString());
+            }
+        });
+    }
+
+    private void readTasksByIdEmployeeApi(String idEmployee) {
+        ApiClient.getClient().create(ApiService.class).readTaskByIdEmployee(idEmployee).enqueue(new Callback<ResponseTask>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
+                        checkIntent(response.body().getTaskList());
                     }
                 }
             }
@@ -183,7 +228,8 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
     }
 
     private void setAdapter(List<Task> taskList) {
-        adapterTask = new TaskAdapter(taskList, 1);
+//        Collections.reverse(taskList);
+        adapterTask = new TaskAdapter(taskList, 1, role);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRCV.setLayoutManager(layoutManager);
@@ -206,7 +252,7 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
         if (check > 0){
             tvShowMessage.setVisibility(View.GONE);
         }
-        taskTodayAdapter = new TaskTodayAdapter(list, 1);
+        taskTodayAdapter = new TaskTodayAdapter(list, 1, role);
         taskTodayAdapter.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRCV.setLayoutManager(layoutManager);
@@ -215,9 +261,10 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
     }
 
     @Override
-    public void nextUpdateScreenTask(Task task) {
+    public void nextUpdateScreenTask(Task task, String role) {
         Intent intent = new Intent(this, UpdateTaskActivity.class);
         intent.putExtra("task", task);
+        intent.putExtra("role", role);
         startActivity(intent);
     }
     @Override
@@ -269,7 +316,7 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
     @Override
     public void onStart() {
         super.onStart();
-        readTasksApi();
+        checkRoleCallApi();
     }
 
 }
