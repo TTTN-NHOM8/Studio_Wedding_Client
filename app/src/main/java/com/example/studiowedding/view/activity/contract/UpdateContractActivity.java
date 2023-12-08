@@ -13,8 +13,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 
 import com.example.studiowedding.R;
-import com.example.studiowedding.interfaces.OnItemClickListner;
-import com.example.studiowedding.utils.FormatUtils;
+import com.example.studiowedding.interfaces.utils.FormatUtils;
 
 import java.text.ParseException;
 import java.util.Calendar;

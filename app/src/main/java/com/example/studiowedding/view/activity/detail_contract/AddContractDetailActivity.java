@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.studiowedding.R;
-import com.example.studiowedding.utils.FormatUtils;
+import com.example.studiowedding.interfaces.utils.FormatUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

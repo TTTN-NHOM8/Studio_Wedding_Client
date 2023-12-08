@@ -1,4 +1,4 @@
-package com.example.studiowedding.utils;
+package com.example.studiowedding.interfaces.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

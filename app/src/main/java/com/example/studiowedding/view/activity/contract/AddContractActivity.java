@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 
 import com.example.studiowedding.R;
-import com.example.studiowedding.utils.FormatUtils;
+import com.example.studiowedding.interfaces.utils.FormatUtils;
 import com.example.studiowedding.view.activity.detail_contract.AddContractDetailActivity;
 
 import java.text.ParseException;
