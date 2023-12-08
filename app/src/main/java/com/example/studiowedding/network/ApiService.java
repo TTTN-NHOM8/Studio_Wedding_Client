@@ -238,12 +238,17 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     Call<ResponseEmployee> updateEmployee(
             @Path("idNhanVien") String id,
             @Field("hoVaTen") String hoTen,
-            @Field("matKhau") String matKhau,
             @Field("ngaySinh") String ngaySinh,
             @Field("gioiTinh") String gioiTinh,
             @Field("dienThoai") String dienThoai,
             @Field("diaChi") String diaChi,
             @Field("anhDaiDien") String anh,
             @Field("vaiTro") String vaiTro
+    );
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.URL_DELETE_EMPLOYEE)
+    Call<ResponseEmployee> deleteEmployee(
+            @Field("idNhanVien") String id
     );
 }
