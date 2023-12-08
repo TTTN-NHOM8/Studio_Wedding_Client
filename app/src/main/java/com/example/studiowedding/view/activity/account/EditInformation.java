@@ -29,11 +29,14 @@ import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -115,6 +118,8 @@ public class EditInformation extends AppCompatActivity {
         // Store the initial role value when the activity is created
         selectedRoleBeforeChange = selectedRole;
 
+
+
         btnLuu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,22 +127,29 @@ public class EditInformation extends AppCompatActivity {
                 String HoTen = edHoTen.getText().toString();
                 String DienThoai = edDienThoai.getText().toString();
                 String DiaChi = edDiaChi.getText().toString();
-
                 try {
                     String formatNgayThanhToan = tvNgaySinh.getText().toString().isEmpty() ? null : sdf.format(sdf2.parse(tvNgaySinh.getText().toString().trim()));
                     String GioiTinh = rdGioitinhnam.isChecked() ? "Nam" : "Nữ";
                     if (MaNv.isEmpty() || HoTen.isEmpty() || DienThoai.isEmpty() || DiaChi.isEmpty()) {
                         Toast.makeText(EditInformation.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                     } else {
-                        // Check if the role has changed
-                        // Role hasn't changed, proceed with updating information
-                        updateEmployeeInfo(MaNv, HoTen, formatNgayThanhToan, GioiTinh, DienThoai, DiaChi, selectedRole);
-                        Toast.makeText(EditInformation.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-                        if (!selectedRole.equals(selectedRoleBeforeChange)) {
-                            logout();
+                        if (containsSpecialCharacters(HoTen)) {
+
+                            Toast.makeText(EditInformation.this, "Không được nhập ký tự đặc biệt trong Họ tên", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        else if(containsSpecialCharactersdiachi(DiaChi)){
+                            Toast.makeText(EditInformation.this, "Không được nhập ký tự đặc biệt trong Địa chỉ", Toast.LENGTH_SHORT).show();
+                            return;
 
                         }
-                        finish();
+                        updateEmployeeInfo(MaNv, HoTen, formatNgayThanhToan, GioiTinh, DienThoai, DiaChi, selectedRole);
+
+
+                        if (!selectedRole.equals(selectedRoleBeforeChange)) {
+                            logout();
+                        }
+
                     }
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
@@ -180,19 +192,24 @@ public class EditInformation extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+
+
+
+
     private void updateEmployeeInfo(String idNhanVien, String hoVaTen, String ngaySinh, String gioiTinh, String dienThoai, String diaChi, String vaiTro) {
         Call<AccountResponse> call = apiService.updateEmployeeInfo(idNhanVien, hoVaTen, ngaySinh, gioiTinh, dienThoai, diaChi, vaiTro);
         call.enqueue(new Callback<AccountResponse>() {
             @Override
             public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.d("EditInformation", "Cập nhật thông tin thành công");
+
+                    Toast.makeText(EditInformation.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     Log.e("EditInformation", "Cập nhật thông tin thất bại");
                     Toast.makeText(EditInformation.this, "Cập nhật thông tin thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<AccountResponse> call, Throwable t) {
                 Toast.makeText(EditInformation.this, "Lỗi kết nối", Toast.LENGTH_SHORT).show();
@@ -237,11 +254,8 @@ public class EditInformation extends AppCompatActivity {
                             List<String> rolesList = Arrays.asList("Quản Lý", "Lái Xe", "Hậu Cần", "Make Up", "Chụp Hình");
                             String[] rolesArray = rolesList.toArray(new String[0]);
 
-                            if (!"Quản Lý".equals(account.getVaiTro())) {
-                                spinnerRoles.setEnabled(false);
-                            } else {
-                                spinnerRoles.setEnabled(true);
-                            }
+                            spinnerRoles.setEnabled(false);
+
                             AccountAdapter adapter = new AccountAdapter(EditInformation.this, R.layout.item_account, rolesArray);
                             adapter.setDropDownViewResource(R.layout.item_account);
                             spinnerRoles.setAdapter(adapter);
@@ -266,7 +280,6 @@ public class EditInformation extends AppCompatActivity {
                     Toast.makeText(EditInformation.this, "loi:" + e.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<AccountResponse> call, Throwable t) {
                 Toast.makeText(EditInformation.this, "Lỗi kết nối", Toast.LENGTH_SHORT).show();
@@ -275,7 +288,20 @@ public class EditInformation extends AppCompatActivity {
         });
     }
 
-    public void thu() {
-
+    private boolean containsSpecialCharacters(String input) {
+        // Loại bỏ dấu diacritic và kiểm tra ký tự
+        String normalized = StringUtils.stripAccents(input);
+        // Allow all letters in the Vietnamese alphabet
+        String pattern = "^[a-zA-ZÀ-Ỹà-ỹĂ-Ẵă-ẵÂ-Ắâ-ẵÊ-Ểê-ểÔ-Ỗô-ỗƠ-Ỡơ-ỡƯ-Ựư-ựĐđ\\s]*$";
+        return !Pattern.matches(pattern, normalized);
     }
+    private boolean containsSpecialCharactersdiachi(String input) {
+        // Allow only letters, numbers, commas, dots, and colons
+        String normalized = StringUtils.stripAccents(input);
+        String pattern = "^[a-zA-ZÀ-Ỹà-ỹĂ-Ẵă-ẵÂ-Ắâ-ẵÊ-Ểê-ểÔ-Ỗô-ỗƠ-Ỡơ-ỡƯ-Ựư-ựĐđ\\s.,:]*$";
+        return !Pattern.matches(pattern, normalized);
+    }
+
+
+
 }

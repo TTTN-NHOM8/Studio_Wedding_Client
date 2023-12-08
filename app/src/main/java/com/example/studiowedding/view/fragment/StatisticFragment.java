@@ -1,7 +1,5 @@
 package com.example.studiowedding.view.fragment;
 
-
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -29,11 +27,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
-
 
 public class StatisticFragment extends Fragment {
 
@@ -43,9 +41,6 @@ public class StatisticFragment extends Fragment {
     private ApiService apiService;
 
     private TextView textViewResult, tvgia, tvDon, tvthang, tvtienthang, tvdtnam1, tvnama, tvngaychon, namchon;
-
-
-
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -112,6 +107,7 @@ public class StatisticFragment extends Fragment {
                 }, year, month, day);
         datePickerDialog.show();
     }
+
     private void getRevenueByDate(String selectedDate) {
         Call<AccountResponse> call = apiService.getDailyRevenue(selectedDate);
         call.enqueue(new Callback<AccountResponse>() {
@@ -121,11 +117,9 @@ public class StatisticFragment extends Fragment {
                     AccountResponse accountResponse = response.body();
                     String status = accountResponse.getStatus();
                     if (response.body() != null) {
-                        String revenue = String.valueOf(accountResponse.getTotalRevenue());
-                        String don = String.valueOf(accountResponse.getSoluong());
-                        Log.d("ngaytien", revenue);
-                        tvgia.setText(revenue);
-
+                        double revenueValue = accountResponse.getTotalRevenue();
+                        String formattedRevenue = formatCurrency(revenueValue);
+                        tvgia.setText(formattedRevenue);
                     } else {
                         tvgia.setText("Dữ liệu trả về từ server là null");
                     }
@@ -133,6 +127,7 @@ public class StatisticFragment extends Fragment {
                     tvgia.setText("Có lỗi khi gọi API: " + response.message());
                 }
             }
+
             @Override
             public void onFailure(Call<AccountResponse> call, Throwable t) {
                 Log.e("API Error", "Call failed: " + t.getMessage());
@@ -140,7 +135,6 @@ public class StatisticFragment extends Fragment {
             }
         });
     }
-
 
     private void showDatePickerMonth() {
         Calendar calendar = Calendar.getInstance();
@@ -186,12 +180,9 @@ public class StatisticFragment extends Fragment {
     private String formatMonth(int day, int month, int year) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
-        calendar.set( year, month - 1, day);
+        calendar.set(year, month - 1, day);
         return sdf.format(calendar.getTime());
     }
-
-
-
 
     private void getDailyMonth(String selectedMonth) {
         Call<AccountResponse> call = apiService.getDailyRevenuemonth(selectedMonth);
@@ -201,9 +192,9 @@ public class StatisticFragment extends Fragment {
                 if (response.isSuccessful()) {
                     AccountResponse accountResponse1 = response.body();
                     if (response.body() != null) {
-                        String doanhthuthang = String.valueOf(accountResponse1.getDoanhthuthang());
-                        Log.d("ngaytien1", doanhthuthang);
-                        tvtienthang.setText(doanhthuthang);
+                        double monthRevenueValue = accountResponse1.getDoanhthuthang();
+                        String formattedMonthRevenue = formatCurrency(monthRevenueValue);
+                        tvtienthang.setText(formattedMonthRevenue);
                     } else {
                         tvtienthang.setText("Dữ liệu trả về từ server là null");
                     }
@@ -219,14 +210,12 @@ public class StatisticFragment extends Fragment {
         });
     }
 
-
     private String formatDate(int day, int month, int year) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month - 1, day);
         return sdf.format(calendar.getTime());
     }
-
 
     private void getDailyNam(String selectedyert) {
         Call<AccountResponse> call = apiService.getDailyRevenueyert(selectedyert);
@@ -236,8 +225,9 @@ public class StatisticFragment extends Fragment {
                 if (response.isSuccessful()) {
                     AccountResponse accountResponse1 = response.body();
                     if (response.body() != null) {
-                        String doanhthunam = String.valueOf(accountResponse1.getDoanhthunam());
-                        tvdtnam1.setText(doanhthunam);
+                        double yearRevenueValue = accountResponse1.getDoanhthunam();
+                        String formattedYearRevenue = formatCurrency(yearRevenueValue);
+                        tvdtnam1.setText(formattedYearRevenue);
                     } else {
                         tvdtnam1.setText("Dữ liệu trả về từ server là null");
                     }
@@ -253,7 +243,9 @@ public class StatisticFragment extends Fragment {
         });
     }
 
-
-
+    private String formatCurrency(double value) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        return formatter.format(value);
+    }
 
 }
