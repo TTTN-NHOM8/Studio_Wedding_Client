@@ -60,8 +60,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ExampleV
             String hexColor = "#D83C3C"; // Ví dụ màu cam
             int color = Color.parseColor(hexColor);
             holder.tvtrangthai.setTextColor(color);
-        }else{
+        }else if (currentItem.getStatus().trim().equals("Có phát sinh")){
             String hexColor = "#E1D140"; // Ví dụ màu cam
+            int color = Color.parseColor(hexColor);
+            holder.tvtrangthai.setTextColor(color);
+        }else{
+            String hexColor = "#3081D0"; // Ví dụ màu cam
             int color = Color.parseColor(hexColor);
             holder.tvtrangthai.setTextColor(color);
         }

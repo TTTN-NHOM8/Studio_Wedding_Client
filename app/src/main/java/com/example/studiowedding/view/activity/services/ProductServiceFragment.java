@@ -146,8 +146,6 @@ public class ProductServiceFragment extends Fragment implements OnItemClickListn
         popupMenu.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.menu_yellow:
-                    // Xử lý khi chọn màu vàng
-                    // Ví dụ: thay đổi màu của ImageView thành màu vàng
                     fillData(filterByStatus("Chưa sẵn sàng"));
 
                     return true;
@@ -157,6 +155,10 @@ public class ProductServiceFragment extends Fragment implements OnItemClickListn
                     return true;
                 case R.id.menu_red:
                     fillData(filterByStatus("Có phát sinh"));
+
+                    return true;
+                case R.id.menu_ps:
+                    fillData(filterByStatus("Đang thuê"));
 
                     return true;
                 default:
