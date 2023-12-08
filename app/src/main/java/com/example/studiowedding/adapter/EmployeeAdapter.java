@@ -126,7 +126,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String strSearch = charSequence.toString();
                 if (strSearch.isEmpty()) {
-                    employeeList = new ArrayList<>();
+                    employeeList.addAll(employeeList);
                 } else {
                     List<Employee> list = new ArrayList<>();
                     for (Employee employee : employeeList) {
@@ -143,6 +143,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                employeeList.clear();
                 employeeList = (List<Employee>) filterResults.values;
                 notifyDataSetChanged();
 

@@ -1,5 +1,7 @@
 package com.example.studiowedding.view.fragment;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.studiowedding.R;
 import com.example.studiowedding.adapter.EmployeeAdapter;
@@ -48,7 +51,12 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     private ImageView ivFilter;
     private RecyclerView rcvEmployee;
     private List<Employee> employeeList = new ArrayList<>();
+
+    private TextView tvNotification;
+
+
     private ProgressDialog mProgressDialog;
+
 
     private SearchView searchView;
 
@@ -62,6 +70,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_employee, container, false);
 
     }
@@ -75,6 +84,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     }
 
     private void setListener(@NonNull View view) {
+        tvNotification = view.findViewById(R.id.tvNotifiicationEmployee);
         rcvEmployee = view.findViewById(R.id.rcv_employee_list);
         floatingActionButton = view.findViewById(R.id.fabContract);
         ivFilter = view.findViewById(R.id.imgFilterContract);
@@ -87,23 +97,20 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     private void showFilterPopupMenu(View view){
         PopupMenu popupMenu = new PopupMenu(requireContext(),view);
         MenuInflater inflater = popupMenu.getMenuInflater();
-        inflater.inflate(R.menu.filternv, popupMenu.getMenu());
+        inflater.inflate(R.menu.filter_employee_task, popupMenu.getMenu());
 
         popupMenu.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
-                case R.id.makeup:
+                case R.id.make_up:
                     filterByRole("Make Up");
                     break;
-                case R.id.laixe:
+                case R.id.lai_xe:
                     filterByRole("Lái Xe");
                     break;
-                case R.id.chuphinh:
+                case R.id.chup_hinh:
                     filterByRole("Chụp Hình");
                     break;
-                case R.id.haucan:
-                    filterByRole("Hậu Cần");
-                    break;
-                case R.id.loctatca:
+                case R.id.loc_tat_ca:
                     filterByRole("Lọc tất cả trạng thái");
                     break;
             }
@@ -123,8 +130,10 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if(query.isEmpty()) {
+                    Log.d(TAG, " Tìm thành công ");
                     getEmployeeList();
                 } else {
+                    Log.d(TAG, " Không có nhân viên này");
                     employeeAdapter.getFilter().filter(query);
                 }
                 return false;
@@ -134,8 +143,10 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
             public boolean onQueryTextChange(String newText)
             {
                 if(newText.isEmpty()) {
+                    tvNotification.setVisibility(View.VISIBLE);
                     getEmployeeList();
                 } else {
+                    tvNotification.setVisibility(View.GONE);
                     employeeAdapter.getFilter().filter(newText);
                 }
                 return true;
