@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -133,6 +134,7 @@ public class AddContractActivity extends AppCompatActivity implements View.OnCli
         swipeRefreshLayout = findViewById(R.id.srlAddContract);
         btnAdd = findViewById(R.id.btnAddNewContract);
         tvHidden=findViewById(R.id.tvNotificationDetailContract);
+        edTotal.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
 
     }
     private void setOnclickView(){

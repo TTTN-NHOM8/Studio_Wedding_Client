@@ -4,7 +4,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -31,13 +31,14 @@ import com.example.studiowedding.interfaces.OnItemClickListner;
 import com.example.studiowedding.model.Employee;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
+import com.example.studiowedding.utils.UIutils;
 import com.example.studiowedding.view.activity.employee.AddEmployeeActivity;
 import com.example.studiowedding.view.activity.employee.ResponseEmployee;
 import com.example.studiowedding.view.activity.employee.UpdateEmployeeActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -52,6 +53,9 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     private List<Employee> employeeList = new ArrayList<>();
 
     private TextView tvNotification;
+
+
+    private ProgressDialog mProgressDialog;
 
 
     private SearchView searchView;
@@ -89,7 +93,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         setAdapter();
         setSearchView();
         ivFilter.setOnClickListener(v -> showFilterPopupMenu(v));
-        }
+    }
     private void showFilterPopupMenu(View view){
         PopupMenu popupMenu = new PopupMenu(requireContext(),view);
         MenuInflater inflater = popupMenu.getMenuInflater();
@@ -193,6 +197,38 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
             }
         });
     }
+    /**
+     * Xóa nhân viên
+     */
+    private void deleteEmployee(Employee employee, View view){
+        ApiClient.getClient().create(ApiService.class).deleteEmployee(employee.getIdNhanVien()).enqueue(new Callback<ResponseEmployee>() {
+            @Override
+            public void onResponse(Call<ResponseEmployee> call, Response<ResponseEmployee> response) {
+                mProgressDialog.dismiss();
+                if (response.isSuccessful()){
+                    if (response.body() != null && AppConstants.STATUS_EMPLOYEE.equals(response.body().getStatus())){
+                        Snackbar.make(view, AppConstants.DELETE_EMPLOYEE_SUCCESS_MESSAGE, Snackbar.LENGTH_SHORT).show();
+                    }else {
+                        Snackbar.make(view, AppConstants.DELETE_EMPLOYEE_FAILED_MESSAGE, Snackbar.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Log.e(AppConstants.EMPLOYEE_OBJECT, AppConstants.CALL_API_ERROR_MESSAGE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEmployee> call, Throwable t) {
+                Log.e(AppConstants.EMPLOYEE_OBJECT, AppConstants.CALL_API_FAILURE_MESSAGE + t);
+            }
+        });
+    }
+
+    private void handleDeleteEmployeeResponse(ResponseEmployee deleteEmployee){
+        if (deleteEmployee != null && deleteEmployee.isSuccess()){
+
+        }
+    }
+
 
 
 
@@ -204,13 +240,14 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
     }
 
     @Override
-    public void showConfirmDeleteEmployee() {
+    public void showConfirmDeleteEmployee(Employee employee, View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Xóa công việc");
-        builder.setMessage("Bạn chắc chắn muốn xóa công việc này ?");
+        builder.setTitle("Xóa nhân viên");
+        builder.setMessage("Bạn chắc chắn muốn xóa nhân viên này ?");
 
         builder.setPositiveButton("Đồng ý", (dialog, which) -> {
-            dialog.dismiss();
+            mProgressDialog = ProgressDialog.show(getContext(), "", "Loading...");
+            deleteEmployee(employee, view);
         });
 
         builder.setNegativeButton("Hủy", (dialog, which) -> {

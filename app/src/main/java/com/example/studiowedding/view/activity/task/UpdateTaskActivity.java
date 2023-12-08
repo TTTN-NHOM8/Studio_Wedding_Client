@@ -47,22 +47,23 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClickListner.TaskJoinI {
-    private EditText etName, etDate, etAddress, etNote;
+    private EditText etName, etDate, etAddress, etNote, etId;
     private ImageView ivSelect, ivBack;
     private LinearLayout btnSave;
     private Task mTask;
-    private TextView tvAddEmployee, tvSeeDetail;
-    private TextView tvShowMessage;
+    private TextView tvAddEmployee, tvSeeDetail, tvShowMessage;
     private RecyclerView mRCV;
     private ProgressDialog mProgressDialog;
     private List<Employee> mListEmployee;
     private List<Integer> responseJoinList;
     private TaskJoinAdapter taskJoinAdapter;
+    private String role;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_task);
         mTask = (Task) getIntent().getSerializableExtra("task");
+        role = getIntent().getStringExtra("role");
         responseJoinList = new ArrayList<>();
         initUI();
         setValue();
@@ -80,14 +81,13 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
         tvAddEmployee.setOnClickListener(view -> {
             Intent intent = new Intent(this, SeeEmployeeActivity.class);
             intent.putExtra("task", mTask.getIdTask());
-            Log.i("TAG",""+mTask.getRole());
-            Log.i("TAG",""+mTask.getIdTask());
             mLauncher.launch(intent);
         });
     }
 
     @SuppressLint({"WrongViewCast", "SetTextI18n"})
     private void initUI() {
+        etId = findViewById(R.id.et_id_update_job);
         etName = findViewById(R.id.et_name_update_job);
         etDate = findViewById(R.id.et_date_update_job);
         etAddress = findViewById(R.id.et_address_update_job);
@@ -104,12 +104,13 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
     }
 
     private void setValue() {
+        etId.setText(mTask.getIdContract());
         etName.setText(mTask.getNameService());
         etDate.setText(FormatUtils.formatDateToString(mTask.getDateImplement()));
         etAddress.setText(mTask.getAddress());
         etNote.setText(mTask.getStatusTask());
 
-        if (mTask.getStatusTask().equals(AppConstants.STATUS_TASK_DONE)){
+        if (mTask.getStatusTask().equals(AppConstants.STATUS_TASK_DONE) || !AppConstants.ROLE.equals(role)){
             ivSelect.setEnabled(false);
             etNote.setBackground(ContextCompat.getDrawable(this, R.drawable.edittext_bgr));
             tvAddEmployee.setVisibility(View.GONE);
@@ -171,7 +172,13 @@ public class UpdateTaskActivity extends AppCompatActivity  implements OnItemClic
     }
 
     private void saveTask() {
-        ApiClient.getClient().create(ApiService.class).updateTaskById(mTask.getIdTask(), etNote.getText().toString()).enqueue(new Callback<ResponseTask>() {
+        ApiClient.getClient().create(ApiService.class).
+                updateTaskById(
+                        mTask.getIdTask(),
+                        etNote.getText().toString(),
+                        mTask.getIdDetailContract(),
+                        mTask.getIdContract())
+                .enqueue(new Callback<ResponseTask>() {
             @Override
             public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
                 mProgressDialog.dismiss();

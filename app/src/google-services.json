@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "372672411878",
+    "project_id": "studiowedding-97fd0",
+    "storage_bucket": "studiowedding-97fd0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372672411878:android:0ac7663be583b1d117e327",
+        "android_client_info": {
+          "package_name": "com.example.studiowedding"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUUWJoG4GuZQ_9VRcRiRLAeBckfdwx1lU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

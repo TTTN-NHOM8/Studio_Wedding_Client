@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
     <item android:id="@+id/make_up"
-        android:title="Make up"/>
+        android:title="Make Up"/>
     <item android:id="@+id/lai_xe"
-        android:title="Lái xe"/>
+        android:title="Lái Xe"/>
     <item android:id="@+id/chup_hinh"
-        android:title="Chụp hình" />
+        android:title="Chụp Hình" />
     <item android:id="@+id/loc_tat_ca"
         android:title="Lọc tất cả trạng thái"/>
     </group>

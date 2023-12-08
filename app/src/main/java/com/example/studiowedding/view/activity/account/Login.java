@@ -1,11 +1,19 @@
 package com.example.studiowedding.view.activity.account;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +25,11 @@ import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.view.activity.MainActivity;
 import com.example.studiowedding.view.activity.task.SeeTaskActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,6 +39,7 @@ public class Login extends AppCompatActivity {
     private ApiService apiService;
     private EditText edtIdNhanVien, edtMatKhau;
     private Button btnLogin;
+    private ImageView btnTogglePassword;
     private boolean isPasswordVisible = false;
 
     @Override
@@ -38,6 +52,7 @@ public class Login extends AppCompatActivity {
         edtIdNhanVien = findViewById(R.id.edTenDn);
         edtMatKhau = findViewById(R.id.edPasswork);
         btnLogin = findViewById(R.id.btnLogin);
+        btnTogglePassword = findViewById(R.id.ivTogglePassword);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,15 +66,26 @@ public class Login extends AppCompatActivity {
                 login(idNhanVien, matKhau);
             }
         });
-        Button btnTogglePassword = findViewById(R.id.btnTogglePassword);
 
         btnTogglePassword.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                isPasswordVisible = !isPasswordVisible;
-                togglePasswordVisibility(edtMatKhau, isPasswordVisible);
+            public void onClick(View view) {
+                togglePasswordVisibility();
             }
         });
+    }
+
+    private void togglePasswordVisibility() {
+        isPasswordVisible = !isPasswordVisible;
+
+        // Toggle password visibility in the EditText
+        edtMatKhau.setTransformationMethod(
+                isPasswordVisible ? HideReturnsTransformationMethod.getInstance() :
+                        PasswordTransformationMethod.getInstance());
+
+        // Toggle the eye icon
+        btnTogglePassword.setImageResource(
+                isPasswordVisible ? R.drawable.baseline_visibility_24 : R.drawable.baseline_visibility_off_24);
     }
 
     private void login(String idNhanVien, String matKhau) {
@@ -73,16 +99,35 @@ public class Login extends AppCompatActivity {
                     if ("success".equals(status)) {
                         Account userAccount = accountResponse.getUserAccount();
                         if (userAccount != null) {
-                            String vaitro = userAccount.getVaitro();
-                            if(vaitro.equals("1")){
-                                Toast.makeText(Login.this, "Đăng nhập thành công admin " , Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Login.this, MainActivity.class);
-                                startActivity(intent);
+                            String vaitro = userAccount.getVaiTro();
+                            String idnhanvien = userAccount.getIdNhanVien();
+                            String pass = edtMatKhau.getText().toString().trim();
+
+                            String ngaysinh = userAccount.getNgaySinh();
+                            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
+                            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                            try {
+                                Date date = inputFormat.parse(ngaysinh);
+                                    String formattedNgaySinh = outputFormat.format(date);
+                                    SharedPreferences preferences = getSharedPreferences("LuuIdNhanvien", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferences.edit();
+                                    editor.putString("IdNhanvien", idnhanvien);
+                                    editor.putString("Matkhau", pass);
+                                    editor.putString("Vaitro", vaitro);
+
+                                    editor.apply();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.d("err: ",e.getMessage());
                             }
-                            else{
-                                Toast.makeText(Login.this, "Đăng nhập thành công nhân viên " , Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(Login.this, SeeTaskActivity.class);
-                                startActivity(intent);
+
+                            if (vaitro.equals("Quản Lý")) {
+                                Toast.makeText(Login.this, "Đăng nhập thành công admin ",Toast.LENGTH_SHORT).show();
+                                navigateToNextScreenAdmin();
+
+                            } else {
+                                Toast.makeText(Login.this, "Đăng nhập thành công nhân viên ", Toast.LENGTH_SHORT).show();
+                                navigateToNextScreenEmployee();
                             }
                         } else {
                             Toast.makeText(Login.this, "Không có thông tin tài khoản", Toast.LENGTH_SHORT).show();
@@ -102,16 +147,17 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-    private void togglePasswordVisibility(EditText editText, boolean isVisible) {
-        if (isVisible) {
-            // Hiển thị mật khẩu
-            editText.setInputType(editText.getInputType() | 1);
-        } else {
-            // Ẩn mật khẩu
-            editText.setInputType(editText.getInputType() & ~1);
-        }
 
-        // Đặt con trỏ về cuối chuỗi
-        editText.setSelection(editText.getText().length());
+    private void navigateToNextScreenAdmin() {
+        // Thực hiện chuyển màn hình admin
+        Intent intent = new Intent(Login.this, MainActivity.class);
+        startActivity(intent);
     }
+
+    private void navigateToNextScreenEmployee() {
+        // Thực hiện chuyển màn hình nhân viên
+        Intent intent = new Intent(Login.this, MainActivity.class);
+        startActivity(intent);
+    }
+
 }

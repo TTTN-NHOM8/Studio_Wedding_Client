@@ -160,15 +160,26 @@ public class AddEmployeeActivity extends AppCompatActivity {
                 this,
                 R.style.CustomDatePickerDialog,
                 (datePicker, selectedYear, selectedMonth, selectedDay) -> {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-                    calendar.set(selectedYear, selectedMonth, selectedDay);
-                    String formattedDate = sdf.format(calendar.getTime());
-                    etDob.setText(formattedDate);
+                    // Kiểm tra nếu ngày sinh được chọn là trong tương lai
+                    Calendar selectedDate = Calendar.getInstance();
+                    selectedDate.set(selectedYear, selectedMonth, selectedDay);
+
+                    if (selectedDate.after(Calendar.getInstance())) {
+                        // Ngày sinh là trong tương lai, thông báo lỗi
+                        showSnackbar(AppConstants.DATE_ILLEGAL);
+                    } else {
+                        // Ngày sinh hợp lệ, tiếp tục xử lý như bình thường
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                        calendar.set(selectedYear, selectedMonth, selectedDay);
+                        String formattedDate = sdf.format(calendar.getTime());
+                        etDob.setText(formattedDate);
+                    }
                 },
                 year,
                 month,
                 dayOfMonth
         );
+
         // Hiển thị DatePickerDialog
         datePickerDialog.show();
     }
@@ -289,7 +300,6 @@ public class AddEmployeeActivity extends AppCompatActivity {
             }
         });
     }
-
     private void handleAddEmployeeResponse(ResponseEmployee addEmployeeResponse) {
         if (addEmployeeResponse != null && addEmployeeResponse.isSuccess()) {
             showSnackbar(AppConstants.ADD_EMPLOYEE_SUCCESS_MESSAGE);
