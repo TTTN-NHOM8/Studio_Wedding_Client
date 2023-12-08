@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -56,12 +57,19 @@ public class ChangePassword extends AppCompatActivity {
         edMkmoi = findViewById(R.id.edPassnew);
         edMkmoi1 = findViewById(R.id.edPassnew1);
         btnThem = findViewById(R.id.btnCapnhat);
+        // Trong phương thức onClick của nút btnThem
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String cu = edMkcu.getText().toString();
                 String moi = edMkmoi.getText().toString();
                 String moi1 = edMkmoi1.getText().toString();
+
+                // Kiểm tra chiều dài của mật khẩu mới
+                if (moi.length() < 6 || moi.length() > 16) {
+                    Toast.makeText(ChangePassword.this, "Mật khẩu phải có ít nhất 6 ký tự và không quá 16 ký tự", Toast.LENGTH_SHORT).show();
+                    return; // Dừng xử lý tiếp theo nếu mật khẩu không đúng chiều dài
+                }
 
                 if (cu.isEmpty() || moi.isEmpty() || moi1.isEmpty()) {
                     Toast.makeText(ChangePassword.this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
@@ -76,7 +84,6 @@ public class ChangePassword extends AppCompatActivity {
                             SharedPreferences.Editor editor = preferences.edit();
                             editor.putString("Matkhau", moi);
                             editor.apply();
-
                             // Perform the password change on the server
                             changePassword(nhanvien, cu, moi);
 
@@ -90,7 +97,6 @@ public class ChangePassword extends AppCompatActivity {
                 }
             }
         });
-
 
         imghien = findViewById(R.id.imgXem);
         imghien.setOnClickListener(PasswordUtils.createEyeIconClickListener(edMkcu, imghien));
