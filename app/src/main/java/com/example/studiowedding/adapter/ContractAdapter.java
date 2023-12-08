@@ -5,10 +5,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +25,8 @@ import java.util.List;
 public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHolder> {
     private List<Contract> contractList;
     private Context context;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy ");
+
     private OnItemClickListner itemClickListener;
     private DecimalFormat decimalFormat = new DecimalFormat("###,###");
 
@@ -36,6 +39,8 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
     public void setOnItemClickListener(OnItemClickListner itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
+
+
 
     @NonNull
     @Override
@@ -64,25 +69,30 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             holder.tvPaymentStatus.setTextColor(paymentStatusColor);
 
             String trangThaiHopDong = contract.getTrangThaiHopDong();
-            holder.tvStatusHD.setText(trangThaiHopDong);
+            String trangThaiPhatSinh = contract.getTrangThaiPhatSinh();
 
 
             int statusHDColor;
-            switch (trangThaiHopDong) {
-                case "Hoàn thành":
-                    statusHDColor = ContextCompat.getColor(context, R.color.dark_green);
-                    break;
-                case "Đang thực hiện":
-                    statusHDColor = ContextCompat.getColor(context, R.color.earthy);
-                    break;
-                case "Có phát sinh":
-                    statusHDColor = ContextCompat.getColor(context, R.color.red_light);
-                    break;
-                default:
-                    statusHDColor = ContextCompat.getColor(context, android.R.color.black);
-            }
-            holder.tvStatusHD.setTextColor(statusHDColor);
+            if ("Có phát sinh".equals(trangThaiPhatSinh)) {
+                holder.tvStatusHD.setText(trangThaiPhatSinh);
+                statusHDColor = ContextCompat.getColor(context, R.color.red_light);
+            } else {
+                holder.tvStatusHD.setText(trangThaiHopDong);
 
+                switch (trangThaiHopDong) {
+                    case "Đã hoàn thành":
+                        statusHDColor = ContextCompat.getColor(context, R.color.blue_g);
+                        break;
+                    case "Đang thực hiện":
+                        statusHDColor = ContextCompat.getColor(context, R.color.earthy);
+                        break;
+                    default:
+                        statusHDColor = ContextCompat.getColor(context, android.R.color.black);
+                }
+            }
+
+            holder.tvStatusHD.setTextColor(statusHDColor);
+            
             holder.position = position;
         }
     }
@@ -95,11 +105,13 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvIdHD, tvDateCreate, tvAmount, tvName, tvPaymentStatus, tvStatusHD;
         public ImageView imgMenu;
+        private CardView cardView;
         public int position;
 
         public ViewHolder(View view) {
             super(view);
 
+            cardView=view.findViewById(R.id.cardViewItemContract);
             tvIdHD = view.findViewById(R.id.tvIdHDItem);
             tvDateCreate = view.findViewById(R.id.tvDateCreateHDItem);
             tvAmount = view.findViewById(R.id.tvTotalAmountHDItem);
@@ -117,6 +129,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
                     }
                 }
             });
+
         }
     }
 

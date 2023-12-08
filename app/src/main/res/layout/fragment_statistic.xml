@@ -13,6 +13,7 @@
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/CsChonngay"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_margin="16dp"
@@ -24,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginBottom="20dp"
-                android:text="Hôm nay"
+                android:text="Ngày"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -33,12 +34,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/tvngaydoanhthu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="70dp"
                 android:layout_marginBottom="20dp"
-                android:text="15/11/2023"
+                android:text="Chọn ngày"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -46,10 +47,9 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/tvSoluongdon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="999 đơn"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -58,19 +58,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/tvGiatien"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="99.999.999đ"
+                android:text="0.0đ"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/textView8"
-                app:layout_constraintStart_toStartOf="@+id/textView8"
-                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+                app:layout_constraintEnd_toEndOf="@+id/tvngaydoanhthu"
+                app:layout_constraintStart_toStartOf="@+id/tvngaydoanhthu"
+                app:layout_constraintTop_toBottomOf="@+id/tvngaydoanhthu" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/thang"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_margin="16dp"
@@ -83,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginBottom="20dp"
-                android:text="Tháng này"
+                android:text="Tháng"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -92,12 +93,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/tvtThang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
+                android:layout_marginStart="60dp"
                 android:layout_marginBottom="20dp"
-                android:text="11/2023"
+                android:text="Chọn tháng"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -105,10 +106,9 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/thangdt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="999 đơn"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -117,19 +117,20 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/tvtienthang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="99.999.999đ"
+                android:text="0.0đ"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/textView11"
-                app:layout_constraintStart_toStartOf="@+id/textView11"
-                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                app:layout_constraintEnd_toEndOf="@+id/tvtThang"
+                app:layout_constraintStart_toStartOf="@+id/tvtThang"
+                app:layout_constraintTop_toBottomOf="@+id/tvtThang" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csnam"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_margin="16dp"
@@ -142,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginBottom="20dp"
-                android:text="Năm này"
+                android:text="Năm"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -151,12 +152,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/tvnam0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="70dp"
                 android:layout_marginBottom="20dp"
-                android:text="11/2023"
+                android:text="Chọn năm"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -164,10 +165,9 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView22"
+                android:id="@+id/namdt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="999 đơn"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -176,16 +176,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
             <TextView
-                android:id="@+id/textView23"
+                android:id="@+id/tvdtnam"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="99.999.999đ"
+                android:text="0.0đ"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/textView21"
-                app:layout_constraintStart_toStartOf="@+id/textView21"
-                app:layout_constraintTop_toBottomOf="@+id/textView21" />
+                app:layout_constraintEnd_toEndOf="@+id/tvnam0"
+                app:layout_constraintStart_toStartOf="@+id/tvnam0"
+                app:layout_constraintTop_toBottomOf="@+id/tvnam0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

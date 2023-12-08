@@ -1,10 +1,20 @@
 package com.example.studiowedding.network;
 
-import com.example.studiowedding.view.activity.task.ResponseTask;
-import com.example.studiowedding.model.Employee;
-import com.example.studiowedding.view.activity.employee.ResponseEmployee;
 
-import java.util.List;
+
+import com.example.studiowedding.model.Account;
+
+
+
+import com.example.studiowedding.model.PickCustomer;
+import com.example.studiowedding.view.activity.task.ResponseEmployeeJoin;
+import com.example.studiowedding.view.activity.task.ResponseJoin;
+import com.example.studiowedding.view.activity.services.ServiceResponse;
+
+import com.example.studiowedding.adapter.ProductAdapter;
+
+import com.example.studiowedding.view.activity.employee.ResponseEmployee;
+import com.example.studiowedding.view.activity.task.ResponseTask;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -32,25 +42,46 @@ public interface ApiService {
     @GET(ManagerUrl.CONTRACT_DETAILS_URL)
     Call<List<ContractDetail>> getContractDetails();
 
-    // task
-    @GET(ManagerUrl.READ_TASKS)
-    Call<ResponseTask> readTask();
 
-    @GET(ManagerUrl.READ_TASKS_ROLE)
-    Call<ResponseTask> readTaskByRole(@Query("vaiTro") String role);
 
-    @PUT(ManagerUrl.UPDATE_TASKS)
-    @FormUrlEncoded
-    Call<ResponseTask> updateTaskById(@Path("id") int id,
-                                      @Field("statusTask") String statusTask);
+    @DELETE(ManagerUrl.DELETE_PRODUCT)
+    Call<ResponseTask> deleteProductId(@Path("id") int id);
 
-    @DELETE(ManagerUrl.DELETE_TASKS)
-    Call<ResponseTask> deleteTaskById(@Path("id") int id);
-
+  
     // Account
     @FormUrlEncoded
     @POST(ManagerUrl.ACCOUNT)
     Call<AccountResponse> loginAccount(@Field("idNhanVien") String idNhanVien, @Field("matKhau") String matKhau);
+
+
+    @GET(ManagerUrl.ACCOUNT_ALL)
+    Call<AccountResponse> getEmployeeInfo(@Path("idNhanVien") String idNhanVien);
+    @FormUrlEncoded
+    @POST(ManagerUrl.ACCOUNT_CHANGEPASSWORK)
+    Call<AccountResponse> changePassword(@Field("idNhanVien") String idNhanVien,
+                                                @Field("matKhauCu") String matKhauCu,
+                                                @Field("matKhauMoi") String matKhauMoi);
+
+    @FormUrlEncoded
+    @POST(ManagerUrl.ACCOUNT_UPDATE_EMPLOYEE_INFO)
+    Call<AccountResponse> updateEmployeeInfo(
+            @Field("idNhanVien") String idNhanVien,
+            @Field("hoVaTen") String hoVaTen,
+            @Field("ngaySinh") String ngaySinh,
+            @Field("gioiTinh") String gioiTinh,
+            @Field("dienThoai") String dienThoai,
+            @Field("diaChi") String diaChi,
+            @Field("vaiTro") String vaiTro
+
+    );
+    @GET(ManagerUrl.ACCOUNT_DOANHTHU)
+    Call<AccountResponse> getDailyRevenue(@Path("ngay") String ngay);
+    @GET(ManagerUrl.ACCOUNT_DOANHTHUMONTH)
+    Call<AccountResponse> getDailyRevenuemonth(@Path("thang") String thang);
+
+    @GET(ManagerUrl.ACCOUNT_DOANHTHUYERT)
+    Call<AccountResponse> getDailyRevenueyert(@Path("nam") String nam);
+
 
 //Customer
 @GET(ManagerUrl.READ_CUSTOMER)
@@ -58,33 +89,25 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     @PUT(ManagerUrl.UPDATE_Customer)
     Call<Void> updateCustomer(@Path("idKhachHang") int idKhachHang,@Body Customer updateCustomer);
 
+
     // CONTRACT
     @GET(ManagerUrl.CONTRACTS)
     Call<List<Contract>>getContracts();
     @GET(ManagerUrl.CONTRACT_CLIENTS)
-    Call<List<Customer>>getCustomers();
+    Call<List<PickCustomer>>getCustomers();
     @GET(ManagerUrl.CONTRACT_DETAIL_CONTRACT)
     Call<List<ContractDetail>>getAllDetailContractByIdHDTT(@Path("idHDTamThoi") String idHDTamThoi);
     @GET(ManagerUrl.CONTRACTS_ID)
     Call<Contract> getContractById(@Path("idHopDong") String idHopDong);
 
-    @GET(ManagerUrl.CONTRACTS_PAYMENT)
-    Call<List<Contract>> getContractsByPayment();
-
-    @GET(ManagerUrl.CONTRACTS_PROGESS)
-    Call<List<Contract>> getContractsByProgess();
-
-    @GET(ManagerUrl.CONTRACTS_INCURRENT)
-    Call<List<Contract>> getContractsByIncurrent();
-
-    @GET(ManagerUrl.INCURRENT)
-    Call<List<Incurrent>> getIncurrent();
-
     @POST(ManagerUrl.ADD_CONTRACT)
     Call<Void> insertContract(@Body Contract newContract);
+    @POST(ManagerUrl.ADD_PRODUCT)
+    Call<Void> addProduct(@Body Product newProduct);
 
-    @POST(ManagerUrl.INCURRENT_ADD)
-    Call<Void> insertIncurrent(@Body Incurrent newIncurrent);
+
+    @PUT(ManagerUrl.UPDATE_PRODUCT)
+    Call<Void> updateProduct(@Path("idSanPham") String idSanPham,@Body Product newProduct);
 
     @PUT(ManagerUrl.CONTRACT_UPDATE)
     Call<Void> updateContract(@Path("idHopDong") String idHopDong, @Body Contract updatedContract);
@@ -92,10 +115,20 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     @PUT(ManagerUrl.CONTRACT_DELETE)
     Call<Void> deleteContract(@Path("idHopDong") String idHopDong);
 
-    @PUT(ManagerUrl.INCURRENT_DELETE)
-    Call<Void> deleteIncurrent(@Path("idPhatSinh") String idPhatSinh);
+    @DELETE(ManagerUrl.CONTRACT_DELETE_TASK)
+    Call<Void>deleteTaskByTemporaryID(@Path("idHDTamThoi")String idHDTamThoi);
 
-  // Detail contract
+    @GET(ManagerUrl.INCURRENT_LIST)
+    Call<List<Incurrent>>getIncurrentList(@Path("idHopDong")String idHDTamThoi);
+
+    @PUT(ManagerUrl.INCURREN_UPDATE)
+    Call<Void>updateIncurrent(@Path("idPhatSinh") String idPhatSinh,@Body Incurrent incurrent);
+    @PUT(ManagerUrl.INCURREN_UPDATE_NONE)
+    Call<Void>updateIncurrentNone(@Path("idPhatSinh")int idPhatSinh,@Body Incurrent incurrent);
+
+
+
+    // Detail contract
     @FormUrlEncoded
     @POST(ManagerUrl.INSERT_CONTRACT_DETAIL_PRODUCT)
     Call<ServerResponse> insertContractDetailWithProduct(
@@ -122,8 +155,20 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     @GET(ManagerUrl.CONTRACT_DETAIL_PRODUCTS)
     Call<List<Product>> getProductsByStatusReady();
 
+    @FormUrlEncoded
+    @POST(ManagerUrl.DELETE_CONTRACT_DETAIL_BY_CONTRACT_DETAIL_ID)
+    Call<ServerResponse> deleteContractDetailByContractDetailID(@Path("contractDetailID") String contractDetailID, @Field("productID") int productID);
+
+
+    @GET(ManagerUrl.GET_PRODUCT)
+    Call<List<Product>> getProducts();
+    @GET(ManagerUrl.GET_PRODUCT_BY_NAME)
+    Call<List<Product>> getProductsByName(@Query("q") String tenSanPham);
+
+    @GET(ManagerUrl.GET_PRODUCT)
     @DELETE(ManagerUrl.DELETE_CONTRACT_DETAIL_BY_CONTRACT_DETAIL_ID)
     Call<ServerResponse> deleteContractDetailByContractDetailID(@Path("contractDetailID") String contractDetailID);
+
 
     @FormUrlEncoded
     @PUT(ManagerUrl.UPDATE_CONTRACT_DETAIL_PRODUCT)
@@ -150,6 +195,63 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     @GET(ManagerUrl.CONTRACT_DETAIL_IDCONTRACT)
     Call<List<ContractDetail>>getContractDetailByIdContract(@Path("contractID") String idContract);
 
+
+
+    // task , join
+    @GET(ManagerUrl.READ_TASKS)
+    Call<ResponseTask> readTask();
+
+    @GET(ManagerUrl.READ_TASK_EMPLOYEE)
+    Call<ResponseEmployeeJoin> readTaskEmployee();
+
+    @GET(ManagerUrl.READ_EMPLOYEE)
+    Call<ResponseEmployeeJoin> readEmployee(@Path("idHDCT") String idDetailContract);
+    @POST(ManagerUrl.READ_EMPLOYEE_ID_TASK)
+    @FormUrlEncoded
+    Call<ResponseEmployeeJoin> readEmployeeByIdTask(@Field("idTask") int idTask);
+    @POST(ManagerUrl.INSERT_EMPLOYEE)
+    @FormUrlEncoded
+    Call<ResponseJoin> insertEmployee(@Field("idTask") int idTask,
+                                      @Field("idEmployee") String idEmployee);
+
+    @DELETE(ManagerUrl.DELETE_EMPLOYEE)
+    Call<ResponseTask> deleteEmployeeJoin(@Path("idJoin") int idJoin);
+
+    @POST(ManagerUrl.READ_TASKS_ID_EMPLOYEE)
+    @FormUrlEncoded
+    Call<ResponseTask> readTaskByIdEmployee(@Field("idEmployee") String idEmployee);
+
+    @PUT(ManagerUrl.UPDATE_TASKS)
+    @FormUrlEncoded
+    Call<ResponseTask> updateTaskById(@Path("id") int id,
+                                      @Field("statusTask") String statusTask,
+                                      @Field("idHDCT") String idHDCT,
+                                      @Field("idHD") String idHD);
+
+    @DELETE(ManagerUrl.DELETE_TASKS)
+    Call<ResponseTask> deleteTaskById(@Path("id") int id);
+
+    // Service
+    @GET(ManagerUrl.GET_SERVICES_URL)
+    Call<List<Service>> getServices();
+
+    @FormUrlEncoded
+    @POST(ManagerUrl.INSERT_SERVICE_URL)
+    Call<ServiceResponse> insertService(@Field("serviceName") String serviceName, @Field("servicePrice") float servicePrice);
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.UPDATE_SERVICE_URL)
+    Call<ServiceResponse> updateService(
+            @Path("serviceID") int serviceID,
+            @Field("serviceName") String serviceName,
+            @Field("servicePrice") float servicePrice
+    );
+
+    @PUT(ManagerUrl.REMOVE_SERVICE_URL)
+    Call<ServiceResponse> removeService(@Path("serviceID") int serviceID);
+
+
+
     @POST(ManagerUrl.UPDATE_CUSTOMER)
     Call<Void> updateCustomer(@Path("id") String id,@Body Customer customer);
 
@@ -175,7 +277,6 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
     Call<ResponseEmployee> updateEmployee(
             @Path("idNhanVien") String id,
             @Field("hoVaTen") String hoTen,
-            @Field("matKhau") String matKhau,
             @Field("ngaySinh") String ngaySinh,
             @Field("gioiTinh") String gioiTinh,
             @Field("dienThoai") String dienThoai,
@@ -183,4 +284,13 @@ Call<List<Customer>> getListCustomer(@Query("idKhachHang")int idKhachHang);
             @Field("anhDaiDien") String anh,
             @Field("vaiTro") String vaiTro
     );
+
+
+    @FormUrlEncoded
+    @PUT(ManagerUrl.URL_DELETE_EMPLOYEE)
+    Call<ResponseEmployee> deleteEmployee(
+            @Field("idNhanVien") String id
+    );
+
 }
+

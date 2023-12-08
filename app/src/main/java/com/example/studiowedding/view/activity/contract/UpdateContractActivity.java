@@ -1,51 +1,48 @@
 package com.example.studiowedding.view.activity.contract;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.LocaleList;
+import android.os.Handler;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.Gravity;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import com.example.studiowedding.R;
-import com.example.studiowedding.adapter.ContractAdapter;
 import com.example.studiowedding.adapter.ContractDetailAdapteVer2;
-import com.example.studiowedding.adapter.ContractDetailAdapter;
-import com.example.studiowedding.interfaces.OnItemClickListner;
+import com.example.studiowedding.adapter.IncurrentAdapter;
 import com.example.studiowedding.model.Contract;
 import com.example.studiowedding.model.ContractDetail;
+import com.example.studiowedding.model.Incurrent;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,47 +50,69 @@ import retrofit2.Response;
 
 public class UpdateContractActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView imgBack;
-    private TextView tvDeposit,tvIDHD,tvDateCreate,tvName,tvPhone,tvAddress;
-    private EditText edPaymentStatus,edIncurrentStatus,edIncurrentNote,edFine,edDor,edDop,edDiscount,edTotal;
-    private RecyclerView rcv;
+    private TextView tvDeposit,tvIDHD,tvDateCreate,tvName,tvPhone,tvAddress,tvShownOncurrent,tvHidden,tvTitle,tvShowDetailContracts;
+    private EditText edPaymentStatus,edDop,edDiscount,edTotal;
+    private RecyclerView rcvDetailContract,rcvIncurrent;
+    private RelativeLayout relativeLayout;
+    private Button btnUpdate;
     private ContractDetailAdapteVer2 adapter;
+    private IncurrentAdapter incurrentAdapter;
     private List<ContractDetail>contractDetailList =new ArrayList<>();
+    private List<Incurrent>incurrentList=new ArrayList<>();
     FormatUtils formatUtils;
     SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd");
-
+    SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+    DialogDatePicker dialogDatePicker=new DialogDatePicker();
     private float totalPrice;
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_contract);
-        imgBack=findViewById(R.id.imgBackFromUpdateContract);
-        tvIDHD=findViewById(R.id.tvIdHDUpdateContract);
-        tvDeposit=findViewById(R.id.tvDepositUpdateContract);
-        tvDateCreate=findViewById(R.id.tvDatecreateUpdateContract);
-        tvName=findViewById(R.id.tvNameClientUpdateContract);
-        tvPhone=findViewById(R.id.tvPhoneNumberUpdateContract);
-        tvAddress=findViewById(R.id.tvAddressUpdateContract);
-        edDop=findViewById(R.id.edUpdateDOPContract);
-        edDiscount=findViewById(R.id.edUpdateDiscountContract);
-        edTotal=findViewById(R.id.edUpdateTotalAmmountContract);
-        edPaymentStatus=findViewById(R.id.edUpdatePaymentStatusContract);
-        edIncurrentStatus=findViewById(R.id.edUpdateIncurrentStatusContract);
-        edIncurrentNote=findViewById(R.id.edUpdateIncurrentNoteContract);
-        edFine=findViewById(R.id.edUpdateIncurrentFineContract);
-        edDor=findViewById(R.id.edUpdateIncurrentDorContract);
-        rcv=findViewById(R.id.rcvDetailContractInUpdateContract);
+        initView();
+        fillDataIntoView();
 
+        // Khởi tạo rcv cho HDCT
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(UpdateContractActivity.this,LinearLayoutManager.VERTICAL,false);
-        rcv.setLayoutManager(linearLayoutManager);
+        rcvDetailContract.setLayoutManager(linearLayoutManager);
         adapter = new ContractDetailAdapteVer2(contractDetailList,this);
-        rcv.setAdapter(adapter);
-        rcv.setNestedScrollingEnabled(false);
+        rcvDetailContract.setAdapter(adapter);
+        rcvDetailContract.setNestedScrollingEnabled(false);
+
+        // Khởi tạo rcv cho Phát sinh
+        LinearLayoutManager linearLayoutManager2=new LinearLayoutManager(UpdateContractActivity.this,LinearLayoutManager.VERTICAL,false);
+        rcvIncurrent.setLayoutManager(linearLayoutManager2);
+        incurrentAdapter = new IncurrentAdapter(incurrentList,this);
+        rcvIncurrent.setAdapter(incurrentAdapter);
+        rcvIncurrent.setNestedScrollingEnabled(false);
+
+        incurrentAdapter.setOnItemClickListener(position -> {
+            Incurrent incurrent=incurrentList.get(position);
+            String noiDung=incurrent.getNoiDung();
+            int hienThi=incurrent.getHienThi();
+            if(noiDung!=null){
+                if(hienThi==1){
+                    showAlertDialog(position,1);
+                }else{
+                    showAlertDialog(position,2);
+                }
+            }else{
+                showAlertDialog(position,0);
+            }
+
+        });
 
 
 
+        setOnClickView();
+        getContractDetail();
+        getIncurrentList();
+        onChangeDiscount();
 
+    }
+
+    private void fillDataIntoView(){
         String formatDeposit=formatUtils.formatCurrencyVietnam(getContractInformation().getTienCoc());
         String formatDateCreate=formatUtils.formatDateToString(getContractInformation().getNgayTao());
         String formatTotal=formatUtils.formatCurrencyVietnam(getContractInformation().getTongTien());
@@ -105,37 +124,74 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
         tvPhone.setText(getContractInformation().getDienThoai());
         tvAddress.setText(getContractInformation().getDiaChi());
         edPaymentStatus.setText(getContractInformation().getTrangThaiThanhToan());
+        edTotal.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
+        edDop.setTextColor(ContextCompat.getColor(this,R.color.black));
 
-        if(getContractInformation().getNgayThanhToan()!=null){
+        if(getContractInformation().getTrangThaiThanhToan().equalsIgnoreCase("Đã thanh toán")){
+            edDop.setEnabled(false);
+            edDiscount.setEnabled(false);
             edPaymentStatus.setEnabled(false);
-            Date dop=null;
-
+            edDiscount.setTextColor(ContextCompat.getColor(this,R.color.black));
+            edDop.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
+            edDiscount.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
+            edPaymentStatus.setBackground(ContextCompat.getDrawable(this,R.drawable.bgr_edt_disable));
+            btnUpdate.setVisibility(View.GONE);
+            tvTitle.setText("Chi tiết hợp đồng");
+        }
+        if(getContractInformation().getTrangThaiThanhToan().equalsIgnoreCase("Chưa thanh toán")){
+            edDop.setEnabled(true);
+            edDiscount.setEnabled(true);
+            edPaymentStatus.setEnabled(true);
+            btnUpdate.setVisibility(View.VISIBLE);
+        }
+        if(getContractInformation().getNgayThanhToan()!=null){
+            Date dop;
             try {
                 dop=sdf.parse(getContractInformation().getNgayThanhToan());
+
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-            String formateDop=formatUtils.formatDateToString(dop);
-            edDop.setText(formateDop);
-            edDop.setEnabled(false);
 
+            String formateDop=sdf2.format(dop);
+            edDop.setText(formateDop);
         }
 
+        float originalDiscount = getContractInformation().getGiamGia();
+        int converDiscount = (int) originalDiscount;
 
-        edDiscount.setText(String.valueOf(getContractInformation().getGiamGia()));
+        edDiscount.setText(String.valueOf(converDiscount));
         edTotal.setText(formatTotal);
-
+    }
+    private void initView(){
+        tvTitle=findViewById(R.id.tvTitleUpdateContract);
+        imgBack=findViewById(R.id.imgBackFromUpdateContract);
+        tvIDHD=findViewById(R.id.tvIdHDUpdateContract);
+        tvDeposit=findViewById(R.id.tvDepositUpdateContract);
+        tvDateCreate=findViewById(R.id.tvDatecreateUpdateContract);
+        tvName=findViewById(R.id.tvNameClientUpdateContract);
+        tvPhone=findViewById(R.id.tvPhoneNumberUpdateContract);
+        tvAddress=findViewById(R.id.tvAddressUpdateContract);
+        tvShownOncurrent=findViewById(R.id.tvShowOncurrent);
+        tvHidden=findViewById(R.id.tvIsnShowOncurrent);
+        tvShowDetailContracts=findViewById(R.id.tvNotificationShowetailContract);
+        edDop=findViewById(R.id.edUpdateDOPContract);
+        edDiscount=findViewById(R.id.edUpdateDiscountContract);
+        edTotal=findViewById(R.id.edUpdateTotalAmmountContract);
+        edPaymentStatus=findViewById(R.id.edUpdatePaymentStatusContract);
+        rcvDetailContract=findViewById(R.id.rcvDetailContractInUpdateContract);
+        rcvIncurrent=findViewById(R.id.rcvIncurrentsInUpdateContract);
+        relativeLayout=findViewById(R.id.rltOncurrent);
+        btnUpdate=findViewById(R.id.btnUpdateOncurrent);
+    }
+    private void setOnClickView(){
         imgBack.setOnClickListener(this);
         edPaymentStatus.setOnClickListener(this);
-        edIncurrentStatus.setOnClickListener(this);
-        edIncurrentNote.setOnClickListener(this);
+        tvShownOncurrent.setOnClickListener(this);
+        tvHidden.setOnClickListener(this);
         edDop.setOnClickListener(this);
-
-        getContractDetail();
-        onChangeDiscount();
+        btnUpdate.setOnClickListener(this);
     }
-
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -144,7 +200,7 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
                 break;
             case R.id.edUpdateDOPContract:
                 try {
-                    showDatePicker(edDop);
+                    dialogDatePicker.showDatePicker(edDop,UpdateContractActivity.this);
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
@@ -152,69 +208,48 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
             case R.id.edUpdatePaymentStatusContract:
                 showPopupMenuPayment(view);
                 break;
-            case R.id.edUpdateIncurrentStatusContract:
-                showPopupMenuIncurrent(view);
+            case R.id.btnUpdateOncurrent:
+                try {
+                    if(validateContrac()>0){
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                finish();
+                            }
+                        }, 1000);
+                        saveContract();
+                    }
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
-            case R.id.edUpdateIncurrentNoteContract:
-                showPopupMenuIncurrentNote(view);
+            case R.id.tvShowOncurrent:
+                relativeLayout.setVisibility(View.VISIBLE);
+                tvShownOncurrent.setVisibility(View.GONE);
+                tvHidden.setVisibility(View.VISIBLE);
+                break;
+            case R.id.tvIsnShowOncurrent:
+                relativeLayout.setVisibility(View.GONE);
+                tvShownOncurrent.setVisibility(View.VISIBLE);
+                tvHidden.setVisibility(View.GONE);
                 break;
         }
     }
 
-    // Set hiển thị tiếng việt cho calender
-    public static Locale getLocaleForCalendarInstance(Context context) {
-        Locale locale = new Locale("vi","VN");
-        LocaleList locales = new LocaleList(locale);
-        context.getResources().getConfiguration().setLocales(locales);
-        context.getResources().updateConfiguration(context.getResources().getConfiguration(),
-                context.getResources().getDisplayMetrics());
+    //Lưu thông tin hợp đồng
+    private void saveContract(){
+        String idHD=tvIDHD.getText().toString().trim();
+        String formatNgayThanhToan=edDop.getText().toString().isEmpty() ? null: formatUtils.formatStringToStringMySqlFormat(edDop.getText().toString().trim());
 
-        return locale;
-    }
+        Float giamGia = edDiscount.getText().toString().trim().isEmpty() ? null : Float.parseFloat(edDiscount.getText().toString().trim());
+        // reverse format tiền vnd
+        Float tongTien = formatUtils.reverseCurrencyVietnam(edTotal.getText().toString());
+        String trangThaiThanhToan = edPaymentStatus.getText().toString();
 
-    //    Dialog date picker
-    private void showDatePicker(EditText editText) throws ParseException {
-        Locale locale = new Locale("vi", "VN");
-        Locale.setDefault(locale);
+        Contract contract=new Contract(idHD,formatNgayThanhToan,giamGia,tongTien,trangThaiThanhToan);
+        updateContract(contract);
 
-        Calendar calendar = Calendar.getInstance(getLocaleForCalendarInstance(this));
-
-        if (editText != null && !TextUtils.isEmpty(editText.getText())) {
-            Date currentDate = FormatUtils.parserStringToDate(editText.getText().toString());
-            if (currentDate != null) {
-                calendar.setTime(currentDate);
-            }
-        }
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                (view, year, monthOfYear, dayOfMonth) -> {
-                    calendar.set(Calendar.YEAR, year);
-                    calendar.set(Calendar.MONTH, monthOfYear);
-                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                    String selectedDate = FormatUtils.formatDateToString(calendar.getTime());
-                    editText.setText(selectedDate);
-                },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-        );
-
-        // Thay đổi tiêu đề của 2 button trong dialog
-        datePickerDialog.setOnShowListener(dialog -> {
-            Button positiveButton = datePickerDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-            Button negativeButton = datePickerDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-
-            if (positiveButton != null) {
-                positiveButton.setText("Chọn");
-            }
-
-            if (negativeButton != null) {
-                negativeButton.setText("Hủy");
-            }
-        });
-        datePickerDialog.show();
     }
 
     private void onChangeDiscount() {
@@ -279,9 +314,63 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
         return total;
     }
 
+    // Alert dialog phát sinh
+    private void showAlertDialog(int position, int isPhatSinh) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(UpdateContractActivity.this);
+        CharSequence[] options;
+        if (isPhatSinh==1) {
+            options = new CharSequence[]{"Chi tiết phát sinh","Xác nhận hết phát sinh"};
+        } else if(isPhatSinh==0){
+            options = new CharSequence[]{"Thêm phát sinh"};
+        }else{
+            options = new CharSequence[]{"Chi tiết phát sinh"};
+
+        }
+        builder.setTitle("Menu")
+                .setItems(options, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                Intent updateIntent = new Intent(UpdateContractActivity.this, UpdateOncurrentActivity.class);
+                                updateIntent.putExtra("oncurrentList", incurrentList.get(position));
+                                startActivity(updateIntent);
+                                break;
+                            case 1:
+                                comfirmDeleteDialog(position);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    // Alert comfirm xoá phát sinh
+    private void comfirmDeleteDialog(int posititon){
+        Incurrent incurrent=incurrentList.get(posititon);
+        String name=incurrent.getTenSanPham();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(UpdateContractActivity.this);
+        builder.setMessage("Xác nhận không còn phát sinh cho: \n"+ name);
+        builder.setNegativeButton("Huỷ", (dialogInterface, i) -> dialogInterface.dismiss());
+        builder.setPositiveButton("Xác nhận", (dialogInterface, i) -> {
+            int idPhatSinh = incurrent.getIdPhatSinh();
+            String idSanPham=incurrent.getIdSanPham();
+            String idHopDong=incurrent.getIdHopDong();
+            String idHopDongChiTiet=incurrent.getIdHopDongChiTiet();
+            Incurrent updateValues=new Incurrent(idPhatSinh,null,null,null,idSanPham,idHopDong,idHopDongChiTiet);
+            deleteIncurrentById(idPhatSinh,updateValues);
+        });
+        builder.show();
+
+    }
     //    Popup menu trạng thái thanh toán
     private void showPopupMenuPayment(View v) {
-        PopupMenu popupMenu = new PopupMenu(this, v);
+        Context wrapper = new ContextThemeWrapper(this, R.style.PopupMenuWindow);
+        PopupMenu popupMenu = new PopupMenu(wrapper, v, Gravity.END);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.popup_menu_payment_status_contract, popupMenu.getMenu());
 
@@ -303,89 +392,113 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
         });
 
         popupMenu.show();
+
     }
-    //    Popup menu phát sinh
-    private void showPopupMenuIncurrent(View v) {
-        PopupMenu popupMenu = new PopupMenu(this, v);
-        MenuInflater inflater = popupMenu.getMenuInflater();
-        inflater.inflate(R.menu.popup_menu_incurrent, popupMenu.getMenu());
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_incurent:
-                        edIncurrentStatus.setText("Có phát sinh");
-                        edIncurrentNote.setVisibility(View.VISIBLE);
-                        edDor.setVisibility(View.GONE);
-                        edFine.setVisibility(View.GONE);
-                        return true;
-                    case R.id.action_is_incurrent:
-                        edIncurrentStatus.setText("Không có phát sinh");
-                        edIncurrentNote.setVisibility(View.GONE);
-                        edDor.setVisibility(View.GONE);
-                        edFine.setVisibility(View.GONE);
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
-
-        popupMenu.show();
-    }
-    //    Popup menu nội dung phát sinh
-    private void showPopupMenuIncurrentNote(View v) {
-        PopupMenu popupMenu = new PopupMenu(this, v);
-        MenuInflater inflater = popupMenu.getMenuInflater();
-        inflater.inflate(R.menu.popup_menu_incurrent_note, popupMenu.getMenu());
-
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_damage:
-                        edIncurrentNote.setText("Khách làm hỏng đồ");
-                        edFine.setVisibility(View.VISIBLE);
-                        edDor.setVisibility(View.GONE);
-                        return true;
-                    case R.id.action_is_late:
-                        edIncurrentNote.setText("Khách trả đồ muộn");
-                        edDor.setVisibility(View.VISIBLE);
-                        edFine.setVisibility(View.VISIBLE);
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
-
-        popupMenu.show();
-    }
-    //
 
     // validate các trường nhập
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private int validateForm() throws ParseException {
-        int check=1;
+    private int validateContrac() throws ParseException {
+        int check = 1;
+        String discount = edDiscount.getText().toString();
+        String status = edPaymentStatus.getText().toString();
         String dateOfPay=edDop.getText().toString();
-        Date dop=formatUtils.parserStringToDate(dateOfPay);
-        LocalDate currentDate = LocalDate.now();
-        LocalDate paymentDate = dop.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String dateCreate=tvDateCreate.getText().toString();
 
-        if(check==1 && paymentDate.isBefore(currentDate)){
-            Toast.makeText(this, "Ngày thanh toán không hợp lệ ", Toast.LENGTH_SHORT).show();
+        if (check == 1 && status.equalsIgnoreCase("Trạng thái hợp đồng")) {
+            showSnackbar("Chưa chọn trạng thái hợp đồng");
             check = -1;
         }
 
+        if(!dateOfPay.isEmpty()){
+            Date dop=formatUtils.parserStringToDate(dateOfPay);
+            Date doc=formatUtils.parserStringToDate(dateCreate);
+
+            if(check==1 && dop.before(doc)){
+                showSnackbar("Ngày thanh toán không hợp lệ");
+                check = -1;
+            }
+        }
+
+        if (check == 1 && discount.isEmpty()) {
+            showSnackbar("Chưa nhập giảm giá");
+            check = -1;
+        }
+
+
         return check;
     }
-    private Contract getContractInformation(){
-        Contract contract=(Contract) getIntent().getSerializableExtra("contractList");
-        return contract;
+
+    private void deleteIncurrentById(int idPhatSinh, Incurrent incurrent){
+        ApiService apiService= ApiClient.getClient().create(ApiService.class);
+        Call<Void>call=apiService.updateIncurrentNone(idPhatSinh,incurrent);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    showSnackbar("Xoá phát sinh thành công");
+                    getIncurrentList();
+                }else{
+                    showSnackbar("Lỗi");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                showSnackbar("Lỗi"+t.getMessage());
+
+            }
+        });
     }
 
+    private void updateContract(Contract contract){
+        String idHD=tvIDHD.getText().toString().trim();
+        ApiService apiService=ApiClient.getClient().create(ApiService.class);
+        Call<Void>call=apiService.updateContract(idHD,contract);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    showSnackbar("Cập nhật hợp đồng thành công");
+                }else{
+                    showSnackbar("Cập nhật hợp đồng thất bại");
 
+                    Log.i("TAG","Lỗi");
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.i("TAG","Lỗi"+t.getMessage());
+                showSnackbar("Lỗi"+t.getMessage());
+
+            }
+        });
+    }
+
+    private void getIncurrentList(){
+        String idHD= tvIDHD.getText().toString();
+        ApiService apiService= ApiClient.getClient().create(ApiService.class);
+        Call<List<Incurrent>>call=apiService.getIncurrentList(idHD);
+        call.enqueue(new Callback<List<Incurrent>>() {
+            @Override
+            public void onResponse(Call<List<Incurrent>> call, Response<List<Incurrent>> response) {
+                if(response.isSuccessful()){
+                    incurrentList.clear();
+                    incurrentList.addAll(response.body());
+
+                    incurrentAdapter.notifyDataSetChanged();
+                }else{
+                    Log.i("TAG","Lỗi");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Incurrent>> call, Throwable t) {
+                Log.i("TAG","Lỗi"+t.getMessage());
+
+            }
+        });
+
+    }
     private void getContractDetail(){
         String idHD= tvIDHD.getText().toString();
         ApiService apiService= ApiClient.getClient().create(ApiService.class);
@@ -398,8 +511,8 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
                     contractDetailList.addAll(response.body());
                     totalPrice = totalPrice(contractDetailList);
                     totalAmount();
-                    adapter.notifyDataSetChanged();
 
+                    adapter.notifyDataSetChanged();
                 }else{
                     Log.i("TAG","Lỗi");
                 }
@@ -413,6 +526,19 @@ public class UpdateContractActivity extends AppCompatActivity implements View.On
         });
     }
 
+    private Contract getContractInformation(){
+        Contract contract=(Contract) getIntent().getSerializableExtra("contractList");
+        return contract;
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getIncurrentList();
+    }
 
+    private void showSnackbar(String message){
+        Snackbar.make(edPaymentStatus,message, Snackbar.LENGTH_SHORT)
+                .show();
+    }
 }

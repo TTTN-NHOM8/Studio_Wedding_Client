@@ -1,9 +1,11 @@
 package com.example.studiowedding.view.activity.detail_contract;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,6 +17,7 @@ import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
 import com.example.studiowedding.view.activity.contract.AddContractActivity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -25,6 +28,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UpdateContractProductActivity extends AppCompatActivity {
+    private ConstraintLayout container;
     private EditText
             contractIdEditText,
             productSelectEditText,
@@ -64,6 +68,7 @@ public class UpdateContractProductActivity extends AppCompatActivity {
         updateButton = findViewById(R.id.updateButton);
         backImageView = findViewById(R.id.backImageView);
         updateButton = findViewById(R.id.updateButton);
+        container = findViewById(R.id.container);
     }
 
     private void setListeners() {
@@ -135,11 +140,14 @@ public class UpdateContractProductActivity extends AppCompatActivity {
                             ServerResponse serverResponse = response.body();
                             if (serverResponse == null) return;
                             if (serverResponse.isSuccess()) {
-                                Toast.makeText(UpdateContractProductActivity.this, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                                showSnackbar("Cập nhật thành công");
+                                new Handler().postDelayed(() -> finish(), 1000);
+
                             } else if (serverResponse.isFailure()) {
-                                Toast.makeText(UpdateContractProductActivity.this, "Không có cập nhật nào", Toast.LENGTH_SHORT).show();
+                                showSnackbar("Không có cập nhật nào");
+                                new Handler().postDelayed(() -> finish(), 1000);
                             } else {
-                                Toast.makeText(UpdateContractProductActivity.this, "Xảy ra lỗi khi cập nhật", Toast.LENGTH_SHORT).show();
+                                showSnackbar("Xảy ra lỗi khi cập nhật");
                             }
                         }
                     }
@@ -161,7 +169,7 @@ public class UpdateContractProductActivity extends AppCompatActivity {
             Date dateOfReturn = FormatUtils.parserStringToDate(dateOfReturnStr);
 
             if (dateOfReturn.before(dateOfHire)) {
-                Toast.makeText(this, "Ngày trả sản phẩm không hợp lệ", Toast.LENGTH_SHORT).show();
+                showSnackbar("Ngày trả sản phẩm không hợp lệ");
                 return false;
             }
 
@@ -170,5 +178,9 @@ public class UpdateContractProductActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    private void showSnackbar(String message) {
+        Snackbar.make(container,message, Snackbar.LENGTH_SHORT).setAnchorView(updateButton).show();
     }
 }
