@@ -300,7 +300,6 @@ public class AddEmployeeActivity extends AppCompatActivity {
             }
         });
     }
-
     private void handleAddEmployeeResponse(ResponseEmployee addEmployeeResponse) {
         if (addEmployeeResponse != null && addEmployeeResponse.isSuccess()) {
             showSnackbar(AppConstants.ADD_EMPLOYEE_SUCCESS_MESSAGE);

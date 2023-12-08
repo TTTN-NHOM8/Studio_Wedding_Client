@@ -31,10 +31,12 @@ public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.View
     private List<Task> filteredTasks;
     private final int selectScreen;
     private OnItemClickListner.TaskI mOnClickItem;
-    public TaskTodayAdapter(List<Task> mList, int selectScreen) {
+    private String role;
+    public TaskTodayAdapter(List<Task> mList, int selectScreen, String role) {
         this.mList = mList;
         this.selectScreen = selectScreen;
         this.filteredTasks = mList;
+        this.role = role;
     }
 
     public void setOnClickItem(OnItemClickListner.TaskI mOnClickItem){
@@ -62,7 +64,13 @@ public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.View
             return;
         }
         holder.bind(task);
-        holder.ivBtn.setOnClickListener(view -> showPopupEdit(holder, task));
+        holder.ivBtn.setOnClickListener(view -> {
+            if (AppConstants.ROLE.equals(role)){
+                showPopupEdit(holder, task);
+            }else {
+                showPopupEditRole(holder, task);
+            }
+        });
 
     }
 
@@ -75,7 +83,7 @@ public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.View
         popupMenu.setOnMenuItemClickListener(menuItem -> {
             switch (menuItem.getItemId()){
                 case R.id.action_update:
-                    mOnClickItem.nextUpdateScreenTask(task);
+                    mOnClickItem.nextUpdateScreenTask(task, role);
                     return true;
                 case R.id.action_delete:
                     mOnClickItem.showConfirmDelete(task, holder.view);
@@ -87,6 +95,21 @@ public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.View
         popupMenu.show();
     }
 
+    @SuppressLint("NonConstantResourceId")
+    private void showPopupEditRole(@NonNull ViewHolder holder, Task task){
+        PopupMenu popupMenu = new PopupMenu(holder.itemView.getContext(), holder.ivBtn);
+        MenuInflater menuInflater = popupMenu.getMenuInflater();
+        menuInflater.inflate(R.menu.popup_menu_role_task, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            if (menuItem.getItemId() == R.id.see_detail_task) {
+                mOnClickItem.nextUpdateScreenTask(task, role);
+                return true;
+            }
+            return false;
+        });
+        popupMenu.show();
+    }
 
     @Override
     public int getItemCount() {
@@ -106,7 +129,8 @@ public class TaskTodayAdapter extends RecyclerView.Adapter<TaskTodayAdapter.View
                     listTask.addAll(filteredTasks);
                 }else {
                     for (Task task : filteredTasks ) {
-                        if (task.getNameService().toLowerCase(Locale.getDefault()).contains(search.toLowerCase())){
+                        if (task.getNameService().toLowerCase(Locale.getDefault()).contains(search.toLowerCase())
+                                || task.getIdContract().toLowerCase(Locale.getDefault()).contains(search.toLowerCase()) ){
                             listTask.add(task);
                         }
                     }

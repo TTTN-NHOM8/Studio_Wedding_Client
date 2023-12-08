@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,10 +27,12 @@ import com.example.studiowedding.model.Task;
 import com.example.studiowedding.network.ApiClient;
 import com.example.studiowedding.network.ApiService;
 import com.example.studiowedding.utils.FormatUtils;
+import com.example.studiowedding.utils.UIutils;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,7 +42,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SeeTaskActivity extends AppCompatActivity implements OnItemClickListner.TaskI {
-    private TextView tvTitle;
+    private TextView tvTitle, tvShowMessage;
     private ImageView ivBack, ivFilter, ivCancelFilter;
     private RecyclerView mRCV;
     private ProgressDialog mProgressDialog;
@@ -48,16 +51,30 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
     private List<Task> mListToday;
     private TaskAdapter adapterTask;
     private TaskTodayAdapter taskTodayAdapter;
+    private String role, idEmployee;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_task);
         initUI();
         onClick();
-        readTasksApi();
     }
 
+    private void checkRoleCallApi() {
+        SharedPreferences preferences = getSharedPreferences("LuuIdNhanvien", MODE_PRIVATE);
+         role = preferences.getString("Vaitro", "");
+         idEmployee = preferences.getString("IdNhanvien", "");
+
+        if (AppConstants.ROLE.equals(role)){
+            readTasksApi();
+        }else {
+            readTasksByIdEmployeeApi(idEmployee);
+        }
+    }
+
+
     private void initUI() {
+        tvShowMessage = findViewById(R.id.tv_show_see_task);
         tvTitle = findViewById(R.id.tv_title_see_job);
         mRCV = findViewById(R.id.rcv_see_job);
         ivBack = findViewById(R.id.iv_back_see_job);
@@ -72,55 +89,69 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
         ivBack.setOnClickListener(view -> onBackPressed());
 
         ivFilter.setOnClickListener(view -> {
-            Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    this,
-                    R.style.CustomDatePickerDialog,
-                    (datePicker, selectedYear, selectedMonth, selectedDay) -> {
-                        ivCancelFilter.setVisibility(View.VISIBLE);
-                        ivFilter.setVisibility(View.GONE);
+            if (mList != null){
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        this,
+                        R.style.CustomDatePickerDialog,
+                        (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+                            ivCancelFilter.setVisibility(View.VISIBLE);
+                            ivFilter.setVisibility(View.GONE);
 
-                        // Tạo một Calendar object từ ngày được chọn
-                        Calendar selectedCalendar = Calendar.getInstance();
-                        selectedCalendar.set(selectedYear, selectedMonth, selectedDay);
+                            // Tạo một Calendar object từ ngày được chọn
+                            Calendar selectedCalendar = Calendar.getInstance();
+                            selectedCalendar.set(selectedYear, selectedMonth, selectedDay);
 
-                        List<Task> list = mList;
-                        List<Task> filteredTasks = filterTasksByDate(list, selectedCalendar.getTime());
-                        adapterTask.setList(filteredTasks);
+                            List<Task> list = mList;
+                            List<Task> filteredTasks = filterTasksByDate(list, selectedCalendar.getTime());
+                            adapterTask.setList(filteredTasks);
 
-                    },
-                    year,
-                    month,
-                    dayOfMonth
-            );
+                        },
+                        year,
+                        month,
+                        dayOfMonth
+                );
 
-            datePickerDialog.show();
-        });
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-
-                if (getIntent().getIntExtra("seeJob", 2) == 0){
-                    adapterTask.getFilter().filter(s);
-                }else {
-                    taskTodayAdapter.getFilter().filter(s);
-                }
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                if (getIntent().getIntExtra("seeJob", 2) == 0){
-                    adapterTask.getFilter().filter(s);
-                }else {
-                    taskTodayAdapter.getFilter().filter(s);
-                }
-                return true;
+                datePickerDialog.show();
+            }else {
+                UIutils.showSnackbar(findViewById(R.id.constraintLayout6), "Không có nhân viên để lọc");
             }
         });
+
+
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    if (mList != null) {
+                        if (getIntent().getIntExtra("seeJob", 2) == 0) {
+                            adapterTask.getFilter().filter(s);
+                        } else {
+                            taskTodayAdapter.getFilter().filter(s);
+                        }
+                    }else {
+                        UIutils.showSnackbar(findViewById(R.id.constraintLayout6), "Không có nhân viên để tìm kiếm");
+                    }
+                    return true;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    if (mList != null) {
+                        if (getIntent().getIntExtra("seeJob", 2) == 0) {
+                            adapterTask.getFilter().filter(s);
+                        } else {
+                            taskTodayAdapter.getFilter().filter(s);
+                        }
+                    } else {
+                        UIutils.showSnackbar(findViewById(R.id.constraintLayout6), "Không có nhân viên để tìm kiếm");
+                        }
+                    return true;
+                }
+            });
+
 
         ivCancelFilter.setOnClickListener(view -> {
             ivCancelFilter.setVisibility(View.GONE);
@@ -155,7 +186,6 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
             setAdapterToday(taskList);
             tvTitle.setText("Danh sách công việc hôm nay");
             ivFilter.setVisibility(View.GONE);
-            ivFilter.setVisibility(View.GONE);
         }
     }
 
@@ -167,8 +197,25 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
                     assert response.body() != null;
                     if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
                         checkIntent(response.body().getTaskList());
-                    }else {
-                        Toast.makeText(getApplicationContext(), "Call Api Failure", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseTask> call, @NonNull Throwable t) {
+                Log.e("Error", t.toString());
+            }
+        });
+    }
+
+    private void readTasksByIdEmployeeApi(String idEmployee) {
+        ApiClient.getClient().create(ApiService.class).readTaskByIdEmployee(idEmployee).enqueue(new Callback<ResponseTask>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseTask> call, @NonNull Response<ResponseTask> response) {
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    if (AppConstants.STATUS_TASK.equals(response.body().getStatus())){
+                        checkIntent(response.body().getTaskList());
                     }
                 }
             }
@@ -181,25 +228,31 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
     }
 
     private void setAdapter(List<Task> taskList) {
-        adapterTask = new TaskAdapter(taskList, 1);
+//        Collections.reverse(taskList);
+        adapterTask = new TaskAdapter(taskList, 1, role);
         adapterTask.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRCV.setLayoutManager(layoutManager);
         mRCV.setAdapter(adapterTask);
         mList= taskList;
+        tvShowMessage.setVisibility(View.GONE);
     }
 
     private void setAdapterToday(List<Task> taskList) {
         List<Task> list = new ArrayList<>();
+        int check = 0;
         for(int i = 0 ; i < taskList.size() ; i ++){
             if (taskList.get(i).getDateImplement() != null){
                 if (FormatUtils.checkData(taskList.get(i).getDateImplement())){
                     list.add(taskList.get(i));
+                    check++;
                 }
             }
         }
-
-        taskTodayAdapter = new TaskTodayAdapter(list, 1);
+        if (check > 0){
+            tvShowMessage.setVisibility(View.GONE);
+        }
+        taskTodayAdapter = new TaskTodayAdapter(list, 1, role);
         taskTodayAdapter.setOnClickItem(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRCV.setLayoutManager(layoutManager);
@@ -208,9 +261,10 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
     }
 
     @Override
-    public void nextUpdateScreenTask(Task task) {
+    public void nextUpdateScreenTask(Task task, String role) {
         Intent intent = new Intent(this, UpdateTaskActivity.class);
         intent.putExtra("task", task);
+        intent.putExtra("role", role);
         startActivity(intent);
     }
     @Override
@@ -262,7 +316,7 @@ public class SeeTaskActivity extends AppCompatActivity implements OnItemClickLis
     @Override
     public void onStart() {
         super.onStart();
-        readTasksApi();
+        checkRoleCallApi();
     }
 
 }

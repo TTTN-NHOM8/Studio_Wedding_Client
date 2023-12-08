@@ -2,18 +2,27 @@ package com.example.studiowedding.network;
 
 public class ManagerUrl {
 
+    public static final String BASE_URL = "http://192.168.1.7:3000/api/";
+
+    //account
+    public static final String ACCOUNT = "account/Login";
+    public static final String ACCOUNT_ALL = "account/get-updated-info/{idNhanVien}";
+    public static final String ACCOUNT_CHANGEPASSWORK = "account/changePassword";
+    public static final String ACCOUNT_UPDATE_EMPLOYEE_INFO = "account/update";
+    public static final String ACCOUNT_DOANHTHU = "getDailyRevenue/{ngay}";
+    public static final String ACCOUNT_DOANHTHUMONTH = "getDailyRevenueMonth/{thang}";
+    public static final String ACCOUNT_DOANHTHUYERT = "getDailyRevenueyert/{nam}";
+
 
 
     public static final String BASE_URL = "http://192.168.1.22:3000/api/";
+
 
     //Customer
     public static final String READ_CUSTOMER = "customer";
     public static final String UPDATE_Customer = "customer/update/{idKhachHang}";
 
-
-
     // Account
-    public static final String ACCOUNT = "account/Login";
 
     // Contract
     public  static  final String CONTRACTS="contracts";
@@ -45,7 +54,7 @@ public class ManagerUrl {
 
     // Task
     public static final String READ_TASKS = "tasks";
-    public static final String READ_TASKS_ROLE = "tasks/role";
+    public static final String READ_TASKS_ID_EMPLOYEE = "tasks/id/employee";
     public static final String UPDATE_TASKS = "update/task/{id}";
     public static final String DELETE_TASKS = "delete/task/{id}";
 
@@ -75,6 +84,8 @@ public class ManagerUrl {
     public static final String URL_ADD_EMPLOYEE = "employee/add";
     public static final String URL_UPDATE_EMPLOYEE = "employee/update/{idNhanVien}";
 
+
     public static final String URL_DELETE_EMPLOYEE = "employee/delete";
+
 
 }

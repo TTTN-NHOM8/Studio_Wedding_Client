@@ -149,16 +149,15 @@ public class ProductServiceFragment extends Fragment implements OnItemClickListn
                     // Xử lý khi chọn màu vàng
                     // Ví dụ: thay đổi màu của ImageView thành màu vàng
                     fillData(filterByStatus("Chưa sẵn sàng"));
-                    ((ImageView) view).setColorFilter(getResources().getColor(R.color.yellow));
+
                     return true;
                 case R.id.menu_green:
                     fillData(filterByStatus("Sẵn sàng"));
-                    ((ImageView) view).setColorFilter(getResources().getColor(R.color.green));
+
                     return true;
                 case R.id.menu_red:
-                    // Xử lý khi chọn màu đỏ
-                    // Ví dụ: thay đổi màu của ImageView thành màu đỏ
-                    ((ImageView) view).setColorFilter(getResources().getColor(R.color.red));
+                    fillData(filterByStatus("Có phát sinh"));
+
                     return true;
                 default:
                     return false;

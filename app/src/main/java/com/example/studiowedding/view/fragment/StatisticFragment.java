@@ -1,66 +1,251 @@
 package com.example.studiowedding.view.fragment;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import com.example.studiowedding.R;
+import com.example.studiowedding.network.ApiClient;
+import com.example.studiowedding.network.ApiService;
+import com.example.studiowedding.view.activity.account.AccountResponse;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StatisticFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
 public class StatisticFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    ConstraintLayout buttonPickDate, buttonPickMonth, btnNam;
+    private ApiService apiService;
 
-    public StatisticFragment() {
-        // Required empty public constructor
-    }
+    private TextView textViewResult, tvgia, tvDon, tvthang, tvtienthang, tvdtnam1, tvnama, tvngaychon, namchon;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment StatisticFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static StatisticFragment newInstance(String param1, String param2) {
-        StatisticFragment fragment = new StatisticFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_statistic, container, false);
+        View view = inflater.inflate(R.layout.fragment_statistic, container, false);
+
+        apiService = ApiClient.getApiService();
+
+        textViewResult = view.findViewById(R.id.tvngaydoanhthu);
+        buttonPickDate = view.findViewById(R.id.CsChonngay);
+        tvgia = view.findViewById(R.id.tvGiatien);
+        tvthang = view.findViewById(R.id.tvtThang);
+        tvtienthang = view.findViewById(R.id.tvtienthang);
+        tvDon = view.findViewById(R.id.thangdt);
+        btnNam = view.findViewById(R.id.csnam);
+        tvdtnam1 = view.findViewById(R.id.tvdtnam);
+        tvnama = view.findViewById(R.id.tvnam0);
+        tvngaychon = view.findViewById(R.id.tvSoluongdon);
+        namchon = view.findViewById(R.id.namdt);
+        btnNam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickeryert();
+
+            }
+        });
+
+        buttonPickDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerDialog();
+            }
+        });
+        buttonPickMonth = view.findViewById(R.id.thang);
+        buttonPickMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDatePickerMonth();
+
+            }
+        });
+
+        return view;
     }
+
+    private void showDatePickerDialog() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                        String selectedDate = formatDate(selectedDay, selectedMonth + 1, selectedYear);
+                        textViewResult.setText(selectedDate);
+                        tvngaychon.setText(String.valueOf(selectedDay));
+                        getRevenueByDate(String.valueOf(selectedDate));
+                    }
+                }, year, month, day);
+        datePickerDialog.show();
+    }
+
+    private void getRevenueByDate(String selectedDate) {
+        Call<AccountResponse> call = apiService.getDailyRevenue(selectedDate);
+        call.enqueue(new Callback<AccountResponse>() {
+            @Override
+            public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
+                if (response.isSuccessful()) {
+                    AccountResponse accountResponse = response.body();
+                    String status = accountResponse.getStatus();
+                    if (response.body() != null) {
+                        double revenueValue = accountResponse.getTotalRevenue();
+                        String formattedRevenue = formatCurrency(revenueValue);
+                        tvgia.setText(formattedRevenue);
+                    } else {
+                        tvgia.setText("Dữ liệu trả về từ server là null");
+                    }
+                } else {
+                    tvgia.setText("Có lỗi khi gọi API: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AccountResponse> call, Throwable t) {
+                Log.e("API Error", "Call failed: " + t.getMessage());
+                textViewResult.setText("Có lỗi khi gọi API");
+            }
+        });
+    }
+
+    private void showDatePickerMonth() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                        String selectedDate = formatMonth(selectedDay, selectedMonth + 1, selectedYear);
+                        tvthang.setText(selectedDate);
+                        // Assuming tvDon is your TextView for displaying the month
+                        tvDon.setText(String.valueOf(selectedMonth + 1));
+
+                        getDailyMonth(selectedDate);
+                    }
+                }, year, month, day);
+        datePickerDialog.show();
+    }
+
+
+    private void showDatePickeryert() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                        String selectedDate = formatMonth(selectedDay, selectedMonth + 1, selectedYear);
+                        tvnama.setText(selectedDate);
+                        namchon.setText(String.valueOf(selectedYear));
+                        getDailyNam(selectedDate);
+                    }
+                }, year, month, day);
+        datePickerDialog.show();
+    }
+
+    private String formatMonth(int day, int month, int year) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, day);
+        return sdf.format(calendar.getTime());
+    }
+
+    private void getDailyMonth(String selectedMonth) {
+        Call<AccountResponse> call = apiService.getDailyRevenuemonth(selectedMonth);
+        call.enqueue(new Callback<AccountResponse>() {
+            @Override
+            public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
+                if (response.isSuccessful()) {
+                    AccountResponse accountResponse1 = response.body();
+                    if (response.body() != null) {
+                        double monthRevenueValue = accountResponse1.getDoanhthuthang();
+                        String formattedMonthRevenue = formatCurrency(monthRevenueValue);
+                        tvtienthang.setText(formattedMonthRevenue);
+                    } else {
+                        tvtienthang.setText("Dữ liệu trả về từ server là null");
+                    }
+                } else {
+                    tvtienthang.setText("Có lỗi khi gọi API: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AccountResponse> call, Throwable t) {
+                Log.e("API Error", "Call failed: " + t.getMessage());
+            }
+        });
+    }
+
+    private String formatDate(int day, int month, int year) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, day);
+        return sdf.format(calendar.getTime());
+    }
+
+    private void getDailyNam(String selectedyert) {
+        Call<AccountResponse> call = apiService.getDailyRevenueyert(selectedyert);
+        call.enqueue(new Callback<AccountResponse>() {
+            @Override
+            public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
+                if (response.isSuccessful()) {
+                    AccountResponse accountResponse1 = response.body();
+                    if (response.body() != null) {
+                        double yearRevenueValue = accountResponse1.getDoanhthunam();
+                        String formattedYearRevenue = formatCurrency(yearRevenueValue);
+                        tvdtnam1.setText(formattedYearRevenue);
+                    } else {
+                        tvdtnam1.setText("Dữ liệu trả về từ server là null");
+                    }
+                } else {
+                    tvdtnam1.setText("Có lỗi khi gọi API: " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AccountResponse> call, Throwable t) {
+                Log.e("API Error", "Call failed: " + t.getMessage());
+            }
+        });
+    }
+
+    private String formatCurrency(double value) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        return formatter.format(value);
+    }
+
 }
