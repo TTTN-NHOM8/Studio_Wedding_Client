@@ -14,7 +14,7 @@ Công nghệ sử dụng Java (Android) + Node.JS (API server) + MySQL (database
 | 6 | Nguyễn Tấn Quốc Anh | AnhNTQ |Nhân viên
 | 7 | Nguyễn Việt Cường | CuongNV |Khách hàng
 | 8 | Trần Hồ Quốc An | AnTHA |Khách hàng
-| 9 | Hồ Minh Phú | PhuHM |Hợp đồng chi tiết
+| 9 | Hồ Minh Phú | PhuHM |Hợp đồng chi tiết, dịch vụ
 | 10 | Hồ Nguyễn Thái Tú | TuHNT |Nhân viên
 | 11 | Ngô Xuân Long | LongNX |Công việc
 
