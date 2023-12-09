@@ -296,10 +296,6 @@ public class UpdateEmployeeActivity extends AppCompatActivity {
             return false;
         }
 
-        if (!FormatUtils.isEmailValid(employee.getIdNhanVien())) {
-            showSnackbar(AppConstants.EMAIL_INVALID_MESSAGE);
-            return false;
-        }
 
         if (!FormatUtils.isDataInputNumber(employee.getDienThoai())){
             showSnackbar(AppConstants.PHONE_INVALID_MESSAGE);

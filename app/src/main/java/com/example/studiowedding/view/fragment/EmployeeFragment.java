@@ -112,7 +112,7 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
                     filterByRole("Chụp Hình");
                     break;
                 case R.id.loc_tat_ca:
-                    filterByRole("Lọc tất cả trạng thái");
+                    getEmployeeList();
                     break;
             }
             return true;

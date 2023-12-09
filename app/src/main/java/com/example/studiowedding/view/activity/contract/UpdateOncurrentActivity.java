@@ -78,7 +78,7 @@ public class UpdateOncurrentActivity extends AppCompatActivity{
         String formatDol=formatUtils.formatDateToString(getIncurentInformation().getNgayThue());
         String formatDor1=formatUtils.formatDateToString(getIncurentInformation().getNgayTra());
         tvIDHDCT.setText(getIncurentInformation().getIdHopDongChiTiet());
-        tvName.setText(getIncurentInformation().getTenSanPham() + "/"+getIncurentInformation().getIdPhatSinh()+"/"+getIncurentInformation().getIdSanPham());
+        tvName.setText(getIncurentInformation().getTenSanPham());
         tvPrice.setText(formatGiaThue);
         tvvDol.setText(formatDol);
         tvDor.setText(formatDor1);
