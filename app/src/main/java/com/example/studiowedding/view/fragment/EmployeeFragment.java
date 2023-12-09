@@ -119,9 +119,10 @@ public class EmployeeFragment extends Fragment implements OnItemClickListner.Emp
         });
         popupMenu.show();
     }
-    private void filterByRole (String role){
-        if (employeeAdapter != null){
-            employeeAdapter.filterByRole(role);
+    private void filterByRole(String role) {
+        if (employeeAdapter != null) {
+            List<Employee> filteredList = employeeAdapter.filterByRole(role);
+            employeeAdapter.setEmployeeList(filteredList);
         }
     }
 
